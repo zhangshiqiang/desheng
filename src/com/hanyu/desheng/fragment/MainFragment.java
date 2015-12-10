@@ -105,7 +105,8 @@ public class MainFragment extends BaseFragment {
 	public static String state;
 	public static final int NEW_GROUP = 131;
 	protected static final int requestCode = 555;
-
+	@ViewInject(R.id.contacts_rl_back)
+	private RelativeLayout contacts_rl_back;
 	private TextView scan;
 	@ViewInject(R.id.home_tv_right)
 	private RelativeLayout home_tv_right;
@@ -198,6 +199,7 @@ public class MainFragment extends BaseFragment {
 					// intent = new Intent(MainFragment.CHANGETAB);
 					// intent.putExtra("unreadMsgCountTotal", "2");
 					// context.sendBroadcast(intent);
+					//暂不删除
 					current_main = 2;
 					if (!YangUtils.isLogin(context)) {
 						ShowDialogUtil.showIsLoginDialog(context);
