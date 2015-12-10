@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/capture_frame"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <SurfaceView
+        android:id="@+id/capture_preview_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center" />
+
+    <com.hanyu.desheng.zxing.decoding.view.ViewfinderView
+        android:id="@+id/capture_viewfinder_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="85.0dip"
+        android:background="@color/transparent"
+        android:orientation="horizontal"
+        android:weightSum="5.0" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="95.0dip"
+        android:layout_gravity="bottom|center"
+        android:background="@color/capture_text_cover_bg"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/capture_button_cancel"
+            android:layout_width="70.0dip"
+            android:layout_height="40.0dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20.0dip"
+            android:text="@string/cancel"
+            android:textSize="14.0sp" />
+
+        <TextView
+            android:id="@+id/capture_bottom_hint"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20.0dip"
+            android:paddingRight="20.0dip"
+            android:text="@string/bottom_hint"
+            android:textColor="#ffffffff"
+            android:textSize="13.0sp" />
+    </LinearLayout>
+
+</FrameLayout>

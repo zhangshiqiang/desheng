@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="135dip" >
+
+        <com.hanyu.desheng.ui.loopviewpager.LoopViewPager
+            android:id="@+id/homgpager_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/syt_03"
+            android:cacheColorHint="@android:color/white"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" >
+        </com.hanyu.desheng.ui.loopviewpager.LoopViewPager>
+
+        <LinearLayout
+            android:id="@+id/ll_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/sy_03"
+            android:gravity="center"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <RadioGroup
+            android:id="@+id/home_rg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/home_rb1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="热门课程"
+                android:textColor="@color/title_text_color"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/home_rb2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="最新动态"
+                android:textColor="@color/title_text_color"
+                android:textSize="14sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/iv_img1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_img2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

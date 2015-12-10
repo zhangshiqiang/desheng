@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:visibility="gone" >
+
+        <com.hanyu.desheng.ui.ClearEditText
+            android:id="@+id/addfriend_cet"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/ss_07"
+            android:drawableLeft="@drawable/cy_07"
+            android:hint="搜索好友"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <ImageView
+        style="@style/DividerLine_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp" />
+
+    <RelativeLayout
+        android:id="@+id/addfriend_search"
+        style="@style/item_rl"
+        android:layout_height="40dp" >
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/py_05" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:text="搜索好友"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        style="@style/DividerLine_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <RelativeLayout
+        android:id="@+id/addfriend_tv"
+        style="@style/item_rl"
+        android:layout_height="40dp" >
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/py_03" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:text="手机联系人"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        style="@style/DividerLine_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <RelativeLayout
+        android:id="@+id/addfriend_scanner"
+        style="@style/item_rl"
+        android:layout_height="40dp" >
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/py_07" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:text="扫一扫"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        style="@style/DividerLine_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:background="#f6f6f6"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="新的朋友"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
+
+    <ListView
+        android:id="@+id/addfriend_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:scrollbars="@null" >
+    </ListView>
+
+</LinearLayout>

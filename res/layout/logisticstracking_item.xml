@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/first_strl"
+            android:layout_width="20dp"
+            android:layout_height="70dp"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/wl_03" />
+
+            <View
+                style="@style/DividerLine_style"
+                android:layout_width="1dp"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+        </RelativeLayout>
+
+        <RelativeLayout
+             android:id="@+id/second_strl"
+            android:layout_width="20dp"
+            android:layout_height="70dp"
+            android:orientation="vertical" >
+
+            <View
+                style="@style/DividerLine_style"
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/wl_07" />
+
+            <View
+                style="@style/DividerLine_style"
+                android:layout_width="1dp"
+                android:layout_height="47dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="69dp" >
+
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="250dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp" >
+
+                        <TextView
+                            android:id="@+id/code_item_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:paddingRight="10dp"
+                            android:text="出场配送"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/code_item_content"
+                            style="@style/sto_tv_bl"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="100dp"
+                            android:text="设备已送到"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/code_item_time"
+                        style="@style/sto_tv_bl"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_horizontal"
+                        android:text="2015-11-11"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View style="@style/DividerLine_style" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

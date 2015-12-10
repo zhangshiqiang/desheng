@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.hanyu.desheng"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <View
+        style="@style/DividerLine_style"
+        android:layout_marginTop="20dp" />
+
+    <RelativeLayout
+        android:id="@+id/accountsafe_rl1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/item_rl_selector" >
+
+        <TextView
+            android:id="@+id/accountsafe_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="密码修改"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/accountsafe_tv1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:text="*建议您定期更改密码以保护账户安全"
+            android:textColor="@color/gray2"
+            android:textSize="12sp" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+
+    <View style="@style/DividerLine_style" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/item_rl_selector"
+        android:visibility="gone" >
+
+        <TextView
+            style="@style/item_textview"
+            android:layout_marginLeft="15dp"
+            android:text="第三方绑定信息"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <View style="@style/DividerLine_style" />
+
+    <RelativeLayout
+        android:id="@+id/third_qq"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/item_rl_selector"
+        android:visibility="gone" >
+
+        <com.hanyu.desheng.ui.RoundedImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/sf_03"
+            app:corner_radius="50dp" />
+
+        <TextView
+            style="@style/item_textview"
+            android:layout_marginLeft="70dp"
+            android:text="QQ"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/qq_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/blue" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+
+    <View
+        style="@style/DividerLine_style"
+        android:layout_marginLeft="30dp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/third_wx"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/item_rl_selector"
+        android:visibility="gone" >
+
+        <com.hanyu.desheng.ui.RoundedImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/dl_wx"
+            app:corner_radius="50dp" />
+
+        <TextView
+            style="@style/item_textview"
+            android:layout_marginLeft="70dp"
+            android:text="微信"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/weixin_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/blue" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+
+    <View
+        style="@style/DividerLine_style"
+        android:layout_marginLeft="30dp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/third_xlwb"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/item_rl_selector"
+        android:visibility="gone" >
+
+        <com.hanyu.desheng.ui.RoundedImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/dl_wb"
+            app:corner_radius="50dp" />
+
+        <TextView
+            style="@style/item_textview"
+            android:layout_marginLeft="70dp"
+            android:text="新浪微博"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/sina_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/blue" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+
+    <View
+        style="@style/DividerLine_style"
+        android:layout_marginLeft="30dp"
+        android:visibility="gone" />
+
+</LinearLayout>

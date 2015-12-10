@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.hanyu.desheng"
+    android:id="@+id/personal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white2"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="@null" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <View
+                    style="@style/DividerLine_style"
+                    android:layout_marginTop="20dp" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rl1"
+                    style="@style/item_rl" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="头像管理" />
+
+                    <com.hanyu.desheng.ui.CircleImageView
+                        android:id="@+id/personal_riv"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:src="@drawable/tx_03"
+                        app:corner_radius="50dp" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <View
+                    style="@style/DividerLine_style"
+                    android:layout_marginTop="20dp" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rl9"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="会员二维码" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rl2"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="真实姓名" />
+
+                    <TextView
+                        android:id="@+id/personal_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/gray2"
+                        android:textSize="14sp" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rl3"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="昵称" />
+
+                    <TextView
+                        android:id="@+id/personal_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/gray2" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="性别" />
+
+                    <RadioGroup
+                        android:id="@+id/personal_rg"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/personal_man"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:button="@drawable/rb_btn_selector"
+                            android:text="男"
+                            android:textColor="@color/gray2"
+                            android:textSize="14sp" />
+
+                        <RadioButton
+                            android:id="@+id/personal_woman"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:button="@drawable/rb_btn_selector"
+                            android:text="女"
+                            android:textColor="@color/gray2"
+                            android:textSize="14sp" />
+                    </RadioGroup>
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rlem"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="邮箱" />
+
+                    <TextView
+                        android:id="@+id/personal_tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/gray2" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rlph"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="手机号" />
+
+                    <TextView
+                        android:id="@+id/personal_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/gray2" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rlqq"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="QQ" />
+
+                    <TextView
+                        android:id="@+id/personal_qq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/gray2" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rlwx"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="微信" />
+
+                    <TextView
+                        android:id="@+id/personal_wx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/gray2" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rlpro"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="职业" />
+
+                    <TextView
+                        android:id="@+id/personal_profession"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/gray2" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rl5"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="生日" />
+
+                    <TextView
+                        android:id="@+id/personal_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/gray2"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+
+                <View
+                    style="@style/DividerLine_style"
+                    android:layout_marginTop="20dp" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_rl8"
+                    style="@style/item_rl"
+                    android:layout_height="45dp" >
+
+                    <TextView
+                        style="@style/item_textview"
+                        android:text="身份证验证" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/gray2" />
+
+                    <ImageView style="@style/imageview_arrows" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLine_style" />
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/my_order_lv_fl"
+            android:layout_width="120dp"
+            android:layout_height="72dp"
+            android:layout_centerInParent="true" >
+
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="120dp"
+                android:layout_height="72dp"
+                android:indeterminate="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ds_pb" />
+        </FrameLayout>
+    </RelativeLayout>
+
+</LinearLayout>

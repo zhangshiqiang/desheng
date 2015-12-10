@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:visibility="gone">
+
+        <com.hanyu.desheng.ui.ClearEditText
+            android:id="@+id/invitefriend_cet"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/ss_07"
+            android:drawableLeft="@drawable/cy_07"
+            android:hint="搜索好友"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <com.hanyu.desheng.pulltorefresh.PullToRefreshListView
+        android:id="@+id/invitefriend_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:divider="@null"
+        android:scrollbars="@null" >
+    </com.hanyu.desheng.pulltorefresh.PullToRefreshListView>
+
+</LinearLayout>

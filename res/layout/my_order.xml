@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <LinearLayout
+        android:id="@+id/my_order_sll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RadioGroup
+            android:id="@+id/myorder_rg"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rb_all"
+                style="@style/myorder_tab"
+                android:background="@drawable/myorder_rb_selector"
+                android:text="全部订单" />
+
+            <View android:visibility="gone" style="@style/myorderLine_style" />
+
+            <RadioButton
+                android:visibility="gone"
+                android:id="@+id/rb_pay"
+                style="@style/myorder_tab"
+                android:background="@drawable/myorder_rb_selector"
+                android:text="待付款" />
+
+            <View style="@style/myorderLine_style" />
+
+            <RadioButton
+                android:id="@+id/rb_send"
+                style="@style/myorder_tab"
+                android:background="@drawable/myorder_rb_selector"
+                android:text="待发货" />
+
+            <View style="@style/myorderLine_style" />
+
+            <RadioButton
+                android:id="@+id/rb_get"
+                style="@style/myorder_tab"
+                android:background="@drawable/myorder_rb_selector"
+                android:text="待收货" />
+
+            <View style="@style/myorderLine_style" />
+
+            <RadioButton
+                android:id="@+id/rb_finish"
+                style="@style/myorder_tab"
+                android:background="@drawable/myorder_rb_selector"
+                android:text="已收货" />
+        </RadioGroup>
+
+        <View style="@style/DividerLine_style" />
+
+        <View style="@style/DividerLine_style2" />
+
+        <View style="@style/DividerLine_style" />
+
+        <FrameLayout
+            android:id="@+id/myorder_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <!-- <LinearLayout
+        android:id="@+id/my_order_gll"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/my_order_tv1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="女装"
+            android:textColor="@color/myorder_text_color2" />
+
+        <TextView
+            android:id="@+id/my_order_tv2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="男装"
+            android:textColor="@color/myorder_text_color2" />
+
+        <TextView
+            android:id="@+id/my_order_tv3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="T恤"
+            android:textColor="@color/myorder_text_color2" />
+
+        <TextView
+            android:id="@+id/my_order_tv4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="套装"
+            android:textColor="@color/myorder_text_color2" />
+
+        <TextView
+            android:id="@+id/my_order_tv5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="衬衫"
+            android:textColor="@color/myorder_text_color2" />
+    </LinearLayout> -->
+
+   <!--  <LinearLayout
+        android:id="@+id/my_order_gll2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <com.hanyu.desheng.ui.UnderlinePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+
+        <ImageView style="@style/DividerLine_style" />
+
+        <ImageView style="@style/DividerLine_style2" />
+
+        <ImageView style="@style/DividerLine_style" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout> -->
+
+</LinearLayout>

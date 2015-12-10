@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.hanyu.desheng"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/center_bg" >
+
+        <com.hanyu.desheng.ui.RoundedImageView
+            android:id="@+id/generalize_headriv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/tx_03"
+            app:corner_radius="50dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/generalize_headriv"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/generalize_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分："
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/generalize_miinter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#7fffc4" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/generalize_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/tx_06"
+            android:text="立即推广"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="推广规则"
+            android:textColor="@color/green"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="可以通过链接、二维码进行推广。分享至QQ、微信、新浪微博。当被邀请者收到分享链接即与邀请人自动建立关系，完成下载App，邀请人即可获得一定积分，此积分可在德升商城交易时做抵扣使用！"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/generalize_rl2"
+        android:layout_marginTop="10dp"
+        style="@style/item_rl"
+        android:layout_height="40dp" >
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            style="@style/item_textview"
+            android:text="店长推广二维码"
+            android:textColor="@color/green"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="我的积分列表"
+            android:textColor="@color/green"
+            android:textSize="16sp" />
+
+        <View
+            style="@style/DividerLine_style"
+            android:layout_marginTop="10dp" />
+
+        <ListView
+            android:id="@+id/generalize_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="@null" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

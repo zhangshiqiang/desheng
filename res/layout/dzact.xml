@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.hanyu.desheng"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <View
+                style="@style/DividerLine_style"
+                android:layout_marginTop="20dp" />
+
+            <RelativeLayout style="@style/item_rl" >
+
+                <TextView
+                    style="@style/item_textview"
+                    android:text="头像" />
+
+                <com.hanyu.desheng.ui.CircleImageView
+                    android:id="@+id/dzact_riv"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:src="@drawable/tx_03"
+                    app:corner_radius="50dp" />
+            </RelativeLayout>
+
+            <View style="@style/DividerLine_style" />
+
+            <RelativeLayout
+                style="@style/item_rl"
+                android:layout_height="45dp" >
+
+                <TextView
+                    style="@style/item_textview"
+                    android:text="昵称" />
+
+                <TextView
+                    android:id="@+id/dzact_tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:textColor="@color/gray2" />
+            </RelativeLayout>
+
+            <View style="@style/DividerLine_style" />
+
+            <RelativeLayout
+                style="@style/item_rl"
+                android:layout_height="45dp" >
+
+                <TextView
+                    style="@style/item_textview"
+                    android:text="手机号" />
+
+                <TextView
+                    android:id="@+id/dzact_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:textColor="@color/gray2" />
+            </RelativeLayout>
+
+            <View style="@style/DividerLine_style" />
+
+            <RelativeLayout
+                style="@style/item_rl"
+                android:layout_height="45dp" >
+
+                <TextView
+                    style="@style/item_textview"
+                    android:text="QQ" />
+
+                <TextView
+                    android:id="@+id/dzact_tv3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:textColor="@color/gray2" />
+            </RelativeLayout>
+
+            <View style="@style/DividerLine_style" />
+
+            <RelativeLayout
+                style="@style/item_rl"
+                android:layout_height="45dp" >
+
+                <TextView
+                    style="@style/item_textview"
+                    android:text="微信" />
+
+                <TextView
+                    android:id="@+id/dzact_tv4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:textColor="@color/gray2" />
+            </RelativeLayout>
+
+            <View style="@style/DividerLine_style" />
+            
+            <Button
+        android:id="@+id/btnChat"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dl_15"
+        android:text="添加好友"
+        android:visibility="gone"
+        android:textColor="@color/white" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/my_order_lv_fl"
+            android:layout_width="120dp"
+            android:layout_height="72dp"
+            android:layout_centerInParent="true" >
+
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="120dp"
+                android:layout_height="72dp"
+                android:indeterminate="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ds_pb" />
+        </FrameLayout>
+    </RelativeLayout>
+
+</LinearLayout>

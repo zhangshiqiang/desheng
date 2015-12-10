@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title_shop"
+        layout="@layout/shop_title"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/title_contacts"
+        layout="@layout/contacts_title"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/title_msg"
+        layout="@layout/message_title"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/title_home"
+        layout="@layout/home_title"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/main_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone" >
+
+        <RadioGroup
+            android:id="@+id/main_radio"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/sy_25"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rb_homepage"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="商学院"
+                android:textColor="@color/title_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="通讯录"
+                android:textColor="@color/title_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_shopping"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="商城购物"
+                android:textColor="@color/red" />
+
+            <RadioButton
+                android:id="@+id/rb_message"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="消息"
+                android:textColor="@color/title_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_center"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:visibility="gone"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="个人中心"
+                android:textColor="@color/title_text_color" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/main_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="#00000000"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnContact"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/home_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1.0" >
+    </FrameLayout>
+
+</LinearLayout>

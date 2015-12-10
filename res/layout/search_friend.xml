@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp" >
+
+        <com.hanyu.desheng.ui.ClearEditText
+            android:id="@+id/search_friend_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/ss_07"
+            android:inputType="number"
+            android:drawableLeft="@drawable/yx_07"
+            android:hint="请输入要添加联系人的手机号"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/search_friend_search"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_btn_bg"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="#919191"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/search_friend_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="@null" >
+    </ListView>
+
+</LinearLayout>

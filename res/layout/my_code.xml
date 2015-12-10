@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B89D58"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/code_bg3" />
+
+        <RelativeLayout
+            android:id="@+id/mycode_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/image_avatar_size"
+                android:layout_height="@dimen/image_avatar_size"
+                android:layout_marginLeft="@dimen/iv_margin_left"
+                android:layout_marginTop="@dimen/iv_margin_top" />
+
+            <ImageView
+                android:id="@+id/my_code_iv"
+                android:layout_width="@dimen/image_code_width"
+                android:layout_height="@dimen/image_code_height"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/image_code_margin_bottom"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/iv_avatar"
+                android:layout_marginLeft="@dimen/code_margin_left"
+                android:layout_marginTop="@dimen/iv_margin_top"
+                android:layout_toRightOf="@+id/iv_avatar"
+                android:text="111111"
+                android:textSize="@dimen/code_text_size" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

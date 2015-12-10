@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white2"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+    <!-- 检测更新 -->
+
+    <RelativeLayout
+        android:id="@+id/setting_rl1"
+        style="@style/item_rl"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="检测更新" />
+
+        <TextView
+            android:id="@+id/setting_tv1"
+            style="@style/right_text"
+            android:text="已是最新版本" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+    <!-- 意见反馈 -->
+
+    <RelativeLayout
+        android:id="@+id/setting_rl2"
+        style="@style/item_rl" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="关于我们" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_rlMes"
+        style="@style/item_rl"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="消息提醒" />
+
+        <ImageView
+            android:id="@+id/ivMes"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/kg_normal" />
+    </RelativeLayout>
+    <!-- 消息设置 -->
+
+    <RelativeLayout
+        android:id="@+id/setting_rl3"
+        style="@style/item_rl"
+        android:layout_marginTop="20dp"
+        android:visibility="gone" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="消息设置" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+
+    <!-- 帐户安全 -->
+
+    <RelativeLayout
+        android:id="@+id/setting_rl4"
+        style="@style/item_rl" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="账户安全" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+
+    <!-- 清除缓存 -->
+
+    <RelativeLayout
+        android:id="@+id/setting_rl5"
+        style="@style/item_rl"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="清除缓存" />
+
+        <TextView
+            android:id="@+id/setting_tv2"
+            style="@style/right_text" />
+
+        <ImageView style="@style/imageview_arrows" />
+    </RelativeLayout>
+    <!-- 意见反馈 -->
+
+    <Button
+        android:id="@+id/menu_proposal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/yjfk"
+        android:gravity="center_horizontal|center_vertical" />
+
+</LinearLayout>

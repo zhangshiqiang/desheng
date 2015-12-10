@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/gywm" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="@null" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                style="@style/aboutus_title"
+                android:layout_marginTop="15dp"
+                android:text="公司介绍" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="        德升集团创始人 张显煌 从事服装行业超过15年，业务涉及品牌策划、时装设计、明星代言、商标转让、网络科技，德升将打造世界最大的服装购物平台，世界从此一键化共享。德升集团凭借移动互联网的快速发展和裂变，在全国服装移动端流量第一，销量第一，知名度和影响力第一。" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="        德升为社会提供众多就业和创业机会，给社会创造更大的价值，CCTV特别颁发“推动中国产业经济创新发展杰出贡献人物”奖 和“中国最具投资价值时装购物平台”荣誉称号。同时成立 德升移动互联商学院，由著名演说家、香港轩辕国际教育集团董事长姬剑晶担任商学院院长。" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="        德升集团致力于辐射4大洋5大洲，服务全球67亿人口。我们时刻铭记“让67亿人口无忧共享全球时装资源，世界从此无国界”的伟大使命，我们夙兴夜寐只为完成“振兴中华民族品牌”的责任，创新、创业者惕励自省，永不止步！" />
+
+            <TextView
+                style="@style/aboutus_title"
+                android:text="经营理念" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="        如果你还活在过去，这将是一个残酷的时代！线下商铺门可罗雀，倒闭风暴席卷实体店，移动互联网的出现彻底改变了人们的生活方式，让人随时随地都能购物。" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="        中国移动电子商务市场正以每年超过300%的速率爆炸式增长，预计到2020年，中国移动电子商务市场交易规模将超过六万亿。更便利、更关联、更全面的商业系统正在逐一形成。你准备好了吗？" />
+
+            <TextView
+                style="@style/aboutus_title"
+                android:text="荣誉证书" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:src="@drawable/aboutus1" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:src="@drawable/aboutus2" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:src="@drawable/aboutus3" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:src="@drawable/aboutus4" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/aboutus_title"
+                android:layout_marginTop="0dp"
+                android:text="企业宗旨" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="这是一个能让成功者为你工作的系统" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="这个一个针对规模达到万亿市场的系统" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="这是一个帮助中国品牌走向世界的系统" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="这是一个让你在家里就能做全世界人生意的系统" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="这就是德升集团打造的 移动互联第一时装平台！"
+                android:textColor="#178750"
+                android:textSize="12dp" />
+
+            <TextView
+                style="@style/aboutus_title"
+                android:text="企业倡导" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="今天你可以选择再等等，今天加入和明天加入，结果截然不同！" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="机会如小偷，轻轻地来，悄悄地走，别人赚钱你消费，时过境迁已惘然！" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="成功者都是立刻做决定，犹豫不决只能走原路，唯有行动才能凤凰涅槃、浴火重生！" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="移动互联网时代已经到来，大浪淘沙，是引领时代还是被时代所淘汰？" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="为了振兴中华民族品牌，来吧，我们一起冲出亚洲，走向世界！！！" />
+
+            <TextView
+                style="@style/aboutus_title"
+                android:text="企业愿景" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="        人生不过如此，美好生活需要您主动去追求，自己永远是自己的主角，不要总在别人的戏剧里充当着配角，德升总部热烈欢迎您的到来！" />
+
+            <TextView
+                style="@style/aboutus_title"
+                android:text="公司口号" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="德行天下，品质升华——德升不忘初衷！" />
+
+            <TextView
+                style="@style/aboutus_content"
+                android:text="打造最大的平台，提供最好的服务——德升矢志不渝！" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

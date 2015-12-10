@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rl_head_img"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp" >
+
+        <com.hanyu.desheng.ui.CircleImageView
+            android:id="@+id/menu_headiv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/tx_03"
+            android:onClick="menu_head" />
+
+        <Button
+            android:id="@+id/menu_login"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/erweima"
+            android:onClick="menu_mar" />
+
+        <TextView
+            android:id="@+id/menu_text_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/menu_headiv"
+            android:maxEms="8"
+            android:orientation="vertical"
+            android:text="请先登录" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/menu_staudy"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/hsxy"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="check_staudy" />
+
+        <Button
+            android:id="@+id/menu_contents"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/htxl"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="check_contents" />
+
+        <Button
+            android:id="@+id/menu_msg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/hxx"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="check_msg" />
+
+        <!-- 我的推广 -->
+
+        <Button
+            android:id="@+id/menu_spread"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/hwdtg"
+            android:gravity="center_horizontal|center_vertical" />
+
+        <!-- 我的订单 -->
+
+        <Button
+            android:id="@+id/menu_order"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/hwddd"
+            android:gravity="center_horizontal|center_vertical" />
+
+        <!-- 意见反馈 -->
+
+        <Button
+            android:id="@+id/menu_proposal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/hyjfk"
+            android:gravity="center_horizontal|center_vertical" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="6dp" >
+
+        <Button
+            android:id="@+id/menu_exit"
+            android:layout_width="101dp"
+            android:layout_height="19dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/jiexian"
+            android:background="@drawable/ltc"
+            android:onClick="menu_exit" />
+
+        <ImageView
+            android:id="@+id/jiexian"
+            android:layout_width="1dp"
+            android:layout_height="19dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/wire" />
+
+        <Button
+            android:id="@+id/menu_set"
+            android:layout_width="101dp"
+            android:layout_height="19dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/jiexian"
+            android:background="@drawable/lsz" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="为了您的帐号安全，请保存好密码，不要轻易泄漏给别人！"
+        android:textColor="@color/gray2"
+        android:textSize="12sp" />
+
+    <View
+        style="@style/DividerLine_style"
+        android:layout_marginTop="15dp" />
+
+    <RelativeLayout style="@style/item_rl" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="账    号：" />
+
+        <EditText
+            android:id="@+id/change_pwd_et1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70dp"
+            android:background="@null"
+            android:hint="请输入您的账号"
+            android:maxLength="20"
+            android:paddingRight="15dp"
+            android:textColor="@color/gray2"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <View style="@style/DividerLine_style" />
+
+    <RelativeLayout style="@style/item_rl" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="原密码：" />
+
+        <EditText
+            android:id="@+id/change_pwd_et2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70dp"
+            android:background="@null"
+            android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="请输入原密码"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:paddingRight="15dp"
+            android:textColor="@color/gray2"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <View style="@style/DividerLine_style" />
+
+    <RelativeLayout style="@style/item_rl" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="新密码：" />
+
+        <EditText
+            android:id="@+id/change_pwd_et3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70dp"
+            android:background="@null"
+            android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="请输入新密码"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:paddingRight="15dp"
+            android:textColor="@color/gray2"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <View style="@style/DividerLine_style" />
+
+    <Button
+        android:id="@+id/change_pwd_btn"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/dl_15"
+        android:text="提交"
+        android:textColor="@color/white" />
+
+</LinearLayout>

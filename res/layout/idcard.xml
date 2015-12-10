@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/idcard"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <ImageView
+        style="@style/DividerLine_style"
+        android:layout_marginTop="20dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="身份证验证" />
+
+        <EditText
+            android:id="@+id/idcard_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="请输入您的有效身份证号码"
+            android:maxLength="18"
+            android:paddingRight="15dp"
+            android:textColor="@color/gray2"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <ImageView style="@style/DividerLine_style" />
+
+    <ImageView
+        style="@style/DividerLine_style"
+        android:layout_marginTop="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="图示"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/yz_03" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/yz_05" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="1.上传身份证照片"
+            android:textColor="@color/gray2"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="2.身份证正反面照片,内容完整清晰可见"
+            android:textColor="@color/gray2"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="3.图片格式为JEPG、PNG、Gif,大小不超过5M"
+            android:textColor="@color/gray2"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView style="@style/DividerLine_style" />
+
+    <Button
+        android:id="@+id/idcard_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/yz_10"
+        android:text="立即验证"
+        android:textColor="@color/white" />
+
+</LinearLayout>

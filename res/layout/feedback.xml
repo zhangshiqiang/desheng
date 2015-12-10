@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/feedback_ll"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <EditText
+        android:id="@+id/feedback_et1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/et_bg"
+        android:hint="请输入标题"
+        android:lines="3"
+        android:paddingLeft="10dp"
+        android:textSize="@dimen/text_size1" />
+
+    <EditText
+          android:id="@+id/feedback_et2"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/et_bg"
+        android:gravity="top"
+        android:hint="请输入详细的内容"
+        android:lines="10"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:textSize="@dimen/text_size1" />
+
+    <Button
+          android:id="@+id/feedback_btn"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/dl_15"
+        android:text="提交"
+        android:textColor="@color/white" />
+
+</LinearLayout>

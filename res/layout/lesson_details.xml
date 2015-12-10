@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_act_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="115dp" >
+
+        <ImageView
+            android:id="@+id/lesson_details_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp" >
+
+        <!--
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/sy_18"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/lesson_details_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:button="@drawable/xin_select"
+                android:clickable="true"
+                android:focusable="false"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="5dp"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+        -->
+
+        <TextView
+            android:id="@+id/lesson_details_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="#3e3e3e"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/lesson_details_ll"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/sy_18"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/lesson_details_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/xin_bai"
+                android:gravity="left|center_vertical" />
+
+            <TextView
+                android:id="@+id/lesson_details_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/lesson_details_wv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

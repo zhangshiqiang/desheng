@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp" >
+
+        <com.hanyu.desheng.ui.ClearEditText
+            android:id="@+id/contacts_fm_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/ss_07"
+            android:drawableLeft="@drawable/yx_07"
+            android:hint="搜索好友"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvSearch"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="#919191"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <include layout="@layout/letter_index" />
+
+</LinearLayout>
