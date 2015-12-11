@@ -52,6 +52,7 @@ public class Left extends BaseFragment implements View.OnClickListener {
 		menu_headiv = (CircleImageView) currentView.findViewById(R.id.menu_headiv);
 		menu_text_login = (TextView) currentView.findViewById(R.id.menu_text_login);
 		menu_exit = (Button) currentView.findViewById(R.id.menu_exit);
+		//我的店长二维码（立即推广）
 		menu_login = (Button) currentView.findViewById(R.id.menu_login);
 		menu_set = (Button) currentView.findViewById(R.id.menu_set);
 		menu_login.setOnClickListener(this);

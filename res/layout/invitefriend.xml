@@ -26,6 +26,24 @@
             android:paddingRight="10dp"
             android:textSize="14sp" />
     </RelativeLayout>
+    <RelativeLayout
+    	
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+    >
+	<CheckBox 
+	    android:id="@+id/T_selectAll"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:button="@null"
+	    android:text="@string/T_SelectAll"
+	    android:layout_alignParentRight="true"
+	    android:drawableRight="@drawable/t_checkbox_selector"
+	    android:drawablePadding="20dp"
+	    /> 
+	</RelativeLayout>
+    
 
     <com.hanyu.desheng.pulltorefresh.PullToRefreshListView
         android:id="@+id/invitefriend_lv"

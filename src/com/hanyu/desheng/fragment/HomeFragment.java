@@ -63,6 +63,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
@@ -92,10 +93,20 @@ public class HomeFragment extends BaseFragment {
 	private List<Banner> banners = new ArrayList<HomeBean.Data.Banner>();
 
 	private android.app.AlertDialog updateDialog;
-
+	private RelativeLayout home_rl_back;
 	@Override
 	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.home_rl_back:
+			Intent intent = new Intent(MainFragment.CHANGETAB);
+			intent.putExtra("tab", 2);
+			// main_rl.setVisibility(View.GONE);
+			getActivity().sendBroadcast(intent);
+			break;
 
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -107,6 +118,7 @@ public class HomeFragment extends BaseFragment {
 
 	@Override
 	public void initData(Bundle savedInstanceState) {
+		home_rl_back=MainFragment.home_rl_back;
 		View headView = View.inflate(getActivity(), R.layout.home_head_view, null);
 
 		homgpager_viewpager = (LoopViewPager) headView.findViewById(R.id.homgpager_viewpager);
@@ -135,7 +147,7 @@ public class HomeFragment extends BaseFragment {
 	}
 
 	private void initListener() {
-
+		home_rl_back.setOnClickListener(this);
 		homgpager_viewpager.setOnPageChangeListener(new OnPageChangeListener() {
 			public void onPageSelected(int position) {
 				if (views.size() != 0 && views.get(position) != null) {

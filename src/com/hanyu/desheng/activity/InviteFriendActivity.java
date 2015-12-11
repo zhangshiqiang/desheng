@@ -45,6 +45,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -53,7 +56,8 @@ public class InviteFriendActivity extends BaseActivity {
 	private PullToRefreshListView invitefriend_lv;
 	@ViewInject(R.id.invitefriend_cet)
 	private ClearEditText invitefriend_cet;
-
+	@ViewInject(R.id.T_selectAll)
+	private CheckBox T_SelectAll;
 	@SuppressWarnings("unused")
 	private List<String> mobilelist = new ArrayList<String>();
 
@@ -88,7 +92,7 @@ public class InviteFriendActivity extends BaseActivity {
 	private List<PhoneModel> SourceDateList;
 
 	private List<PhoneModel> allDateList;
-
+	private boolean isAllSelector = false;
 	/**
 	 * 根据拼音来排列ListView里面的数据类
 	 */
@@ -161,9 +165,51 @@ public class InviteFriendActivity extends BaseActivity {
 				// Toast.LENGTH_SHORT).show();
 			}
 		});
+		T_SelectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						if(isChecked){
+							isAllSelector = true;
+						}else{
+							isAllSelector = false;				
+						}
+						selectorAll();
+					}
+				});
+		
+		selectorAll();
 
 	}
-
+	private void selectorAll(){
+		if(isAllSelector){
+			selectAllContacts();
+			
+		}else{
+			invertSelection();
+			
+		}
+		
+		
+	}
+	public void selectAllContacts() {  
+        for (int i = 0; i < SourceDateList.size(); i++) {  
+            PhoneModel contact = SourceDateList.get(i);  
+            adapter.map_NumberSelected.put(contact, true);  
+        }  
+        isAllSelector = true;
+        adapter.notifyDataSetChanged();
+       // refreshList();  
+    }  
+    public void invertSelection() {  
+        for (int i = 0; i < SourceDateList.size(); i++) {  
+            PhoneModel contact = SourceDateList.get(i);  
+            adapter.map_NumberSelected.put(contact, false);  
+        }  
+        isAllSelector = false;
+        adapter.notifyDataSetChanged();
+       // refreshList();  
+    }  
 	protected void searchFriendByName(String str) {
 		ContentResolver resolver = context.getContentResolver();
 

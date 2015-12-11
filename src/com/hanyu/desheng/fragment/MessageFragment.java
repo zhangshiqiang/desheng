@@ -79,7 +79,7 @@ public class MessageFragment extends BaseFragment {
 	private ChatAllHistoryAdapter adapter;
 	private List<EMConversation> conversationList = new ArrayList<EMConversation>();
 	UserDao dao;
-
+	private RelativeLayout msg_rl_back;
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -91,7 +91,12 @@ public class MessageFragment extends BaseFragment {
 		case R.id.msg_iv:
 			badge.toggle(true);
 			break;
-
+		case R.id.msg_rl_back:
+			Intent intent = new Intent(MainFragment.CHANGETAB);
+			intent.putExtra("tab", 2);
+			// main_rl.setVisibility(View.GONE);
+			getActivity().sendBroadcast(intent);
+			break;
 		default:
 			break;
 		}
@@ -108,6 +113,8 @@ public class MessageFragment extends BaseFragment {
 
 	@Override
 	public void initData(Bundle savedInstanceState) {
+		msg_rl_back=MainFragment.msg_rl_back;
+		msg_rl_back.setOnClickListener(this);
 		if (savedInstanceState != null
 				&& savedInstanceState.getBoolean("isConflict", false))
 			return;
@@ -211,6 +218,7 @@ public class MessageFragment extends BaseFragment {
 
 	@Override
 	public void setListener() {
+//		msg_rl_back.setOnClickListener(this);
 //		message_right.setOnClickListener(this);
 	}
 

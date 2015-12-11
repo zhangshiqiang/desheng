@@ -152,6 +152,7 @@ public class LostPassWordActivity extends BaseActivity {
 						int code = json.getInt("code");// 返回状态
 						if (code == 0) {
 							authcode = json.getString("msg");
+							System.out.println("--------------"+authcode);
 							MyToastUtils.showShortToast(context, "获取验证码成功");
 							LogUtil.i(tag, "获取成功" + authcode);
 						} else {

@@ -80,12 +80,18 @@ public class MainFragment extends BaseFragment {
 	private Button btnContact;
 	private BadgeView contarctBadge;
 	UserDao dao;
-	// 标题控件
+	//标题返回
 	@ViewInject(R.id.shop_rl_back)
 	public static RelativeLayout rlback;// webview后退键
 	@ViewInject(R.id.shop_head_img)
 	public static CircleImageView shop_head_img;
-	
+	@ViewInject(R.id.contacts_rl_back)
+	public static RelativeLayout contacts_rl_back;
+	@ViewInject(R.id.home_rl_back)
+	public static RelativeLayout home_rl_back;
+	@ViewInject(R.id.msg_rl_back)
+	public static RelativeLayout msg_rl_back;
+	// 标题控件
 	@ViewInject(R.id.title_shop)
 	private View vtitle_shop;
 	@ViewInject(R.id.title_home)
@@ -105,8 +111,6 @@ public class MainFragment extends BaseFragment {
 	public static String state;
 	public static final int NEW_GROUP = 131;
 	protected static final int requestCode = 555;
-	@ViewInject(R.id.contacts_rl_back)
-	private RelativeLayout contacts_rl_back;
 	private TextView scan;
 	@ViewInject(R.id.home_tv_right)
 	private RelativeLayout home_tv_right;

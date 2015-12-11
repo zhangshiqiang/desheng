@@ -1,5 +1,6 @@
 package com.hanyu.desheng.adapter;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.jivesoftware.smack.util.Base64Encoder;
@@ -16,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -40,7 +42,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 	private List<PhoneModel> list = null;
 	private Context mContext;
 	public ImageLoader imageLoader;
-
+	public static HashMap<PhoneModel, Boolean> map_NumberSelected = null;  
 	// 当前的位置，这个很重要，Button的状态记录就靠它了
 	@SuppressWarnings("unused")
 	private int currentPosition = 0;
@@ -56,7 +58,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		this.mContext = mContext;
 		this.list = list;
 		imageLoader = new ImageLoader(mContext);
-
+		map_NumberSelected = new HashMap<PhoneModel, Boolean>();
 		// ORDER_SUCCESS = new boolean[list.size()];//
 		// int[listSize.get(0).get(0)];
 	}
@@ -89,20 +91,14 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 
 		if (view == null) {
 			viewHolder = new ViewHolder();
-			view = LayoutInflater.from(mContext).inflate(
-					R.layout.phone_contacts_item, null);
-			viewHolder.tvHead = (ImageView) view
-					.findViewById(R.id.phone_contacts_iv);
-			viewHolder.tvTitle = (TextView) view
-					.findViewById(R.id.phone_contacts_tv2);
-			viewHolder.tvLetter = (TextView) view
-					.findViewById(R.id.phone_contacts_tv);
-			viewHolder.phone_contacts_tv3 = (TextView) view
-					.findViewById(R.id.phone_contacts_tv3);
-			viewHolder.phone_contacts_tv4 = (TextView) view
-					.findViewById(R.id.phone_contacts_tv4);
-			viewHolder.phone_contacts_btn = (Button) view
-					.findViewById(R.id.phone_contacts_btn);
+			view = LayoutInflater.from(mContext).inflate(R.layout.phone_contacts_item, null);
+			viewHolder.tvHead = (ImageView) view.findViewById(R.id.phone_contacts_iv);
+			viewHolder.tvTitle = (TextView) view.findViewById(R.id.phone_contacts_tv2);
+			viewHolder.tvLetter = (TextView) view.findViewById(R.id.phone_contacts_tv);
+			viewHolder.phone_contacts_tv3 = (TextView) view.findViewById(R.id.phone_contacts_tv3);
+			viewHolder.phone_contacts_tv4 = (TextView) view.findViewById(R.id.phone_contacts_tv4);
+			viewHolder.phone_contacts_btn = (Button) view.findViewById(R.id.phone_contacts_btn);
+			viewHolder.checked = (CheckBox) view.findViewById(R.id.T_selectAll_item);
 			view.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) view.getTag();
@@ -148,7 +144,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 
 			}
 		});
-
+		viewHolder.checked.setChecked(map_NumberSelected.get(mContent));
 		// 判断保存的position位置上的Butoon是否已预约成功
 		// if (ORDER_SUCCESS[position]) {
 		// viewHolder.phone_contacts_btn.setVisibility(View.GONE);
@@ -172,7 +168,12 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		return view;
 
 	}
-
+	public static void setMap_NumberSelected( HashMap<PhoneModel, Boolean> map_NumberSelected) {  
+        PhoneContactsAdapter.map_NumberSelected = map_NumberSelected;  
+    }  
+	public static HashMap<PhoneModel, Boolean> getMap_NumberSelected(){
+		return map_NumberSelected;
+	}
 	/**
 	 * 添加contact
 	 * 
@@ -267,6 +268,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		@SuppressWarnings("unused")
 		TextView phone_contacts_tv4;
 		Button phone_contacts_btn;
+		CheckBox checked;
 	}
 
 	/**

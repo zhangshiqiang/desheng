@@ -40,7 +40,7 @@ public class ContactsFragment extends BaseFragment {
 	private MyFriendFragment friendFragment;
 	private MyGroupFragment groupFragment;
 	private ImageView iv_friend_right;
-
+	private RelativeLayout contacts_rl_back;
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -49,7 +49,12 @@ public class ContactsFragment extends BaseFragment {
 			intent = new Intent(context, AddFrendActivity.class);
 			startActivity(intent);
 			break;
-
+		case R.id.contacts_rl_back:
+			Intent intent = new Intent(MainFragment.CHANGETAB);
+			intent.putExtra("tab", 2);
+			// main_rl.setVisibility(View.GONE);
+			getActivity().sendBroadcast(intent);
+			break;
 		default:
 			break;
 		}
@@ -68,6 +73,8 @@ public class ContactsFragment extends BaseFragment {
 
 	@Override
 	public void initData(Bundle savedInstanceState) {
+		contacts_rl_back=MainFragment.contacts_rl_back;
+		contacts_rl_back.setOnClickListener(this);
 		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -146,6 +153,7 @@ public class ContactsFragment extends BaseFragment {
 
 	@Override
 	public void setListener() {
+//		
 		contacts_right.setOnClickListener(this);
 	}
 
