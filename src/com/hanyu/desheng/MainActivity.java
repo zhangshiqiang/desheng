@@ -220,7 +220,7 @@ public class MainActivity extends BaseActivity {
 			// 三个fragment里加的判断同理
 			ExampleApplication.getInstance().logout(null);
 
-			JPushInterface.stopPush(getApplicationContext());
+			//JPushInterface.stopPush(getApplicationContext());
 			startActivity(new Intent(this, LoginActivity.class));
 			finish();
 
@@ -229,7 +229,7 @@ public class MainActivity extends BaseActivity {
 			// 防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 			// 三个fragment里加的判断同理
 
-			JPushInterface.stopPush(getApplicationContext());
+			//JPushInterface.stopPush(getApplicationContext());
 			startActivity(new Intent(this, LoginActivity.class));
 			finish();
 			return;

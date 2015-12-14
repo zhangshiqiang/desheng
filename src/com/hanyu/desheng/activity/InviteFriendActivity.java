@@ -3,13 +3,20 @@ package com.hanyu.desheng.activity;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.w3c.dom.Entity;
+
 import com.google.gson.Gson;
 import com.hanyu.desheng.R;
+
 import com.hanyu.desheng.adapter.PhoneContactsAdapter;
+import com.hanyu.desheng.adapter.PhoneContactsAdapter.ViewHolder;
 import com.hanyu.desheng.base.BaseActivity;
 import com.hanyu.desheng.bean.MobileData;
 import com.hanyu.desheng.bean.PhoneBean;
@@ -27,9 +34,12 @@ import com.hanyu.desheng.utils.MyToastUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,13 +52,20 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class InviteFriendActivity extends BaseActivity {
@@ -58,6 +75,11 @@ public class InviteFriendActivity extends BaseActivity {
 	private ClearEditText invitefriend_cet;
 	@ViewInject(R.id.T_selectAll)
 	private CheckBox T_SelectAll;
+	@ViewInject(R.id.T_selectmore)
+	private CheckBox T_Selectmore;
+	@ViewInject(R.id.t_dialoglv)
+	private View dialog_view;
+	
 	@SuppressWarnings("unused")
 	private List<String> mobilelist = new ArrayList<String>();
 
@@ -100,8 +122,9 @@ public class InviteFriendActivity extends BaseActivity {
 	private PhoneContactsAdapter adapter;
 
 	private Gson gson = new Gson();
-
+	private int select_position = -1;
 	ProgressDialog dialog;
+	private HashMap<PhoneModel, Boolean> map_NumberSelected = null;
 
 	@Override
 	public void onClick(View v) {
@@ -115,6 +138,7 @@ public class InviteFriendActivity extends BaseActivity {
 
 	@Override
 	public void init(Bundle savedInstanceState) {
+		map_NumberSelected = adapter.getMap_NumberSelected();
 		dialog = new ProgressDialog(this);
 		// 实例化汉字转拼音类
 		characterParser = CharacterParser.getInstance();
@@ -154,15 +178,22 @@ public class InviteFriendActivity extends BaseActivity {
 
 			}
 		});
-
+		invitefriend_lv.getRefreshableView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		invitefriend_lv.getRefreshableView().setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// 这里要利用adapter.getItem(position)来获取当前position所对应的对象
-				// Toast.makeText(InviteFriendActivity.this,
-				// ((PhoneModel) adapter.getItem(position)).getName(),
-				// Toast.LENGTH_SHORT).show();
+				/*ViewHolder vh = (ViewHolder) view.getTag();
+				if(!adapter.map_NumberSelected.containsKey(SourceDateList.get(position))){
+					adapter.map_NumberSelected.put(SourceDateList.get(position), true);
+				}else{
+					adapter.map_NumberSelected.remove(SourceDateList.get(position));
+				}
+				adapter.notifyDataSetChanged();
+				if(adapter.getMap_NumberSelected() != null && adapter.getMap_NumberSelected().containsValue(true)){
+					showDialog();
+				}*/
+				select_position = position;
 			}
 		});
 		T_SelectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -175,27 +206,85 @@ public class InviteFriendActivity extends BaseActivity {
 							isAllSelector = false;				
 						}
 						selectorAll();
+						
 					}
 				});
-		
-		selectorAll();
+		T_Selectmore.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					if(adapter.getMap_NumberSelected() == null || !adapter.getMap_NumberSelected().containsValue(true)){
+						Toast.makeText(getBaseContext(), "请选择邀请人", Toast.LENGTH_SHORT).show();
+					}
+					showDialog();
+				}else{
+					adapter.getMap_NumberSelected().clear();
+					dialog_view.setVisibility(View.GONE);
+				}
+				
+				
+				
+			}
+		});
+		//selectorAll();
+		/*adapter.getMap_NumberSelected();
+		if(adapter.getMap_NumberSelected() != null && adapter.getMap_NumberSelected().containsValue(true)){
+			showDialog();
+		}*/
 
+	}
+	StringBuffer buffer = new StringBuffer();
+	public void showDialog(){
+		dialog_view.setVisibility(View.VISIBLE);
+		TextView cancle = (TextView) dialog_view.findViewById(R.id.t_cancle);
+        TextView addtofrd = (TextView) dialog_view.findViewById(R.id.t_addtofrd);
+        cancle.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dialog_view.setVisibility(View.GONE);
+			}
+		});
+        addtofrd.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(adapter.map_NumberSelected != null){
+					for(PhoneModel keypm : adapter.map_NumberSelected.keySet()){
+						
+						if (PhoneDao.findByMobole(keypm.getMobile()) == null && adapter.map_NumberSelected.containsValue(true)) {
+							//adapter.getcode(keypm.getMobile());
+							buffer.append(keypm.getMobile() + ";");
+						}
+					}
+					adapter.getcode(buffer.toString());
+				}
+				dialog_view.setVisibility(View.GONE);
+			}
+		});
+		
 	}
 	private void selectorAll(){
 		if(isAllSelector){
 			selectAllContacts();
-			
+			//createDialog(this,R.style.custom_dialog2);
+			showDialog();
 		}else{
-			invertSelection();
-			
+			//invertSelection();
+			adapter.map_NumberSelected.clear();
+			dialog_view.setVisibility(View.GONE);
 		}
 		
 		
 	}
+	 
 	public void selectAllContacts() {  
         for (int i = 0; i < SourceDateList.size(); i++) {  
             PhoneModel contact = SourceDateList.get(i);  
-            adapter.map_NumberSelected.put(contact, true);  
+            if(PhoneDao.findByMobole(contact.getMobile()) == null){
+            	adapter.map_NumberSelected.put(contact, true); 
+            }
         }  
         isAllSelector = true;
         adapter.notifyDataSetChanged();
@@ -209,7 +298,61 @@ public class InviteFriendActivity extends BaseActivity {
         isAllSelector = false;
         adapter.notifyDataSetChanged();
        // refreshList();  
-    }  
+    } 
+    public Dialog createDialog(Context context, int style) {
+		int outsideMenuWidth = 0;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout dialogView = (LinearLayout) inflater.inflate(R.layout.t_invite_dialog_layout, null);
+        final Dialog customDialog = new Dialog(context, style);
+        TextView cancle = (TextView) dialogView.findViewById(R.id.t_cancle);
+        TextView addtofrd = (TextView) dialogView.findViewById(R.id.t_addtofrd);
+        WindowManager.LayoutParams localLayoutParams = customDialog.getWindow().getAttributes();
+        localLayoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
+        localLayoutParams.x = outsideMenuWidth;
+        localLayoutParams.y = 0;
+
+        int screenWidth = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
+        dialogView.setMinimumWidth(screenWidth - outsideMenuWidth);
+         dialogView.setMinimumHeight(10);
+
+        customDialog.onWindowAttributesChanged(localLayoutParams);
+        customDialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        
+        customDialog.setCancelable(true);
+        //customDialog.setCanceledOnTouchOutside(true);
+        customDialog.setContentView(dialogView);
+
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            if (!activity.isFinishing()) {
+                customDialog.show();
+            }
+        }
+        cancle.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				customDialog.cancel();
+			}
+		});
+        addtofrd.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(adapter.map_NumberSelected != null){
+					for(PhoneModel keypm : adapter.map_NumberSelected.keySet()){
+						
+						if (PhoneDao.findByMobole(keypm.getMobile()) == null) {
+							adapter.getcode(keypm.getMobile());
+						}
+					}
+				}
+				customDialog.cancel();
+			}
+		});
+        
+        return customDialog;
+    }
 	protected void searchFriendByName(String str) {
 		ContentResolver resolver = context.getContentResolver();
 

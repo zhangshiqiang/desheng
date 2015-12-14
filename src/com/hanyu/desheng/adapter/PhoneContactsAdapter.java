@@ -1,5 +1,7 @@
 package com.hanyu.desheng.adapter;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -27,9 +31,11 @@ import com.easemob.chat.EMContactManager;
 import com.hanyu.desheng.ExampleApplication;
 import com.hanyu.desheng.R;
 import com.hanyu.desheng.activity.AlertDialog;
+import com.hanyu.desheng.activity.InviteFriendActivity;
 import com.hanyu.desheng.bean.PhoneModel;
 import com.hanyu.desheng.db.PhoneDao;
 import com.hanyu.desheng.ui.silent.handle.ImageLoader;
+import com.hanyu.desheng.utils.LogUtil;
 import com.hanyu.desheng.utils.SharedPreferencesUtil;
 
 /**
@@ -40,7 +46,7 @@ import com.hanyu.desheng.utils.SharedPreferencesUtil;
 @SuppressLint({ "DefaultLocale", "ShowToast" })
 public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer {
 	private List<PhoneModel> list = null;
-	private Context mContext;
+	private InviteFriendActivity mContext;
 	public ImageLoader imageLoader;
 	public static HashMap<PhoneModel, Boolean> map_NumberSelected = null;  
 	// 当前的位置，这个很重要，Button的状态记录就靠它了
@@ -54,7 +60,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 	// private boolean[] ORDER_SUCCESS;
 
 	@SuppressLint("UseSparseArrays")
-	public PhoneContactsAdapter(Context mContext, List<PhoneModel> list) {
+	public PhoneContactsAdapter(InviteFriendActivity mContext, List<PhoneModel> list) {
 		this.mContext = mContext;
 		this.list = list;
 		imageLoader = new ImageLoader(mContext);
@@ -85,9 +91,9 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		return position;
 	}
 
-	public View getView(final int position, View view, ViewGroup arg2) {
+	public View getView(int position, View view, ViewGroup arg2) {
 		final ViewHolder viewHolder;
-		PhoneModel mContent = list.get(position);
+		final PhoneModel mContent = list.get(position);
 
 		if (view == null) {
 			viewHolder = new ViewHolder();
@@ -117,12 +123,12 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 
 //		imageLoader.DisplayImage(this.list.get(position).getImgSrc(),
 //				viewHolder.tvHead);
-        
+        final int pos = position;
 			try{
-		viewHolder.tvTitle.setText(list.get(position).getName());
+		viewHolder.tvTitle.setText(list.get(pos).getName());
 		// viewHolder.tvTitle.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         
-		if (PhoneDao.findByMobole(list.get(position).getMobile()) == null) {
+		if (PhoneDao.findByMobole(list.get(pos).getMobile()) == null) {
 			viewHolder.phone_contacts_btn.setText("邀请");
 		} else {
 			viewHolder.phone_contacts_btn.setText("添加");
@@ -135,16 +141,38 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		viewHolder.phone_contacts_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				if (PhoneDao.findByMobole(list.get(position).getMobile()) == null) {
-					getcode(list.get(position).getMobile());
+				if (PhoneDao.findByMobole(list.get(pos).getMobile()) == null) {
+					getcode(list.get(pos).getMobile());
 				} else {
-					addContact(PhoneDao.findByMobole(list.get(position)
-							.getMobile()), list.get(position).getName());
+					addContact(PhoneDao.findByMobole(list.get(pos).getMobile()), list.get(pos).getName());
 				}
 
 			}
 		});
-		viewHolder.checked.setChecked(map_NumberSelected.get(mContent));
+		
+		viewHolder.checked.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					if(!map_NumberSelected.containsKey(list.get(pos))){
+						map_NumberSelected.put(list.get(pos), isChecked);
+					}
+				}else{
+					map_NumberSelected.remove(list.get(pos));
+				}
+				
+				
+				//mContext.showDialog();
+				LogUtil.i("===", map_NumberSelected.containsKey(list.get(pos)) + "");
+			}
+		});
+		if(map_NumberSelected.containsKey(list.get(pos))){
+			viewHolder.checked.setChecked(true);
+		}else{
+			viewHolder.checked.setChecked(false);
+		}
+		//viewHolder.checked.setChecked(map_NumberSelected.get(list.get(pos)));
 		// 判断保存的position位置上的Butoon是否已预约成功
 		// if (ORDER_SUCCESS[position]) {
 		// viewHolder.phone_contacts_btn.setVisibility(View.GONE);
@@ -165,8 +193,26 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		// position, viewHolder.phone_contacts_btn));
 		//
 		// }
+		//sort(list);
 		return view;
 
+	}
+	@SuppressWarnings("unchecked")
+	private void sort(List<PhoneModel> list){
+		Collections.sort(list,new Comparator<PhoneModel>() {
+
+			@Override
+			public int compare(PhoneModel lhs, PhoneModel rhs) {
+				if(PhoneDao.findByMobole(lhs.getMobile()) == null && PhoneDao.findByMobole(rhs.getMobile()) == null){
+					return 0;
+				}else if(PhoneDao.findByMobole(lhs.getMobile()) != null && PhoneDao.findByMobole(rhs.getMobile()) != null){
+					return 2;
+				}else{
+					return 1;
+				}
+				
+			}
+		});
 	}
 	public static void setMap_NumberSelected( HashMap<PhoneModel, Boolean> map_NumberSelected) {  
         PhoneContactsAdapter.map_NumberSelected = map_NumberSelected;  
@@ -259,7 +305,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		}
 	}
 
-	private static class ViewHolder {
+	public static class ViewHolder {
 		ImageView tvHead;
 		TextView tvLetter;
 		TextView tvTitle;
@@ -268,7 +314,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		@SuppressWarnings("unused")
 		TextView phone_contacts_tv4;
 		Button phone_contacts_btn;
-		CheckBox checked;
+		public CheckBox checked;
 	}
 
 	/**
@@ -322,7 +368,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 	 * 
 	 * @param phone
 	 */
-	private void getcode(String friphone) {
+	public void getcode(String friphone) {
 		String phone = SharedPreferencesUtil.getStringData(mContext, "miphone",
 				"");
 		String mobile = Base64Encoder.getInstance().encode(phone);
