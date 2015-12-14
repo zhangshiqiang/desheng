@@ -115,12 +115,10 @@ public class MessageFragment extends BaseFragment {
 	public void initData(Bundle savedInstanceState) {
 		msg_rl_back=MainFragment.msg_rl_back;
 		msg_rl_back.setOnClickListener(this);
-		if (savedInstanceState != null
-				&& savedInstanceState.getBoolean("isConflict", false))
+		if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
 			return;
 		dao = new UserDao(getActivity());
-		inputMethodManager = (InputMethodManager) getActivity()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		errorItem = (RelativeLayout) getView().findViewById(R.id.rl_error_item);
 		errorText = (TextView) errorItem.findViewById(R.id.tv_connect_errormsg);
 		conversationList.addAll(loadConversationsWithRecentChat());
@@ -149,8 +147,7 @@ public class MessageFragment extends BaseFragment {
 			}
 		});
 
-		final String st2 = getResources().getString(
-				R.string.Cant_chat_with_yourself);
+		final String st2 = getResources().getString(R.string.Cant_chat_with_yourself);
 		message_ptr.getRefreshableView().setOnItemClickListener(
 				new OnItemClickListener() {
 
@@ -159,17 +156,14 @@ public class MessageFragment extends BaseFragment {
 							int position, long id) {
 						EMConversation conversation = adapter.getItem(position);
 						String username = conversation.getUserName();
-						if (username.equals(ExampleApplication.getInstance()
-								.getUserName()))
+						if (username.equals(ExampleApplication.getInstance().getUserName()))
 							Toast.makeText(getActivity(), st2, 0).show();
 						else {
 							// 进入聊天页面
-							Intent intent = new Intent(getActivity(),
-									ChatActivity.class);
+							Intent intent = new Intent(getActivity(),ChatActivity.class);
 							if (conversation.isGroup()) {
 								// it is group chat群聊
-								intent.putExtra("chatType",
-										ChatActivity.CHATTYPE_GROUP);
+								intent.putExtra("chatType",ChatActivity.CHATTYPE_GROUP);
 								intent.putExtra("groupId", username);
 							} else {
 								// it is single chat单聊
@@ -281,20 +275,16 @@ public class MessageFragment extends BaseFragment {
 	void hideSoftKeyboard() {
 		if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
 			if (getActivity().getCurrentFocus() != null)
-				inputMethodManager.hideSoftInputFromWindow(getActivity()
-						.getCurrentFocus().getWindowToken(),
-						InputMethodManager.HIDE_NOT_ALWAYS);
+				inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.delete_message) {
-			EMConversation tobeDeleteCons = adapter
-					.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
+			EMConversation tobeDeleteCons = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
 			// 删除此会话
-			EMChatManager.getInstance().deleteConversation(
-					tobeDeleteCons.getUserName(), tobeDeleteCons.isGroup());
+			EMChatManager.getInstance().deleteConversation(tobeDeleteCons.getUserName(), tobeDeleteCons.isGroup());
 			InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
 			inviteMessgeDao.deleteMessage(tobeDeleteCons.getUserName());
 			adapter.remove(tobeDeleteCons);
