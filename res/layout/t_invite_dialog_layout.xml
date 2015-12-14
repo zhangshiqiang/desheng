@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray"
+        />
+    <LinearLayout
+        android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content">
+    <TextView 
+        android:id="@+id/t_addtofrd" 
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="邀请好友"
+        android:gravity="center"
+        />
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="30dp"
+        android:background="@color/gray"
+        android:layout_gravity="center_vertical"
+        />
+	<TextView
+	    android:id="@+id/t_cancle" 
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="取消"
+        android:gravity="center"
+        />
+	</LinearLayout>
+	<View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray"
+        />
+</LinearLayout>
