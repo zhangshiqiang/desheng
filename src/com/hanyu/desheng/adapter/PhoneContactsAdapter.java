@@ -48,11 +48,10 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 	private List<PhoneModel> list = null;
 	private InviteFriendActivity mContext;
 	public ImageLoader imageLoader;
-	public static HashMap<PhoneModel, Boolean> map_NumberSelected = null;  
+	public static HashMap<PhoneModel, Boolean> map_NumberSelected = null;
 	// 当前的位置，这个很重要，Button的状态记录就靠它了
 	@SuppressWarnings("unused")
 	private int currentPosition = 0;
-	// 这个Button用于在重网络返回数据后设置其显示的内容，如成功、失败等。
 	@SuppressWarnings("unused")
 	private Button currentBtn;
 
@@ -111,33 +110,33 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		}
 
 		// 根据position获取分类的首字母的Char ascii值
-//		int section = getSectionForPosition(position);
+		// int section = getSectionForPosition(position);
 
 		// 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
-//		if (position == getPositionForSection(section)) {
-//			viewHolder.tvLetter.setVisibility(View.VISIBLE);
-//			viewHolder.tvLetter.setText(mContent.getSortLetters());
-//		} else {
-			viewHolder.tvLetter.setVisibility(View.GONE);
-//		}
+		// if (position == getPositionForSection(section)) {
+		// viewHolder.tvLetter.setVisibility(View.VISIBLE);
+		// viewHolder.tvLetter.setText(mContent.getSortLetters());
+		// } else {
+		viewHolder.tvLetter.setVisibility(View.GONE);
+		// }
 
-//		imageLoader.DisplayImage(this.list.get(position).getImgSrc(),
-//				viewHolder.tvHead);
-        final int pos = position;
-			try{
-		viewHolder.tvTitle.setText(list.get(pos).getName());
-		// viewHolder.tvTitle.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
-        
-		if (PhoneDao.findByMobole(list.get(pos).getMobile()) == null) {
-			viewHolder.phone_contacts_btn.setText("邀请");
-		} else {
-			viewHolder.phone_contacts_btn.setText("添加");
-		}
-			}catch(Exception e){
-				viewHolder.tvTitle.setText("");
-				viewHolder.phone_contacts_btn.setVisibility(View.GONE);
+		// imageLoader.DisplayImage(this.list.get(position).getImgSrc(),
+		// viewHolder.tvHead);
+		final int pos = position;
+		try {
+			viewHolder.tvTitle.setText(list.get(pos).getName());
+			// viewHolder.tvTitle.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+
+			if (PhoneDao.findByMobole(list.get(pos).getMobile()) == null) {
+				viewHolder.phone_contacts_btn.setText("邀请");
+			} else {
+				viewHolder.phone_contacts_btn.setText("添加");
 			}
-		
+		} catch (Exception e) {
+			viewHolder.tvTitle.setText("");
+			viewHolder.phone_contacts_btn.setVisibility(View.GONE);
+		}
+
 		viewHolder.phone_contacts_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -149,30 +148,29 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 
 			}
 		});
-		
+
 		viewHolder.checked.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(isChecked){
-					if(!map_NumberSelected.containsKey(list.get(pos))){
+				if (isChecked) {
+					if (!map_NumberSelected.containsKey(list.get(pos))) {
 						map_NumberSelected.put(list.get(pos), isChecked);
 					}
-				}else{
+				} else {
 					map_NumberSelected.remove(list.get(pos));
 				}
-				
-				
-				//mContext.showDialog();
+
+				// mContext.showDialog();
 				LogUtil.i("===", map_NumberSelected.containsKey(list.get(pos)) + "");
 			}
 		});
-		if(map_NumberSelected.containsKey(list.get(pos))){
+		if (map_NumberSelected.containsKey(list.get(pos))) {
 			viewHolder.checked.setChecked(true);
-		}else{
+		} else {
 			viewHolder.checked.setChecked(false);
 		}
-		//viewHolder.checked.setChecked(map_NumberSelected.get(list.get(pos)));
+		// viewHolder.checked.setChecked(map_NumberSelected.get(list.get(pos)));
 		// 判断保存的position位置上的Butoon是否已预约成功
 		// if (ORDER_SUCCESS[position]) {
 		// viewHolder.phone_contacts_btn.setVisibility(View.GONE);
@@ -193,33 +191,38 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 		// position, viewHolder.phone_contacts_btn));
 		//
 		// }
-		//sort(list);
+		// sort(list);
 		return view;
 
 	}
+
 	@SuppressWarnings("unchecked")
-	private void sort(List<PhoneModel> list){
-		Collections.sort(list,new Comparator<PhoneModel>() {
+	private void sort(List<PhoneModel> list) {
+		Collections.sort(list, new Comparator<PhoneModel>() {
 
 			@Override
 			public int compare(PhoneModel lhs, PhoneModel rhs) {
-				if(PhoneDao.findByMobole(lhs.getMobile()) == null && PhoneDao.findByMobole(rhs.getMobile()) == null){
+				if (PhoneDao.findByMobole(lhs.getMobile()) == null && PhoneDao.findByMobole(rhs.getMobile()) == null) {
 					return 0;
-				}else if(PhoneDao.findByMobole(lhs.getMobile()) != null && PhoneDao.findByMobole(rhs.getMobile()) != null){
+				} else if (PhoneDao.findByMobole(lhs.getMobile()) != null
+						&& PhoneDao.findByMobole(rhs.getMobile()) != null) {
 					return 2;
-				}else{
+				} else {
 					return 1;
 				}
-				
+
 			}
 		});
 	}
-	public static void setMap_NumberSelected( HashMap<PhoneModel, Boolean> map_NumberSelected) {  
-        PhoneContactsAdapter.map_NumberSelected = map_NumberSelected;  
-    }  
-	public static HashMap<PhoneModel, Boolean> getMap_NumberSelected(){
+
+	public static void setMap_NumberSelected(HashMap<PhoneModel, Boolean> map_NumberSelected) {
+		PhoneContactsAdapter.map_NumberSelected = map_NumberSelected;
+	}
+
+	public static HashMap<PhoneModel, Boolean> getMap_NumberSelected() {
 		return map_NumberSelected;
 	}
+
 	/**
 	 * 添加contact
 	 * 
@@ -227,25 +230,19 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 	 */
 	public void addContact(final String hx_username, final String username) {
 		if (ExampleApplication.getInstance().getUserName().equals(hx_username)) {
-			String str = mContext.getResources().getString(
-					R.string.not_add_myself);
-			mContext.startActivity(new Intent(mContext, AlertDialog.class)
-					.putExtra("msg", str));
+			String str = mContext.getResources().getString(R.string.not_add_myself);
+			mContext.startActivity(new Intent(mContext, AlertDialog.class).putExtra("msg", str));
 			return;
 		}
 
-		if (ExampleApplication.getInstance().getContactList()
-				.containsKey(hx_username)) {
-			String strin = mContext.getResources().getString(
-					R.string.This_user_is_already_your_friend);
-			mContext.startActivity(new Intent(mContext, AlertDialog.class)
-					.putExtra("msg", strin));
+		if (ExampleApplication.getInstance().getContactList().containsKey(hx_username)) {
+			String strin = mContext.getResources().getString(R.string.This_user_is_already_your_friend);
+			mContext.startActivity(new Intent(mContext, AlertDialog.class).putExtra("msg", strin));
 			return;
 		}
 
 		final ProgressDialog progressDialog = new ProgressDialog(mContext);
-		String stri = mContext.getResources().getString(
-				R.string.Is_sending_a_request);
+		String stri = mContext.getResources().getString(R.string.Is_sending_a_request);
 		progressDialog.setMessage(stri);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
@@ -262,8 +259,7 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 					((Activity) mContext).runOnUiThread(new Runnable() {
 						public void run() {
 							progressDialog.dismiss();
-							String s1 = mContext.getResources().getString(
-									R.string.send_successful);
+							String s1 = mContext.getResources().getString(R.string.send_successful);
 							Toast.makeText(mContext, s1, 1).show();
 						}
 					});
@@ -271,10 +267,8 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 					((Activity) mContext).runOnUiThread(new Runnable() {
 						public void run() {
 							progressDialog.dismiss();
-							String s2 = mContext.getResources().getString(
-									R.string.Request_add_buddy_failure);
-							Toast.makeText(mContext, s2 + e.getMessage(), 1)
-									.show();
+							String s2 = mContext.getResources().getString(R.string.Request_add_buddy_failure);
+							Toast.makeText(mContext, s2 + e.getMessage(), 1).show();
 						}
 					});
 				}
@@ -364,19 +358,19 @@ public class PhoneContactsAdapter extends BaseAdapter implements SectionIndexer 
 
 	/**
 	 * 向好友发短信
-	 * @param friphone 
+	 * 
+	 * @param friphone
 	 * 
 	 * @param phone
 	 */
 	public void getcode(String friphone) {
-		String phone = SharedPreferencesUtil.getStringData(mContext, "miphone",
-				"");
+		String phone = SharedPreferencesUtil.getStringData(mContext, "miphone", "");
 		String mobile = Base64Encoder.getInstance().encode(phone);
 		// LogUtil.i(tag, "mobile" + mobile);
 		// String uName = SharedPreferencesUtil.getStringData(mContext,
 		// "miname", "");
-		String url = "大众创业，万众创新：我只推荐 德升DS4567，移动互联 第一时装平台"
-				+ "，邀请你加入：http://app.4567cn.com/Api/login.php?invite=" + mobile;
+		String url = "大众创业，万众创新：我只推荐 德升DS4567，一个更专业的时装购物平台"
+				+ "，链接地址：http://app.4567cn.com/Api/login.php?invite=MTU1MzczMzI5ODE=" + mobile;
 		Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
 		sendIntent.setData(Uri.parse("smsto:" + friphone));
 		sendIntent.putExtra("sms_body", url);

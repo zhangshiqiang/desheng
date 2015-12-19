@@ -46,10 +46,11 @@ public class SettingActivity extends BaseActivity {
 	private TextView setting_tv1;// 检测更新文本
 	@ViewInject(R.id.setting_tv2)
 	private TextView setting_tv2;// 清除缓存文本
-
+	@ViewInject(R.id.setting_version)
+	private TextView setting_version;
 	@ViewInject(R.id.ivMes)
 	private ImageView ivMes;
-
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -106,6 +107,8 @@ public class SettingActivity extends BaseActivity {
 	 */
 	private void getToppic(final String page_no) {
 		new HttpTask<Void, Void, String>(context) {
+			
+
 			@Override
 			protected String doInBackground(Void... params) {
 				String user_id = "";
@@ -123,6 +126,7 @@ public class SettingActivity extends BaseActivity {
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					HomeBean homeBean = GsonUtils.json2Bean(result, HomeBean.class);
+					
 					// 检测版本更新
 					checkUpdate(homeBean);
 				}
@@ -146,8 +150,7 @@ public class SettingActivity extends BaseActivity {
 			String versionName = info.versionName;
 			if (!versionName.equals(homeBean.data.andriod.version)) {
 				setting_tv1.setText("发现新版本" + homeBean.data.andriod.version);
-				showUpdateDialog(homeBean.data.andriod.version,
-						new DSUrlManager().getFullUrl2(homeBean.data.andriod.apk_url));
+				showUpdateDialog(homeBean.data.andriod.version,new DSUrlManager().getFullUrl2(homeBean.data.andriod.apk_url));
 			} else {
 				Toast.makeText(this, "您已经是最新版本了！", Toast.LENGTH_SHORT).show();
 			}
@@ -224,6 +227,18 @@ public class SettingActivity extends BaseActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		PackageManager pm = getPackageManager();
+		PackageInfo info;
+		try {
+			info = pm.getPackageInfo(getPackageName(), 0);
+			String version = info.versionName;
+			setting_version.setText("当前版本:" + version);
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	@Override

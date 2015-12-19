@@ -85,8 +85,8 @@ public class AlertDialog extends BaseActivity {
 			 //优先拿大图，没有去取缩略图
 			if(!new File(path).exists())
 				path = DownloadImageTask.getThumbnailImagePath(path);
-		    imageView.setVisibility(View.VISIBLE);
-		    ((TextView)findViewById(R.id.alert_message)).setVisibility(View.GONE);
+			    imageView.setVisibility(View.VISIBLE);
+			    ((TextView)findViewById(R.id.alert_message)).setVisibility(View.GONE);
 		    if(ImageCache.getInstance().get(path) != null){
 		        imageView.setImageBitmap(ImageCache.getInstance().get(path));
 		    }else{
@@ -109,8 +109,7 @@ public class AlertDialog extends BaseActivity {
 	}
 	
 	public void ok(View view){
-		setResult(RESULT_OK,new Intent().putExtra("position", position).
-				putExtra("edittext", editText.getText().toString())
+		setResult(RESULT_OK,new Intent().putExtra("position", position).putExtra("edittext", editText.getText().toString())
 				/*.putExtra("voicePath", voicePath)*/);
 		if(position != -1)
 			ChatActivity.resendPos = position;

@@ -57,7 +57,8 @@ public class MainFragment extends BaseFragment {
 	private FragmentManager fm;
 	@ViewInject(R.id.layout_content)
 	private FrameLayout layout_content;
-
+	@ViewInject(R.id.shop_head_tv)
+	public static TextView shop_head_txt;
 	// 主页
 	private HomeFragment homefragment;
 	private ContactsFragment contactsfragment;
@@ -80,9 +81,11 @@ public class MainFragment extends BaseFragment {
 	private Button btnContact;
 	private BadgeView contarctBadge;
 	UserDao dao;
-	//标题返回
+	// 标题返回
 	@ViewInject(R.id.shop_rl_back)
 	public static RelativeLayout rlback;// webview后退键
+	@ViewInject(R.id.shop_head_rl)
+	public static View shop_head_rl;
 	@ViewInject(R.id.shop_head_img)
 	public static CircleImageView shop_head_img;
 	@ViewInject(R.id.contacts_rl_back)
@@ -149,6 +152,8 @@ public class MainFragment extends BaseFragment {
 		contarctBadge.setTextColor(context.getResources().getColor(R.color.white));
 
 		selectpage();
+		hasNewMsg();
+		newMsgBroad();
 	}
 
 	/**
@@ -203,7 +208,7 @@ public class MainFragment extends BaseFragment {
 					// intent = new Intent(MainFragment.CHANGETAB);
 					// intent.putExtra("unreadMsgCountTotal", "2");
 					// context.sendBroadcast(intent);
-					//暂不删除
+					// 暂不删除
 					current_main = 2;
 					if (!YangUtils.isLogin(context)) {
 						ShowDialogUtil.showIsLoginDialog(context);
@@ -241,7 +246,7 @@ public class MainFragment extends BaseFragment {
 					}
 					break;
 				}
-				transaction.commit();
+				transaction.commitAllowingStateLoss();
 			}
 		});
 		main_radio.check(R.id.rb_shopping);
@@ -300,10 +305,14 @@ public class MainFragment extends BaseFragment {
 			}
 		}
 		if (hasNewMsgs) {
-			iv_friend_right.setBackgroundResource(R.drawable.ss_03_new);
+			// iv_friend_right.setBackgroundResource(R.drawable.ss_03_new);
+			shop_head_txt.setVisibility(View.VISIBLE);
+			LogUtil.i("***", shop_head_txt.getVisibility() + "=1");
 		} else {
-			iv_friend_right.setBackgroundResource(R.drawable.ss_03);
+			// iv_friend_right.setBackgroundResource(R.drawable.ss_03);
+			shop_head_txt.setVisibility(View.GONE);
 		}
+		LogUtil.i("***", shop_head_txt.getVisibility() + "=2");
 	}
 
 	public static final String GET_NEW_MSG = "action_new_msg";
@@ -458,24 +467,15 @@ public class MainFragment extends BaseFragment {
 
 	@Override
 	public void onResume() {
+		hasNewMsg();
 		super.onResume();
-		// User user =
-		// ExampleApplication.getInstance().getContactList().get(ExampleApplication.NEW_FRIENDS_USERNAME);
-		// if (user != null) {
-		// if (user.getUnreadMsgCount() > 0) {
-		// contarctBadge.setVisibility(View.VISIBLE);
-		// contarctBadge.show();
-		// if (user.getUnreadMsgCount() < 99) {
-		// contarctBadge.setText(user.getUnreadMsgCount() + "");
-		// } else if (user.getUnreadMsgCount() > 99) {
-		// contarctBadge.setText("99");
-		// }
-		// } else {
-		// contarctBadge.setVisibility(View.GONE);
-		// }
-		// } else {
-		// contarctBadge.setVisibility(View.GONE);
-		// }
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		hasNewMsg();
+		super.onPause();
 	}
 
 	@Override
@@ -512,9 +512,10 @@ public class MainFragment extends BaseFragment {
 
 			Bundle extras = intent.getExtras();
 			int tab = extras.getInt("tab");
-			// if (tab == 1) {
-			// main_rl.setVisibility(View.GONE);
-			// } else if (tab == 2) {
+			if (tab == 2) {
+				MainActivity.slidingPaneLayout.openPane();
+			}
+			// else if (tab == 2) {
 			// main_rl.setVisibility(View.VISIBLE);
 			// }
 			RadioButton childRb = (RadioButton) main_radio.getChildAt(tab);
@@ -534,17 +535,24 @@ public class MainFragment extends BaseFragment {
 			Bundle extras = intent.getExtras();
 			int unreadMsgCountTotal = extras.getInt("unreadMsgCountTotal");
 			if (unreadMsgCountTotal > 0) {
-				badge.setVisibility(View.VISIBLE);
-				badge.show();
+				Left.menu_msgcnt.setVisibility(View.VISIBLE);
+				// badge.show();
+				LogUtil.i("unreadMsgCountTotal", Left.menu_msgcnt.toString() + "===");
 				LogUtil.i("unreadMsgCountTotal", unreadMsgCountTotal + "");
 				if (unreadMsgCountTotal < 99) {
-					badge.setText(unreadMsgCountTotal + "");
+					Left.menu_msgcnt.setText(unreadMsgCountTotal + "");
 				} else if (unreadMsgCountTotal > 99) {
-					badge.setText("99");
+					Left.menu_msgcnt.setText("99");
 				}
 			} else {
-				badge.setVisibility(View.GONE);
+				Left.menu_msgcnt.setVisibility(View.GONE);
 			}
+			if (Left.menu_msgcnt.getVisibility() != View.VISIBLE) {
+				MainFragment.shop_head_txt.setVisibility(View.GONE);
+			} else {
+				MainFragment.shop_head_txt.setVisibility(View.VISIBLE);
+			}
+
 			if (ExampleApplication.getInstance().getContactList() == null) {
 				return;
 			}
@@ -553,7 +561,7 @@ public class MainFragment extends BaseFragment {
 			if (user != null) {
 				if (user.getUnreadMsgCount() > 0) {
 					contarctBadge.setVisibility(View.VISIBLE);
-					contarctBadge.show();
+					// contarctBadge.show();
 					if (user.getUnreadMsgCount() < 99) {
 						contarctBadge.setText(user.getUnreadMsgCount() + "");
 					} else if (user.getUnreadMsgCount() > 99) {

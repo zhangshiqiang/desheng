@@ -110,8 +110,7 @@ public class BannedActivity extends BaseActivity {
 			// if (!user.getUsername().equals(Constant.NEW_FRIENDS_USERNAME) &
 			// !user.getUsername().equals(Constant.GROUP_USERNAME))
 			for (int i = 0; i < exitingMembers.size(); i++) {
-				if (user.getUsername().equals(exitingMembers.get(i))
-						&& !user.getUsername().equals(ExampleApplication.getInstance().getUserName())) {
+				if (user.getUsername().equals(exitingMembers.get(i)) && !user.getUsername().equals(ExampleApplication.getInstance().getUserName())) {
 					alluserList.add(user);
 				}
 			}

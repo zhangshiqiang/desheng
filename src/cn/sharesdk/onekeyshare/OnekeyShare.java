@@ -89,8 +89,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 			String name = String.valueOf(shareParamsMap.get("platform"));
 			Platform platform = ShareSDK.getPlatform(name);
 
-			if (silent || ShareCore.isUseClientToShare(name)
-					|| platform instanceof CustomPlatform) {
+			if (silent || ShareCore.isUseClientToShare(name) || platform instanceof CustomPlatform) {
 				HashMap<Platform, HashMap<String, Object>> shareData = new HashMap<Platform, HashMap<String, Object>>();
 				shareData.put(ShareSDK.getPlatform(name), shareParamsMap);
 				share(shareData);
@@ -102,14 +101,10 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 		try {
 			if (OnekeyShareTheme.SKYBLUE == theme) {
 				platformListFakeActivity = (PlatformListFakeActivity) Class
-						.forName(
-								"cn.sharesdk.onekeyshare.theme.skyblue.PlatformListPage")
-						.newInstance();
+						.forName("cn.sharesdk.onekeyshare.theme.skyblue.PlatformListPage").newInstance();
 			} else {
 				platformListFakeActivity = (PlatformListFakeActivity) Class
-						.forName(
-								"cn.sharesdk.onekeyshare.theme.classic.PlatformListPage")
-						.newInstance();
+						.forName("cn.sharesdk.onekeyshare.theme.classic.PlatformListPage").newInstance();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,17 +117,14 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 		platformListFakeActivity.setCustomerLogos(customers);
 		platformListFakeActivity.setBackgroundView(bgView);
 		platformListFakeActivity.setHiddenPlatforms(hiddenPlatforms);
-		platformListFakeActivity
-				.setOnShareButtonClickListener(onShareButtonClickListener);
-		platformListFakeActivity
-				.setThemeShareCallback(new ThemeShareCallback() {
+		platformListFakeActivity.setOnShareButtonClickListener(onShareButtonClickListener);
+		platformListFakeActivity.setThemeShareCallback(new ThemeShareCallback() {
 
-					@Override
-					public void doShare(
-							HashMap<Platform, HashMap<String, Object>> shareData) {
-						share(shareData);
-					}
-				});
+			@Override
+			public void doShare(HashMap<Platform, HashMap<String, Object>> shareData) {
+				share(shareData);
+			}
+		});
 		if (shareParamsMap.containsKey("platform")) {
 			String name = String.valueOf(shareParamsMap.get("platform"));
 			Platform platform = ShareSDK.getPlatform(name);
@@ -170,8 +162,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 
 	/** 获取text字段的值 */
 	public String getText() {
-		return shareParamsMap.containsKey("text") ? String
-				.valueOf(shareParamsMap.get("text")) : null;
+		return shareParamsMap.containsKey("text") ? String.valueOf(shareParamsMap.get("text")) : null;
 	}
 
 	/** imagePath是本地的图片路径，除Linked-In外的所有平台都支持这个字段 */
@@ -267,8 +258,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 	}
 
 	/** 设置用于分享过程中，根据不同平台自定义分享内容的回调 */
-	public void setShareContentCustomizeCallback(
-			ShareContentCustomizeCallback callback) {
+	public void setShareContentCustomizeCallback(ShareContentCustomizeCallback callback) {
 		customizeCallback = callback;
 	}
 
@@ -278,8 +268,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 	}
 
 	/** 设置自己图标和点击事件，可以重复调用添加多次 */
-	public void setCustomerLogo(Bitmap enableLogo, Bitmap disableLogo,
-			String label, OnClickListener ocListener) {
+	public void setCustomerLogo(Bitmap enableLogo, Bitmap disableLogo, String label, OnClickListener ocListener) {
 		CustomerLogo cl = new CustomerLogo();
 		cl.label = label;
 		cl.enableLogo = enableLogo;
@@ -307,8 +296,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 	/** 设置一个将被截图分享的View , surfaceView是截不了图片的 */
 	public void setViewToShare(View viewToShare) {
 		try {
-			Bitmap bm = captureView(viewToShare, viewToShare.getWidth(),
-					viewToShare.getHeight());
+			Bitmap bm = captureView(viewToShare, viewToShare.getWidth(), viewToShare.getHeight());
 			shareParamsMap.put("viewToShare", bm);
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -332,8 +320,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 	/** 循环执行分享 */
 	public void share(HashMap<Platform, HashMap<String, Object>> shareData) {
 		boolean started = false;
-		for (Entry<Platform, HashMap<String, Object>> ent : shareData
-				.entrySet()) {
+		for (Entry<Platform, HashMap<String, Object>> ent : shareData.entrySet()) {
 			Platform plat = ent.getKey();
 			plat.SSOSetting(disableSSO);
 			String name = plat.getName();
@@ -353,8 +340,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 			if (isKakaoTalk && !plat.isClientValid()) {
 				Message msg = new Message();
 				msg.what = MSG_TOAST;
-				int resId = getStringRes(context,
-						"kakaotalk_client_inavailable");
+				int resId = getStringRes(context, "kakaotalk_client_inavailable");
 				msg.obj = context.getString(resId);
 				UIHandler.sendMessage(msg, this);
 				continue;
@@ -364,8 +350,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 			if (isKakaoStory && !plat.isClientValid()) {
 				Message msg = new Message();
 				msg.what = MSG_TOAST;
-				int resId = getStringRes(context,
-						"kakaostory_client_inavailable");
+				int resId = getStringRes(context, "kakaostory_client_inavailable");
 				msg.obj = context.getString(resId);
 				UIHandler.sendMessage(msg, this);
 				continue;
@@ -395,8 +380,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 			if (isPinterest && !plat.isClientValid()) {
 				Message msg = new Message();
 				msg.what = MSG_TOAST;
-				int resId = getStringRes(context,
-						"pinterest_client_inavailable");
+				int resId = getStringRes(context, "pinterest_client_inavailable");
 				msg.obj = context.getString(resId);
 				UIHandler.sendMessage(msg, this);
 				continue;
@@ -405,8 +389,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 			if ("Instagram".equals(name) && !plat.isClientValid()) {
 				Message msg = new Message();
 				msg.what = MSG_TOAST;
-				int resId = getStringRes(context,
-						"instagram_client_inavailable");
+				int resId = getStringRes(context, "instagram_client_inavailable");
 				msg.obj = context.getString(resId);
 				UIHandler.sendMessage(msg, this);
 				continue;
@@ -418,16 +401,14 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 				if (!plat.isClientValid()) {
 					Message msg = new Message();
 					msg.what = MSG_TOAST;
-					int resId = getStringRes(context,
-							"laiwang_client_inavailable");
+					int resId = getStringRes(context, "laiwang_client_inavailable");
 					msg.obj = context.getString(resId);
 					UIHandler.sendMessage(msg, this);
 					continue;
 				}
 			}
 
-			boolean isYixin = "YixinMoments".equals(name)
-					|| "Yixin".equals(name);
+			boolean isYixin = "YixinMoments".equals(name) || "Yixin".equals(name);
 			if (isYixin && !plat.isClientValid()) {
 				Message msg = new Message();
 				msg.what = MSG_TOAST;
@@ -444,12 +425,9 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 				shareType = Platform.SHARE_IMAGE;
 				if (imagePath.endsWith(".gif")) {
 					shareType = Platform.SHARE_EMOJI;
-				} else if (data.containsKey("url")
-						&& !TextUtils.isEmpty(data.get("url").toString())) {
+				} else if (data.containsKey("url") && !TextUtils.isEmpty(data.get("url").toString())) {
 					shareType = Platform.SHARE_WEBPAGE;
-					if (data.containsKey("musicUrl")
-							&& !TextUtils.isEmpty(data.get("musicUrl")
-									.toString())) {
+					if (data.containsKey("musicUrl") && !TextUtils.isEmpty(data.get("musicUrl").toString())) {
 						shareType = Platform.SHARE_MUSIC;
 					}
 				}
@@ -457,29 +435,21 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 				Bitmap viewToShare = (Bitmap) data.get("viewToShare");
 				if (viewToShare != null && !viewToShare.isRecycled()) {
 					shareType = Platform.SHARE_IMAGE;
-					if (data.containsKey("url")
-							&& !TextUtils.isEmpty(data.get("url").toString())) {
+					if (data.containsKey("url") && !TextUtils.isEmpty(data.get("url").toString())) {
 						shareType = Platform.SHARE_WEBPAGE;
-						if (data.containsKey("musicUrl")
-								&& !TextUtils.isEmpty(data.get("musicUrl")
-										.toString())) {
+						if (data.containsKey("musicUrl") && !TextUtils.isEmpty(data.get("musicUrl").toString())) {
 							shareType = Platform.SHARE_MUSIC;
 						}
 					}
 				} else {
 					Object imageUrl = data.get("imageUrl");
-					if (imageUrl != null
-							&& !TextUtils.isEmpty(String.valueOf(imageUrl))) {
+					if (imageUrl != null && !TextUtils.isEmpty(String.valueOf(imageUrl))) {
 						shareType = Platform.SHARE_IMAGE;
 						if (String.valueOf(imageUrl).endsWith(".gif")) {
 							shareType = Platform.SHARE_EMOJI;
-						} else if (data.containsKey("url")
-								&& !TextUtils.isEmpty(data.get("url")
-										.toString())) {
+						} else if (data.containsKey("url") && !TextUtils.isEmpty(data.get("url").toString())) {
 							shareType = Platform.SHARE_WEBPAGE;
-							if (data.containsKey("musicUrl")
-									&& !TextUtils.isEmpty(data.get("musicUrl")
-											.toString())) {
+							if (data.containsKey("musicUrl") && !TextUtils.isEmpty(data.get("musicUrl").toString())) {
 								shareType = Platform.SHARE_MUSIC;
 							}
 						}
@@ -504,8 +474,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 		}
 	}
 
-	public void onComplete(Platform platform, int action,
-			HashMap<String, Object> res) {
+	public void onComplete(Platform platform, int action, HashMap<String, Object> res) {
 		Message msg = new Message();
 		msg.what = MSG_ACTION_CCALLBACK;
 		msg.arg1 = 1;
@@ -552,11 +521,11 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 				if (resId > 0) {
 					showNotification(context.getString(resId));
 					if (GlobalParams.share == 2) {
-						String phone = SharedPreferencesUtil.getStringData(
-								context, "miphone", "");
-						String miinter = SharedPreferencesUtil.getStringData(
-								context, "miinter", "");
-						sharepoint(phone, miinter);
+						// String phone = SharedPreferencesUtil.getStringData(
+						// context, "miphone", "");
+						// String miinter = SharedPreferencesUtil.getStringData(
+						// context, "miinter", "");
+						// sharepoint(phone, miinter);
 					}
 				}
 			}
@@ -565,18 +534,14 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 				// 失败
 				String expName = msg.obj.getClass().getSimpleName();
 				if ("WechatClientNotExistException".equals(expName)
-						|| "WechatTimelineNotSupportedException"
-								.equals(expName)
-						|| "WechatFavoriteNotSupportedException"
-								.equals(expName)) {
-					int resId = getStringRes(context,
-							"wechat_client_inavailable");
+						|| "WechatTimelineNotSupportedException".equals(expName)
+						|| "WechatFavoriteNotSupportedException".equals(expName)) {
+					int resId = getStringRes(context, "wechat_client_inavailable");
 					if (resId > 0) {
 						showNotification(context.getString(resId));
 					}
 				} else if ("GooglePlusClientNotExistException".equals(expName)) {
-					int resId = getStringRes(context,
-							"google_plus_client_inavailable");
+					int resId = getStringRes(context, "google_plus_client_inavailable");
 					if (resId > 0) {
 						showNotification(context.getString(resId));
 					}
@@ -587,26 +552,22 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 					}
 				} else if ("YixinClientNotExistException".equals(expName)
 						|| "YixinTimelineNotSupportedException".equals(expName)) {
-					int resId = getStringRes(context,
-							"yixin_client_inavailable");
+					int resId = getStringRes(context, "yixin_client_inavailable");
 					if (resId > 0) {
 						showNotification(context.getString(resId));
 					}
 				} else if ("KakaoTalkClientNotExistException".equals(expName)) {
-					int resId = getStringRes(context,
-							"kakaotalk_client_inavailable");
+					int resId = getStringRes(context, "kakaotalk_client_inavailable");
 					if (resId > 0) {
 						showNotification(context.getString(resId));
 					}
 				} else if ("KakaoStoryClientNotExistException".equals(expName)) {
-					int resId = getStringRes(context,
-							"kakaostory_client_inavailable");
+					int resId = getStringRes(context, "kakaostory_client_inavailable");
 					if (resId > 0) {
 						showNotification(context.getString(resId));
 					}
 				} else if ("WhatsAppClientNotExistException".equals(expName)) {
-					int resId = getStringRes(context,
-							"whatsapp_client_inavailable");
+					int resId = getStringRes(context, "whatsapp_client_inavailable");
 					if (resId > 0) {
 						showNotification(context.getString(resId));
 					}
@@ -660,8 +621,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 		new HttpTask<Void, Void, String>(context) {
 			@Override
 			protected String doInBackground(Void... params) {
-				String rb = EngineManager.getUserEngine().updatajifen(phone,
-						miinter, "手机app");
+				String rb = EngineManager.getUserEngine().updatajifen(phone, miinter, "手机app");
 				return rb;
 			}
 

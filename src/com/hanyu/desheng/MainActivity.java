@@ -220,7 +220,7 @@ public class MainActivity extends BaseActivity {
 			// 三个fragment里加的判断同理
 			ExampleApplication.getInstance().logout(null);
 
-			//JPushInterface.stopPush(getApplicationContext());
+			// JPushInterface.stopPush(getApplicationContext());
 			startActivity(new Intent(this, LoginActivity.class));
 			finish();
 
@@ -229,7 +229,7 @@ public class MainActivity extends BaseActivity {
 			// 防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 			// 三个fragment里加的判断同理
 
-			//JPushInterface.stopPush(getApplicationContext());
+			// JPushInterface.stopPush(getApplicationContext());
 			startActivity(new Intent(this, LoginActivity.class));
 			finish();
 			return;
@@ -237,8 +237,8 @@ public class MainActivity extends BaseActivity {
 
 		if (getIntent().getBooleanExtra("conflict", false) && !isConflictDialogShow) {
 			showConflictDialog();
-		} else
-			if (getIntent().getBooleanExtra(ExampleApplication.ACCOUNT_REMOVED, false) && !isAccountRemovedDialogShow) {
+		} else if (getIntent().getBooleanExtra(ExampleApplication.ACCOUNT_REMOVED, false)
+				&& !isAccountRemovedDialogShow) {
 			showAccountRemovedDialog();
 		}
 
@@ -333,14 +333,22 @@ public class MainActivity extends BaseActivity {
 				left.setScaleX(slideOffset / 2 + 0.5F);
 				left.setAlpha(slideOffset);
 				right.setScaleY(1 - slideOffset / 5);
+				if(Left.menu_msgcnt.getVisibility() != View.VISIBLE){
+					MainFragment.shop_head_txt.setVisibility(View.GONE);
+				}else{
+					MainFragment.shop_head_txt.setVisibility(View.VISIBLE);
+				}
+				
 			}
 
 			@Override
 			public void onPanelOpened(View arg0) {
+				MainFragment.shop_head_rl.setAlpha(0.0f);
 			}
 
 			@Override
 			public void onPanelClosed(View arg0) {
+				MainFragment.shop_head_rl.setAlpha(1.0f);
 			}
 
 		});
@@ -1121,8 +1129,8 @@ public class MainActivity extends BaseActivity {
 		super.onNewIntent(intent);
 		if (getIntent().getBooleanExtra("conflict", false) && !isConflictDialogShow) {
 			showConflictDialog();
-		} else
-			if (getIntent().getBooleanExtra(ExampleApplication.ACCOUNT_REMOVED, false) && !isAccountRemovedDialogShow) {
+		} else if (getIntent().getBooleanExtra(ExampleApplication.ACCOUNT_REMOVED, false)
+				&& !isAccountRemovedDialogShow) {
 			showAccountRemovedDialog();
 		}
 	}

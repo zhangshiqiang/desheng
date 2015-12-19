@@ -38,20 +38,17 @@ public class ShowVideoActivity extends HuanXinBaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.showvideo_activity);
 		loadingLayout = (RelativeLayout) findViewById(R.id.loading_layout);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		localFilePath = getIntent().getStringExtra("localpath");
 		String remotepath = getIntent().getStringExtra("remotepath");
 		String secret = getIntent().getStringExtra("secret");
-		System.err.println("show video view file:" + localFilePath
-				+ " remotepath:" + remotepath + " secret:" + secret);
+		System.err.println("show video view file:" + localFilePath + " remotepath:" + remotepath + " secret:" + secret);
 		if (localFilePath != null && new File(localFilePath).exists()) {
 			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(new File(localFilePath)),
-					"video/mp4");
+			intent.setDataAndType(Uri.fromFile(new File(localFilePath)),"video/mp4");
 			startActivity(intent);
 			finish();
 		} else if (!TextUtils.isEmpty(remotepath) && !remotepath.equals("null")) {
@@ -85,8 +82,7 @@ public class ShowVideoActivity extends HuanXinBaseActivity{
 	 */
 	private void showLocalVideo(String localPath){
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.fromFile(new File(localPath)),
-				"video/mp4");
+		intent.setDataAndType(Uri.fromFile(new File(localPath)),"video/mp4");
 		startActivity(intent);
 		finish();
 	}
@@ -97,8 +93,7 @@ public class ShowVideoActivity extends HuanXinBaseActivity{
 	/**
 	 * 下载视频文件
 	 */
-	private void downloadVideo(final String remoteUrl,
-			final Map<String, String> header) {
+	private void downloadVideo(final String remoteUrl,final Map<String, String> header) {
 
 		if (TextUtils.isEmpty(localFilePath)) {
 			localFilePath = getLocalFilePath(remoteUrl);
@@ -108,8 +103,7 @@ public class ShowVideoActivity extends HuanXinBaseActivity{
 			return;
 		}
 		loadingLayout.setVisibility(View.VISIBLE);
-		final HttpFileManager httpFileMgr = new HttpFileManager(this,
-				EMChatConfig.getInstance().getStorageUrl());
+		final HttpFileManager httpFileMgr = new HttpFileManager(this,EMChatConfig.getInstance().getStorageUrl());
 		final CloudOperationCallback callback = new CloudOperationCallback() {
 
 			@Override
@@ -152,8 +146,7 @@ public class ShowVideoActivity extends HuanXinBaseActivity{
 
 			@Override
 			public void run() {
-				httpFileMgr.downloadFile(remoteUrl, localFilePath, header,
-						callback);
+				httpFileMgr.downloadFile(remoteUrl, localFilePath, header,callback);
 			}
 		}).start();
 

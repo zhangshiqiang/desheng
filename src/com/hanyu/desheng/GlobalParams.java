@@ -14,6 +14,10 @@ public class GlobalParams {
 	 */
 	public static boolean isLoad = true;
 	/**
+	 * 微信access_token
+	 */
+	public static String wx_access_token;
+	/**
 	 * 是否是wap连接
 	 */
 	public static boolean isWap = false;
@@ -62,13 +66,13 @@ public class GlobalParams {
 	 * 时间差
 	 */
 	public static long timeDelay = 0;
-	
-	public static int shakeRing=0;
+
+	public static int shakeRing = 0;
 	/**
 	 * 分享状态
 	 */
 	public static int share;
-	
+
 	/**
 	 * 状态栏
 	 */

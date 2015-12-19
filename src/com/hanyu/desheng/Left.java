@@ -1,11 +1,12 @@
 package com.hanyu.desheng;
 
+import org.jivesoftware.smack.util.Base64Encoder;
 import com.easemob.EMCallBack;
 import com.hanyu.desheng.activity.FeedBackActivity;
 import com.hanyu.desheng.activity.GeneralizeActivity;
 import com.hanyu.desheng.activity.LoginActivity;
-import com.hanyu.desheng.activity.MyCodeActivity;
 import com.hanyu.desheng.activity.MyOrderActivity;
+import com.hanyu.desheng.activity.MygenCodeAct;
 import com.hanyu.desheng.activity.PersonalActivity;
 import com.hanyu.desheng.activity.SettingActivity;
 import com.hanyu.desheng.base.BaseFragment;
@@ -14,10 +15,10 @@ import com.hanyu.desheng.db.InviteMessgeDao;
 import com.hanyu.desheng.db.UserDao;
 import com.hanyu.desheng.ui.CircleImageView;
 import com.hanyu.desheng.util.ShowDialogUtil;
+import com.hanyu.desheng.utils.LogUtil;
 import com.hanyu.desheng.utils.SharedPreferencesUtil;
 import com.hanyu.desheng.utils.YangUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,12 +33,18 @@ import cn.jpush.android.api.JPushInterface;
 
 public class Left extends BaseFragment implements View.OnClickListener {
 	private static final int GERENZILIAO = 1;
+	private static final int HEADPICRQCODE = 2;
 	private View currentView;
 	private Button menu_order, menu_spread, menu_proposal, menu_exit, menu_login, menu_set;
 	private CircleImageView menu_headiv;// 用户头像
+	public static TextView menu_msgcnt;
 	private TextView menu_text_login;
 	private UserInfo userinfo;
 	UserDao userDao;
+	private String phones;
+	public static String erweima_url;
+	private String state;
+	private boolean isLeft = true;
 
 	public View getCurrentView() {
 		return currentView;
@@ -46,13 +53,15 @@ public class Left extends BaseFragment implements View.OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		currentView = inflater.inflate(R.layout.left, container, false);
+		state = SharedPreferencesUtil.getStringData(context, "shopstate", "");
 		menu_order = (Button) currentView.findViewById(R.id.menu_order);
 		menu_spread = (Button) currentView.findViewById(R.id.menu_spread);
 		menu_proposal = (Button) currentView.findViewById(R.id.menu_proposal);
 		menu_headiv = (CircleImageView) currentView.findViewById(R.id.menu_headiv);
 		menu_text_login = (TextView) currentView.findViewById(R.id.menu_text_login);
 		menu_exit = (Button) currentView.findViewById(R.id.menu_exit);
-		//我的店长二维码（立即推广）
+		menu_msgcnt = (TextView) currentView.findViewById(R.id.menu_msgcnt);
+		// 我的店长二维码（立即推广）
 		menu_login = (Button) currentView.findViewById(R.id.menu_login);
 		menu_set = (Button) currentView.findViewById(R.id.menu_set);
 		menu_login.setOnClickListener(this);
@@ -62,6 +71,9 @@ public class Left extends BaseFragment implements View.OnClickListener {
 		menu_proposal.setOnClickListener(this);
 		menu_spread.setOnClickListener(this);
 		menu_order.setOnClickListener(this);
+		phones = SharedPreferencesUtil.getStringData(context, "miphone", "");
+		String mobile = Base64Encoder.getInstance().encode(phones);
+		erweima_url = "http://app.4567cn.com/Api/login.php?invite=" + mobile;
 		return currentView;
 	}
 
@@ -76,12 +88,12 @@ public class Left extends BaseFragment implements View.OnClickListener {
 		userDao = new UserDao(getActivity());
 		if (!YangUtils.isLogin(context)) {
 			menu_exit.setVisibility(View.GONE);
-			// menu_login.setVisibility(View.VISIBLE);
+			menu_login.setVisibility(View.GONE);
 			menu_text_login.setText("请先登录");
 		} else {
 			username = SharedPreferencesUtil.getStringData(context, "miname", "");
 			menu_exit.setVisibility(View.VISIBLE);
-			// menu_login.setVisibility(View.GONE);
+			menu_login.setVisibility(View.VISIBLE);
 			menu_text_login.setText(username);
 		}
 
@@ -99,6 +111,15 @@ public class Left extends BaseFragment implements View.OnClickListener {
 			if (data != null) {
 				userinfo = (UserInfo) data.getExtras().getSerializable("userinfo");
 				menu_text_login.setText(userinfo.miname);
+			}
+		}
+		if (requestCode == HEADPICRQCODE && resultCode == PersonalActivity.RESULTCODE) {
+			if (data != null) {
+				String headpic = data.getStringExtra("headpic");
+				if (!TextUtils.isEmpty(headpic)) {
+					ImageLoader.getInstance().displayImage(headpic, menu_headiv);
+				}
+
 			}
 		}
 	}
@@ -148,12 +169,19 @@ public class Left extends BaseFragment implements View.OnClickListener {
 				ShowDialogUtil.showIsLoginDialog(context);
 			} else {
 				intent = new Intent(context, PersonalActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, HEADPICRQCODE);
 			}
 			break;
+		// 点击推广二维码
 		case R.id.menu_login:
-			intent = new Intent(context, MyCodeActivity.class);
-			startActivity(intent);
+			if ("1".equals(state)) {
+				intent = new Intent(context, MygenCodeAct.class);
+				intent.putExtra("dsqr", erweima_url);
+				intent.putExtra("left_return", isLeft);
+				startActivity(intent);
+			} else {
+
+			}
 			break;
 		case R.id.menu_exit:
 			/**

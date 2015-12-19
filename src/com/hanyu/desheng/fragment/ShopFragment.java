@@ -1,5 +1,6 @@
 package com.hanyu.desheng.fragment;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,16 @@ import com.hanyu.desheng.MainActivity;
 import com.hanyu.desheng.R;
 import com.hanyu.desheng.activity.ChatActivity;
 import com.hanyu.desheng.base.BaseFragment;
+import com.hanyu.desheng.bean.HomeBean;
 import com.hanyu.desheng.bean.MobileData;
 import com.hanyu.desheng.bean.PhoneBean;
 import com.hanyu.desheng.bean.ShopInfo;
+import com.hanyu.desheng.engine.DSUrlManager;
 import com.hanyu.desheng.engine.EngineManager;
 import com.hanyu.desheng.engine.HttpTask;
 import com.hanyu.desheng.ui.CircleImageView;
 import com.hanyu.desheng.util.LogUtils;
+import com.hanyu.desheng.utils.GsonUtils;
 import com.hanyu.desheng.utils.LogUtil;
 import com.hanyu.desheng.utils.MyToastUtils;
 import com.hanyu.desheng.utils.SharedPreferencesUtil;
@@ -26,14 +30,22 @@ import com.hanyu.desheng.utils.YangUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.zhy.utils.DownLoadManager;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -77,11 +89,12 @@ public class ShopFragment extends BaseFragment {
 	private TextView scan;
 	private static final String APP_CACAHE_DIRNAME = "/webcache";
 	protected static final String tag = "ShopFragment";
-
+	private android.app.AlertDialog updateDialog;
 	public static ShopFragment instance;
 	@SuppressWarnings("unused")
 	private String chat_url = "http://wxkf.wddcn.com/client/chat.ashx?sid=17871&mid=429&utype=dzd&uid=5495667&ciid_siid=0_0&url=http://dzd.4567cn.com/vshop/detail.html?sid=17871%26gid=585956509%26iid=55621";
 	private String chat_url1 = "http://wxkf.wddcn.com/client/chat.ashx?";
+	private String info;
 
 	public ShopFragment() {
 	}
@@ -172,6 +185,7 @@ public class ShopFragment extends BaseFragment {
 	@SuppressLint("NewApi")
 	@Override
 	public void initData(Bundle savedInstanceState) {
+		getToppic("0");
 		WebSettings s = shop_webview.getSettings();
 		// 开启 DOM storage API 功能
 		shop_webview.getSettings().setDomStorageEnabled(true);
@@ -340,6 +354,139 @@ public class ShopFragment extends BaseFragment {
 		}
 	}
 
+	private void getToppic(final String page_no) {
+		new HttpTask<Void, Void, String>(context) {
+			@Override
+			protected String doInBackground(Void... params) {
+				String user_id = "";
+				String result = "";
+				if (YangUtils.isLogin(context)) {
+					user_id = SharedPreferencesUtil.getStringData(context, "memberid", "");
+					result = EngineManager.getUserEngine().getTopPic(user_id, page_no);
+				} else {
+					result = EngineManager.getUserEngine().getTopPic("", page_no);
+				}
+				LogUtil.i("===", "result = " + result);
+
+				return result;
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					HomeBean homeBean = GsonUtils.json2Bean(result, HomeBean.class);
+					info = homeBean.data.andriod.apk_url;
+
+					// 检测版本更新
+					 checkUpdate(homeBean);
+				}
+			}
+
+			protected void onPreExecute() {
+
+			}
+		}.executeProxy();
+	}
+
+	/**
+	 * 检查更新
+	 */
+	public void checkUpdate(HomeBean homeBean) {
+		if (getActivity() == null) {
+			return;
+		}
+		PackageManager pm = getActivity().getPackageManager();
+		try {
+			PackageInfo info = pm.getPackageInfo(getActivity().getPackageName(), 0);
+			String versionName = info.versionName;
+			if (!versionName.equals(homeBean.data.andriod.version)) {
+				showUpdateDialog(homeBean.data.andriod.version,
+						new DSUrlManager().getFullUrl3(homeBean.data.andriod.apk_url));
+
+			} else {
+//				Toast.makeText(getActivity(), "已是最新版本！", Toast.LENGTH_LONG);
+				LogUtil.i("===", "已是最新版本！");
+			}
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void showUpdateDialog(final String versionName, final String downloadUrl) {
+		Builder builder = new android.app.AlertDialog.Builder(context);
+		builder.setTitle("发现新版本!");
+		builder.setMessage("新版本" + versionName + ",是否更新");
+		builder.setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				updateDialog.dismiss();
+			}
+
+		});
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				updateDialog.dismiss();
+				// Intent updateIntent = new Intent(context,
+				// UpdateAppService.class);
+				// updateIntent.putExtra("downloadUrl", downloadUrl);
+				// context.startService(updateIntent);
+
+				/*
+				 * Uri uri = Uri.parse("http://www.pgyer.com/1G7m"); Intent
+				 * intent = new Intent(Intent.ACTION_VIEW, uri);
+				 * startActivity(intent);
+				 */
+				downLoadApk(downloadUrl);
+			}
+		});
+		updateDialog = builder.show();
+
+	}
+
+	protected void downLoadApk(final String downloadUrl) {
+		final ProgressDialog pd; // 进度条对话框
+		pd = new ProgressDialog(this.getActivity());
+		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pd.setMessage("正在下载更新");
+		pd.show();
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					File file = DownLoadManager.getFileFromServer(downloadUrl, pd);
+					sleep(3000);
+					installApk(file);
+					pd.dismiss(); // 结束掉进度条对话框
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+	}
+
+	protected void installApk(File file) {
+		Intent intent = new Intent();
+		// 执行动作
+		intent.setAction(Intent.ACTION_VIEW);
+		// 执行的数据类型
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");// 编者按：此处Android应为android，否则造成安装不了
+		startActivity(intent);
+	}
+
+	@Override
+	public void onResume() {
+		String headpic = SharedPreferencesUtil.getStringData(context, "headpic", "");
+		if (!TextUtils.isEmpty(headpic)) {
+			ImageLoader.getInstance().displayImage(headpic, shop_head_img);
+		}
+
+		super.onResume();
+	}
+
 	@Override
 	public void setListener() {
 		shop_head_img.setOnClickListener(this);
@@ -472,6 +619,7 @@ public class ShopFragment extends BaseFragment {
 						ShopInfo shopinfo = new ShopInfo();
 						XmlComonUtil.streamText2Model(result, shopinfo);
 						String state = shopinfo.vsstate;
+						String asfjdjskhfd = shopinfo.vsphone;
 						LogUtil.i(tag, "上级店铺的状态：" + state);
 						List<String> pList = new ArrayList<String>();
 						pList.add(shopinfo.vsphone);

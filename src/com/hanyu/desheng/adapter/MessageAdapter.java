@@ -140,15 +140,13 @@ public class MessageAdapter extends BaseAdapter {
 
 	private Map<String, Timer> timers = new Hashtable<String, Timer>();
 	
-  UserDao userDao;
+	UserDao userDao;
 	// 图片缓存 默认 等
-		private DisplayImageOptions options = new DisplayImageOptions.Builder()
-				 .showImageForEmptyUri(R.drawable.default_avatar)
+		private DisplayImageOptions options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.default_avatar)
 //				 设置图片Uri为空或是错误的时候显示的图片
 				 .showImageOnFail(R.drawable.default_avatar)
 //				 设置图片加载/解码过程中错误时候显示的图片
-				.cacheInMemory(true).cacheOnDisk(true).considerExifParams(true)
-				.imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
+				.cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
 
 
 	public MessageAdapter(Context context, String username, int chatType) {
@@ -156,8 +154,7 @@ public class MessageAdapter extends BaseAdapter {
 		this.context = context;
 		inflater = LayoutInflater.from(context);
 		activity = (Activity) context;
-		this.conversation = EMChatManager.getInstance().getConversation(
-				username);
+		this.conversation = EMChatManager.getInstance().getConversation(username);
 		userDao=new UserDao(context);
 	}
 
@@ -196,37 +193,27 @@ public class MessageAdapter extends BaseAdapter {
 	public int getItemViewType(int position) {
 		EMMessage message = conversation.getMessage(position);
 		if (message.getType() == EMMessage.Type.TXT) {
-			if (message.getBooleanAttribute(
-					Constant.MESSAGE_ATTR_IS_VOICE_CALL, false))
-				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE_CALL
-						: MESSAGE_TYPE_SENT_VOICE_CALL;
-			else if (message.getBooleanAttribute(
-					Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
-				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL
-						: MESSAGE_TYPE_SENT_VIDEO_CALL;
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT
-					: MESSAGE_TYPE_SENT_TXT;
+			if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false))
+				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE_CALL : MESSAGE_TYPE_SENT_VOICE_CALL;
+			else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
+				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
+			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
 		}
 		if (message.getType() == EMMessage.Type.IMAGE) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_IMAGE
-					: MESSAGE_TYPE_SENT_IMAGE;
+			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_IMAGE : MESSAGE_TYPE_SENT_IMAGE;
 
 		}
 		if (message.getType() == EMMessage.Type.LOCATION) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_LOCATION
-					: MESSAGE_TYPE_SENT_LOCATION;
+			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_LOCATION : MESSAGE_TYPE_SENT_LOCATION;
 		}
 		if (message.getType() == EMMessage.Type.VOICE) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE
-					: MESSAGE_TYPE_SENT_VOICE;
+			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE : MESSAGE_TYPE_SENT_VOICE;
 		}
 		if (message.getType() == EMMessage.Type.VIDEO) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO
-					: MESSAGE_TYPE_SENT_VIDEO;
+			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO : MESSAGE_TYPE_SENT_VIDEO;
 		}
 		if (message.getType() == EMMessage.Type.FILE) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_FILE
-					: MESSAGE_TYPE_SENT_FILE;
+			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_FILE : MESSAGE_TYPE_SENT_FILE;
 		}
 
 		return -1;// invalid
@@ -235,18 +222,18 @@ public class MessageAdapter extends BaseAdapter {
 	private View createViewByMessage(EMMessage message, int position) {
 		switch (message.getType()) {
 		case LOCATION:
-			return message.direct == EMMessage.Direct.RECEIVE ? inflater
-					.inflate(R.layout.row_received_location, null) : inflater
-					.inflate(R.layout.row_sent_location, null);
+			return message.direct == EMMessage.Direct.RECEIVE ? 
+					inflater.inflate(R.layout.row_received_location, null) : 
+					inflater.inflate(R.layout.row_sent_location, null);
 		case IMAGE:
 			return message.direct == EMMessage.Direct.RECEIVE ? inflater
 					.inflate(R.layout.row_received_picture, null) : inflater
 					.inflate(R.layout.row_sent_picture, null);
 
 		case VOICE:
-			return message.direct == EMMessage.Direct.RECEIVE ? inflater
-					.inflate(R.layout.row_received_voice, null) : inflater
-					.inflate(R.layout.row_sent_voice, null);
+			return message.direct == EMMessage.Direct.RECEIVE ? 
+					inflater.inflate(R.layout.row_received_voice, null) : 
+					inflater.inflate(R.layout.row_sent_voice, null);
 		case VIDEO:
 			return message.direct == EMMessage.Direct.RECEIVE ? inflater
 					.inflate(R.layout.row_received_video, null) : inflater
@@ -257,20 +244,12 @@ public class MessageAdapter extends BaseAdapter {
 					.inflate(R.layout.row_sent_file, null);
 		default:
 			// 语音通话
-			if (message.getBooleanAttribute(
-					Constant.MESSAGE_ATTR_IS_VOICE_CALL, false))
-				return message.direct == EMMessage.Direct.RECEIVE ? inflater
-						.inflate(R.layout.row_received_voice_call, null)
-						: inflater.inflate(R.layout.row_sent_voice_call, null);
+			if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false))
+				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(R.layout.row_received_voice_call, null) : inflater.inflate(R.layout.row_sent_voice_call, null);
 			// 视频通话
-			else if (message.getBooleanAttribute(
-					Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
-				return message.direct == EMMessage.Direct.RECEIVE ? inflater
-						.inflate(R.layout.row_received_video_call, null)
-						: inflater.inflate(R.layout.row_sent_video_call, null);
-			return message.direct == EMMessage.Direct.RECEIVE ? inflater
-					.inflate(R.layout.row_received_message, null) : inflater
-					.inflate(R.layout.row_sent_message, null);
+			else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
+				return message.direct == EMMessage.Direct.RECEIVE ? inflater .inflate(R.layout.row_received_video_call, null) : inflater.inflate(R.layout.row_sent_video_call, null);
+			return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(R.layout.row_received_message, null) : inflater.inflate(R.layout.row_sent_message, null);
 		}
 	}
 
@@ -284,33 +263,24 @@ public class MessageAdapter extends BaseAdapter {
 			convertView = createViewByMessage(message, position);
 			if (message.getType() == EMMessage.Type.IMAGE) {
 				try {
-					holder.iv = ((ImageView) convertView
-							.findViewById(R.id.iv_sendPicture));
-					holder.iv_avatar = (CircleImageView) convertView
-							.findViewById(R.id.iv_userhead);
-					holder.tv = (TextView) convertView
-							.findViewById(R.id.percentage);
-					holder.pb = (ProgressBar) convertView
-							.findViewById(R.id.progressBar);
-					holder.staus_iv = (ImageView) convertView
-							.findViewById(R.id.msg_status);
-					holder.tv_usernick = (TextView) convertView
-							.findViewById(R.id.tv_userid);
+					holder.iv = ((ImageView) convertView.findViewById(R.id.iv_sendPicture));
+					holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
+					holder.tv = (TextView) convertView.findViewById(R.id.percentage);
+					holder.pb = (ProgressBar) convertView.findViewById(R.id.progressBar);
+					holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
+					holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
 				} catch (Exception e) {
 				}
 
 			} else if (message.getType() == EMMessage.Type.TXT) {
 
 				try {
-					holder.pb = (ProgressBar) convertView
-							.findViewById(R.id.pb_sending);
-					holder.staus_iv = (ImageView) convertView
-							.findViewById(R.id.msg_status);
-					holder.iv_avatar = (CircleImageView) convertView
-							.findViewById(R.id.iv_userhead);
+					holder.pb = (ProgressBar) convertView.findViewById(R.id.pb_sending);
+					holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
+					holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
 					// 这里是文字内容
-					holder.tv = (TextView) convertView
-							.findViewById(R.id.tv_chatcontent);
+					holder.tv = (TextView) convertView.findViewById(R.id.tv_chatcontent);
+					//长按复制文字信息内容
 					holder.tv.setOnLongClickListener(new OnLongClickListener() {
 						private ClipboardManager cm;
 						@Override
@@ -325,103 +295,66 @@ public class MessageAdapter extends BaseAdapter {
 						}
 					});
 					
-					holder.tv_usernick = (TextView) convertView
-							.findViewById(R.id.tv_userid);
+					holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
 				} catch (Exception e) {
 				}
 
 				// 语音通话及视频通话
-				if (message.getBooleanAttribute(
-						Constant.MESSAGE_ATTR_IS_VOICE_CALL, false)
-						|| message.getBooleanAttribute(
-								Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)) {
-					holder.iv = (ImageView) convertView
-							.findViewById(R.id.iv_call_icon);
-					holder.tv = (TextView) convertView
-							.findViewById(R.id.tv_chatcontent);
+				if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false) || message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)) {
+					holder.iv = (ImageView) convertView.findViewById(R.id.iv_call_icon);
+					holder.tv = (TextView) convertView.findViewById(R.id.tv_chatcontent);
 				}
 
 			} else if (message.getType() == EMMessage.Type.VOICE) {
 				try {
-					holder.iv = ((ImageView) convertView
-							.findViewById(R.id.iv_voice));
-					holder.iv_avatar = (CircleImageView) convertView
-							.findViewById(R.id.iv_userhead);
-					holder.tv = (TextView) convertView
-							.findViewById(R.id.tv_length);
-					holder.pb = (ProgressBar) convertView
-							.findViewById(R.id.pb_sending);
-					holder.staus_iv = (ImageView) convertView
-							.findViewById(R.id.msg_status);
-					holder.tv_usernick = (TextView) convertView
-							.findViewById(R.id.tv_userid);
-					holder.iv_read_status = (ImageView) convertView
-							.findViewById(R.id.iv_unread_voice);
+					holder.iv = ((ImageView) convertView.findViewById(R.id.iv_voice));
+					holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
+					holder.tv = (TextView) convertView.findViewById(R.id.tv_length);
+					holder.pb = (ProgressBar) convertView.findViewById(R.id.pb_sending);
+					holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
+					holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
+					holder.iv_read_status = (ImageView) convertView.findViewById(R.id.iv_unread_voice);
 				} catch (Exception e) {
 				}
 			} else if (message.getType() == EMMessage.Type.LOCATION) {
 				try {
-					holder.iv_avatar = (CircleImageView) convertView
-							.findViewById(R.id.iv_userhead);
-					holder.tv = (TextView) convertView
-							.findViewById(R.id.tv_location);
-					holder.pb = (ProgressBar) convertView
-							.findViewById(R.id.pb_sending);
-					holder.staus_iv = (ImageView) convertView
-							.findViewById(R.id.msg_status);
-					holder.tv_usernick = (TextView) convertView
-							.findViewById(R.id.tv_userid);
+					holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
+					holder.tv = (TextView) convertView.findViewById(R.id.tv_location);
+					holder.pb = (ProgressBar) convertView.findViewById(R.id.pb_sending);
+					holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
+					holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
 				} catch (Exception e) {
 				}
 			} else if (message.getType() == EMMessage.Type.VIDEO) {
 				try {
-					holder.iv = ((ImageView) convertView
-							.findViewById(R.id.chatting_content_iv));
-					holder.iv_avatar = (CircleImageView) convertView
-							.findViewById(R.id.iv_userhead);
-					holder.tv = (TextView) convertView
-							.findViewById(R.id.percentage);
-					holder.pb = (ProgressBar) convertView
-							.findViewById(R.id.progressBar);
-					holder.staus_iv = (ImageView) convertView
-							.findViewById(R.id.msg_status);
-					holder.size = (TextView) convertView
-							.findViewById(R.id.chatting_size_iv);
-					holder.timeLength = (TextView) convertView
-							.findViewById(R.id.chatting_length_iv);
-					holder.playBtn = (ImageView) convertView
-							.findViewById(R.id.chatting_status_btn);
-					holder.container_status_btn = (LinearLayout) convertView
-							.findViewById(R.id.container_status_btn);
-					holder.tv_usernick = (TextView) convertView
-							.findViewById(R.id.tv_userid);
+					holder.iv = ((ImageView) convertView.findViewById(R.id.chatting_content_iv));
+					holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
+					holder.tv = (TextView) convertView.findViewById(R.id.percentage);
+					holder.pb = (ProgressBar) convertView.findViewById(R.id.progressBar);
+					holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
+					holder.size = (TextView) convertView.findViewById(R.id.chatting_size_iv);
+					holder.timeLength = (TextView) convertView.findViewById(R.id.chatting_length_iv);
+					holder.playBtn = (ImageView) convertView.findViewById(R.id.chatting_status_btn);
+					holder.container_status_btn = (LinearLayout) convertView.findViewById(R.id.container_status_btn);
+					holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
 
 				} catch (Exception e) {
 				}
 			} else if (message.getType() == EMMessage.Type.FILE) {
 				try {
-					holder.iv_avatar = (CircleImageView) convertView
-							.findViewById(R.id.iv_userhead);
-					holder.tv_file_name = (TextView) convertView
-							.findViewById(R.id.tv_file_name);
-					holder.tv_file_size = (TextView) convertView
-							.findViewById(R.id.tv_file_size);
-					holder.pb = (ProgressBar) convertView
-							.findViewById(R.id.pb_sending);
-					holder.staus_iv = (ImageView) convertView
-							.findViewById(R.id.msg_status);
-					holder.tv_file_download_state = (TextView) convertView
-							.findViewById(R.id.tv_file_state);
-					holder.ll_container = (LinearLayout) convertView
-							.findViewById(R.id.ll_file_container);
+					holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
+					holder.tv_file_name = (TextView) convertView.findViewById(R.id.tv_file_name);
+					holder.tv_file_size = (TextView) convertView.findViewById(R.id.tv_file_size);
+					holder.pb = (ProgressBar) convertView.findViewById(R.id.pb_sending);
+					holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
+					holder.tv_file_download_state = (TextView) convertView.findViewById(R.id.tv_file_state);
+					holder.ll_container = (LinearLayout) convertView.findViewById(R.id.ll_file_container);
 					// 这里是进度值
-					holder.tv = (TextView) convertView
-							.findViewById(R.id.percentage);
+					holder.tv = (TextView) convertView.findViewById(R.id.percentage);
 				} catch (Exception e) {
 				}
 				try {
-					holder.tv_usernick = (TextView) convertView
-							.findViewById(R.id.tv_userid);
+					holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
 				} catch (Exception e) {
 				}
 
@@ -433,17 +366,14 @@ public class MessageAdapter extends BaseAdapter {
 		}
 
 		// 群聊时，显示接收的消息的发送人的名称
-		if (chatType == ChatType.GroupChat
-				&& message.direct == EMMessage.Direct.RECEIVE) {
+		if (chatType == ChatType.GroupChat && message.direct == EMMessage.Direct.RECEIVE) {
 			// demo里使用username代码nick
 //			holder.tv_usernick.setText(message.getFrom());
 		}
 		// 如果是发送的消息并且不是群聊消息，显示已读textview
-		if (message.direct == EMMessage.Direct.SEND
-				&& chatType != ChatType.GroupChat) {
+		if (message.direct == EMMessage.Direct.SEND && chatType != ChatType.GroupChat) {
 			holder.tv_ack = (TextView) convertView.findViewById(R.id.tv_ack);
-			holder.tv_delivered = (TextView) convertView
-					.findViewById(R.id.tv_delivered);
+			holder.tv_delivered = (TextView) convertView.findViewById(R.id.tv_delivered);
 			if (holder.tv_ack != null) {
 				if (message.isAcked) {
 					if (holder.tv_delivered != null) {
@@ -465,14 +395,11 @@ public class MessageAdapter extends BaseAdapter {
 			}
 		} else {
 			// 如果是文本或者地图消息并且不是group messgae，显示的时候给对方发送已读回执
-			if ((message.getType() == Type.TXT || message.getType() == Type.LOCATION)
-					&& !message.isAcked && chatType != ChatType.GroupChat) {
+			if ((message.getType() == Type.TXT || message.getType() == Type.LOCATION) && !message.isAcked && chatType != ChatType.GroupChat) {
 				// 不是语音通话记录
-				if (!message.getBooleanAttribute(
-						Constant.MESSAGE_ATTR_IS_VOICE_CALL, false)) {
+				if (!message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false)) {
 					try {
-						EMChatManager.getInstance().ackMessageRead(
-								message.getFrom(), message.getMsgId());
+						EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
 						// 发送已读回执
 						message.isAcked = true;
 					} catch (Exception e) {
@@ -491,8 +418,7 @@ public class MessageAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 //				if (chatType != ChatType.GroupChat) {
-					Intent intent = new Intent(context,
-							PerInfoAct.class);
+					Intent intent = new Intent(context,PerInfoAct.class);
 					intent.putExtra("hxuser", message.getFrom());
 					intent.putExtra("flag","1");
 					context.startActivity(intent);
@@ -538,10 +464,7 @@ public class MessageAdapter extends BaseAdapter {
 			handleImageMessage(message, holder, position, convertView);
 			break;
 		case TXT: // 文本
-			if (message.getBooleanAttribute(
-					Constant.MESSAGE_ATTR_IS_VOICE_CALL, false)
-					|| message.getBooleanAttribute(
-							Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
+			if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false) || message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
 				// 音视频通话
 				handleCallMessage(message, holder, position);
 			else
@@ -572,38 +495,29 @@ public class MessageAdapter extends BaseAdapter {
 
 					// 显示重发消息的自定义alertdialog
 					Intent intent = new Intent(activity, com.hanyu.desheng.activity.AlertDialog.class);
-					intent.putExtra("msg",
-							activity.getString(R.string.confirm_resend));
-					intent.putExtra("title",
-							activity.getString(R.string.resend));
+					intent.putExtra("msg",activity.getString(R.string.confirm_resend));
+					intent.putExtra("title",activity.getString(R.string.resend));
 					intent.putExtra("cancel", true);
 					intent.putExtra("position", position);
 					if (message.getType() == EMMessage.Type.TXT)
-						activity.startActivityForResult(intent,
-								ChatActivity.REQUEST_CODE_TEXT);
+						activity.startActivityForResult(intent,ChatActivity.REQUEST_CODE_TEXT);
 					else if (message.getType() == EMMessage.Type.VOICE)
-						activity.startActivityForResult(intent,
-								ChatActivity.REQUEST_CODE_VOICE);
+						activity.startActivityForResult(intent,ChatActivity.REQUEST_CODE_VOICE);
 					else if (message.getType() == EMMessage.Type.IMAGE)
-						activity.startActivityForResult(intent,
-								ChatActivity.REQUEST_CODE_PICTURE);
+						activity.startActivityForResult(intent,ChatActivity.REQUEST_CODE_PICTURE);
 					else if (message.getType() == EMMessage.Type.LOCATION)
-						activity.startActivityForResult(intent,
-								ChatActivity.REQUEST_CODE_LOCATION);
+						activity.startActivityForResult(intent,ChatActivity.REQUEST_CODE_LOCATION);
 					else if (message.getType() == EMMessage.Type.FILE)
-						activity.startActivityForResult(intent,
-								ChatActivity.REQUEST_CODE_FILE);
+						activity.startActivityForResult(intent,ChatActivity.REQUEST_CODE_FILE);
 					else if (message.getType() == EMMessage.Type.VIDEO)
-						activity.startActivityForResult(intent,
-								ChatActivity.REQUEST_CODE_VIDEO);
+						activity.startActivityForResult(intent,ChatActivity.REQUEST_CODE_VIDEO);
 
 				}
 			});
 
 		} else {
 			@SuppressWarnings("unused")
-			final String st = context.getResources().getString(
-					R.string.Into_the_blacklist);
+			final String st = context.getResources().getString(R.string.Into_the_blacklist);
 			// 长按头像，移入黑名单
 			holder.iv_avatar.setOnLongClickListener(new OnLongClickListener() {
 
@@ -620,21 +534,17 @@ public class MessageAdapter extends BaseAdapter {
 			});
 		}
 
-		TextView timestamp = (TextView) convertView
-				.findViewById(R.id.timestamp);
+		TextView timestamp = (TextView) convertView.findViewById(R.id.timestamp);
 
 		if (position == 0) {
-			timestamp.setText(DateUtils.getTimestampString(new Date(message
-					.getMsgTime())));
+			timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
 			timestamp.setVisibility(View.VISIBLE);
 		} else {
 			// 两条消息时间离得如果稍长，显示时间
-			if (DateUtils.isCloseEnough(message.getMsgTime(), conversation
-					.getMessage(position - 1).getMsgTime())) {
+			if (DateUtils.isCloseEnough(message.getMsgTime(), conversation.getMessage(position - 1).getMsgTime())) {
 				timestamp.setVisibility(View.GONE);
 			} else {
-				timestamp.setText(DateUtils.getTimestampString(new Date(message
-						.getMsgTime())));
+				timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
 				timestamp.setVisibility(View.VISIBLE);
 			}
 		}
@@ -654,8 +564,7 @@ public class MessageAdapter extends BaseAdapter {
 	 */
 	private void setUserAvatar(EMMessage message, CircleImageView imageView) {
 		if (message.direct == Direct.SEND) {
-			ImageLoader.getInstance().displayImage(SharedPreferencesUtil.getStringData(context,
-					"headpic", ""), imageView, options);
+			ImageLoader.getInstance().displayImage(SharedPreferencesUtil.getStringData(context,"headpic", ""), imageView, options);
 //			// 显示自己头像
 //			UserUtils.setUserAvatar(context, EMChatManager.getInstance()
 //					.getCurrentUser(), imageView);
@@ -684,11 +593,9 @@ public class MessageAdapter extends BaseAdapter {
 	 * @param holder
 	 * @param position
 	 */
-	private void handleTextMessage(EMMessage message, ViewHolder holder,
-			final int position) {
+	private void handleTextMessage(EMMessage message, ViewHolder holder,final int position) {
 		TextMessageBody txtBody = (TextMessageBody) message.getBody();
-		Spannable span = SmileUtils
-				.getSmiledText(context, txtBody.getMessage());
+		Spannable span = SmileUtils.getSmiledText(context, txtBody.getMessage());
 		// 设置内容
 		holder.tv.setText(span, BufferType.SPANNABLE);
 		// 设置长按事件监听
@@ -779,10 +686,8 @@ public class MessageAdapter extends BaseAdapter {
 					String remotePath = imgBody.getRemoteUrl();
 					String filePath = ImageUtils.getImagePath(remotePath);
 					String thumbRemoteUrl = imgBody.getThumbnailUrl();
-					String thumbnailPath = ImageUtils
-							.getThumbnailImagePath(thumbRemoteUrl);
-					showImageView(thumbnailPath, holder.iv, filePath,
-							imgBody.getRemoteUrl(), message);
+					String thumbnailPath = ImageUtils.getThumbnailImagePath(thumbRemoteUrl);
+					showImageView(thumbnailPath, holder.iv, filePath,imgBody.getRemoteUrl(), message);
 				}
 			}
 			return;
@@ -794,11 +699,9 @@ public class MessageAdapter extends BaseAdapter {
 		ImageMessageBody imgBody = (ImageMessageBody) message.getBody();
 		String filePath = imgBody.getLocalUrl();
 		if (filePath != null && new File(filePath).exists()) {
-			showImageView(ImageUtils.getThumbnailImagePath(filePath),
-					holder.iv, filePath, null, message);
+			showImageView(ImageUtils.getThumbnailImagePath(filePath),holder.iv, filePath, null, message);
 		} else {
-			showImageView(ImageUtils.getThumbnailImagePath(filePath),
-					holder.iv, filePath, IMAGE_DIR, message);
+			showImageView(ImageUtils.getThumbnailImagePath(filePath),holder.iv, filePath, IMAGE_DIR, message);
 		}
 
 		switch (message.status) {
@@ -841,12 +744,7 @@ public class MessageAdapter extends BaseAdapter {
 								// message.setSendingStatus(Message.SENDING_STATUS_FAIL);
 								// message.setProgress(0);
 								holder.staus_iv.setVisibility(View.VISIBLE);
-								Toast.makeText(
-										activity,
-										activity.getString(R.string.send_fail)
-												+ activity
-														.getString(R.string.connect_failuer_toast),
-										0).show();
+								Toast.makeText(activity,activity.getString(R.string.send_fail)+ activity.getString(R.string.connect_failuer_toast),0).show();
 								timer.cancel();
 							}
 
@@ -869,8 +767,7 @@ public class MessageAdapter extends BaseAdapter {
 	 * @param position
 	 * @param convertView
 	 */
-	private void handleVideoMessage(final EMMessage message,
-			final ViewHolder holder, final int position, View convertView) {
+	private void handleVideoMessage(final EMMessage message,final ViewHolder holder, final int position, View convertView) {
 
 		VideoMessageBody videoBody = (VideoMessageBody) message.getBody();
 		// final File image=new File(PathUtil.getInstance().getVideoPath(),
@@ -1054,8 +951,7 @@ public class MessageAdapter extends BaseAdapter {
 			if (message.status == EMMessage.Status.INPROGRESS) {
 				holder.pb.setVisibility(View.VISIBLE);
 				System.err.println("!!!! back receive");
-				((FileMessageBody) message.getBody())
-						.setDownloadCallback(new EMCallBack() {
+				((FileMessageBody) message.getBody()).setDownloadCallback(new EMCallBack() {
 
 							@Override
 							public void onSuccess() {
@@ -1139,15 +1035,12 @@ public class MessageAdapter extends BaseAdapter {
 					FileUtils.openFile(file, (Activity) context);
 				} else {
 					// 下载
-					context.startActivity(new Intent(context,
-							ShowNormalFileActivity.class).putExtra("msgbody",
+					context.startActivity(new Intent(context,ShowNormalFileActivity.class).putExtra("msgbody",
 							fileMessageBody));
 				}
-				if (message.direct == EMMessage.Direct.RECEIVE
-						&& !message.isAcked) {
+				if (message.direct == EMMessage.Direct.RECEIVE && !message.isAcked) {
 					try {
-						EMChatManager.getInstance().ackMessageRead(
-								message.getFrom(), message.getMsgId());
+						EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
 						message.isAcked = true;
 					} catch (EaseMobException e) {
 						e.printStackTrace();
@@ -1156,8 +1049,7 @@ public class MessageAdapter extends BaseAdapter {
 			}
 		});
 		String st1 = context.getResources().getString(R.string.Have_downloaded);
-		String st2 = context.getResources()
-				.getString(R.string.Did_not_download);
+		String st2 = context.getResources().getString(R.string.Did_not_download);
 		if (message.direct == EMMessage.Direct.RECEIVE) { // 接收的消息
 			System.err.println("it is receive msg");
 			File file = new File(filePath);
@@ -1284,8 +1176,7 @@ public class MessageAdapter extends BaseAdapter {
 	 * @param holder
 	 * @param position
 	 */
-	public void sendMsgInBackground(final EMMessage message,
-			final ViewHolder holder) {
+	public void sendMsgInBackground(final EMMessage message,final ViewHolder holder) {
 		holder.staus_iv.setVisibility(View.GONE);
 		holder.pb.setVisibility(View.VISIBLE);
 
@@ -1373,8 +1264,7 @@ public class MessageAdapter extends BaseAdapter {
 	/*
 	 * send message with new sdk
 	 */
-	private void sendPictureMessage(final EMMessage message,
-			final ViewHolder holder) {
+	private void sendPictureMessage(final EMMessage message,final ViewHolder holder) {
 		try {
 			@SuppressWarnings("unused")
 			String to = message.getTo();
@@ -1412,11 +1302,7 @@ public class MessageAdapter extends BaseAdapter {
 							holder.tv.setVisibility(View.GONE);
 							// message.setSendingStatus(Message.SENDING_STATUS_FAIL);
 							holder.staus_iv.setVisibility(View.VISIBLE);
-							Toast.makeText(
-									activity,
-									activity.getString(R.string.send_fail)
-											+ activity
-													.getString(R.string.connect_failuer_toast),
+							Toast.makeText(activity,activity.getString(R.string.send_fail) + activity.getString(R.string.connect_failuer_toast),
 									0).show();
 						}
 					});
@@ -1443,8 +1329,7 @@ public class MessageAdapter extends BaseAdapter {
 	 * @param message
 	 * @param holder
 	 */
-	private void updateSendedView(final EMMessage message,
-			final ViewHolder holder) {
+	private void updateSendedView(final EMMessage message,final ViewHolder holder) {
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -1469,11 +1354,7 @@ public class MessageAdapter extends BaseAdapter {
 					// holder.pb.setVisibility(View.GONE);
 					// }
 					// holder.staus_iv.setVisibility(View.VISIBLE);
-					Toast.makeText(
-							activity,
-							activity.getString(R.string.send_fail)
-									+ activity
-											.getString(R.string.connect_failuer_toast),
+					Toast.makeText(activity,activity.getString(R.string.send_fail) + activity.getString(R.string.connect_failuer_toast),
 							0).show();
 				}
 
@@ -1490,9 +1371,7 @@ public class MessageAdapter extends BaseAdapter {
 	 * @param position
 	 * @return the image exists or not
 	 */
-	private boolean showImageView(final String thumbernailPath,
-			final ImageView iv, final String localFullSizePath,
-			String remoteDir, final EMMessage message) {
+	private boolean showImageView(final String thumbernailPath,final ImageView iv, final String localFullSizePath,String remoteDir, final EMMessage message) {
 		// String imagename =
 		// localFullSizePath.substring(localFullSizePath.lastIndexOf("/") + 1,
 		// localFullSizePath.length());
@@ -1515,25 +1394,19 @@ public class MessageAdapter extends BaseAdapter {
 					if (file.exists()) {
 						Uri uri = Uri.fromFile(file);
 						intent.putExtra("uri", uri);
-						System.err
-								.println("here need to check why download everytime");
+						System.err.println("here need to check why download everytime");
 					} else {
 						// The local full size pic does not exist yet.
 						// ShowBigImage needs to download it from the server
 						// first
 						// intent.putExtra("", message.get);
-						ImageMessageBody body = (ImageMessageBody) message
-								.getBody();
+						ImageMessageBody body = (ImageMessageBody) message.getBody();
 						intent.putExtra("secret", body.getSecret());
 						intent.putExtra("remotepath", remote);
 					}
-					if (message != null
-							&& message.direct == EMMessage.Direct.RECEIVE
-							&& !message.isAcked
-							&& message.getChatType() != ChatType.GroupChat) {
+					if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != ChatType.GroupChat) {
 						try {
-							EMChatManager.getInstance().ackMessageRead(
-									message.getFrom(), message.getMsgId());
+							EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
 							message.isAcked = true;
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -1545,8 +1418,7 @@ public class MessageAdapter extends BaseAdapter {
 			return true;
 		} else {
 
-			new LoadImageTask().execute(thumbernailPath, localFullSizePath,
-					remote, message.getChatType(), iv, activity, message);
+			new LoadImageTask().execute(thumbernailPath, localFullSizePath,remote, message.getChatType(), iv, activity, message);
 			return true;
 		}
 
@@ -1562,8 +1434,7 @@ public class MessageAdapter extends BaseAdapter {
 	 *            远程缩略图路径
 	 * @param message
 	 */
-	private void showVideoThumbView(String localThumb, ImageView iv,
-			String thumbnailUrl, final EMMessage message) {
+	private void showVideoThumbView(String localThumb, ImageView iv,String thumbnailUrl, final EMMessage message) {
 		// first check if the thumbnail image already loaded into cache
 		Bitmap bitmap = ImageCache.getInstance().get(localThumb);
 		if (bitmap != null) {
@@ -1574,22 +1445,16 @@ public class MessageAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					VideoMessageBody videoBody = (VideoMessageBody) message
-							.getBody();
+					VideoMessageBody videoBody = (VideoMessageBody) message.getBody();
 					System.err.println("video view is on click");
-					Intent intent = new Intent(activity,
-							ShowVideoActivity.class);
+					Intent intent = new Intent(activity,ShowVideoActivity.class);
 					intent.putExtra("localpath", videoBody.getLocalUrl());
 					intent.putExtra("secret", videoBody.getSecret());
 					intent.putExtra("remotepath", videoBody.getRemoteUrl());
-					if (message != null
-							&& message.direct == EMMessage.Direct.RECEIVE
-							&& !message.isAcked
-							&& message.getChatType() != ChatType.GroupChat) {
-						message.isAcked = true;
+					if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != ChatType.GroupChat) {
+							message.isAcked = true;
 						try {
-							EMChatManager.getInstance().ackMessageRead(
-									message.getFrom(), message.getMsgId());
+							EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -1600,8 +1465,7 @@ public class MessageAdapter extends BaseAdapter {
 			});
 
 		} else {
-			new LoadVideoImageTask().execute(localThumb, thumbnailUrl, iv,
-					activity, message, this);
+			new LoadVideoImageTask().execute(localThumb, thumbnailUrl, iv,activity, message, this);
 		}
 
 	}
@@ -1674,28 +1538,20 @@ public class MessageAdapter extends BaseAdapter {
 				switch (message.getType()) {
 				case TXT:
 				case LOCATION:
-					MobclickAgent.onEventValue(activity, "text_msg", params,
-							(int) costTime);
-					MobclickAgent.onEventDuration(activity, "text_msg",
-							(int) costTime);
+					MobclickAgent.onEventValue(activity, "text_msg", params,(int) costTime);
+					MobclickAgent.onEventDuration(activity, "text_msg",(int) costTime);
 					break;
 				case IMAGE:
-					MobclickAgent.onEventValue(activity, "img_msg", params,
-							(int) costTime);
-					MobclickAgent.onEventDuration(activity, "img_msg",
-							(int) costTime);
+					MobclickAgent.onEventValue(activity, "img_msg", params,(int) costTime);
+					MobclickAgent.onEventDuration(activity, "img_msg",(int) costTime);
 					break;
 				case VOICE:
-					MobclickAgent.onEventValue(activity, "voice_msg", params,
-							(int) costTime);
-					MobclickAgent.onEventDuration(activity, "voice_msg",
-							(int) costTime);
+					MobclickAgent.onEventValue(activity, "voice_msg", params,(int) costTime);
+					MobclickAgent.onEventDuration(activity, "voice_msg",(int) costTime);
 					break;
 				case VIDEO:
-					MobclickAgent.onEventValue(activity, "video_msg", params,
-							(int) costTime);
-					MobclickAgent.onEventDuration(activity, "video_msg",
-							(int) costTime);
+					MobclickAgent.onEventValue(activity, "video_msg", params,(int) costTime);
+					MobclickAgent.onEventDuration(activity, "video_msg",(int) costTime);
 					break;
 				default:
 					break;

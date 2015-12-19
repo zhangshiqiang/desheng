@@ -183,6 +183,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	public static ChatActivity activityInstance = null;
 	// 给谁发送消息
 	private String toChatUsername;
+	//语音录音器
 	private VoiceRecorder voiceRecorder;
 	private MessageAdapter adapter;
 	private File cameraFile;
@@ -375,8 +376,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 		manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		wakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
-				.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "demo");
+		wakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "demo");
 		// 判断单聊还是群聊
 		chatType = getIntent().getIntExtra("chatType", CHATTYPE_SINGLE);
 
@@ -446,8 +446,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			new Thread() {
 				public void run() {
 					try {
-						String checkUserChat = EngineManager.getUserEngine().checkUserChat(
-								ExampleApplication.getInstance().getUserName(), getIntent().getStringExtra("groupId"));
+						String checkUserChat = EngineManager.getUserEngine().checkUserChat(ExampleApplication.getInstance().getUserName(), getIntent().getStringExtra("groupId"));
 						JSONObject jsonObject = new JSONObject(checkUserChat);
 						JSONObject jsonObject2 = jsonObject.getJSONObject("data");
 						String isSilence = jsonObject2.getString("is_silence");
@@ -475,11 +474,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 
 			if (group != null) {
 				if (group.getGroupName().length() < 7) {
-					((TextView) findViewById(R.id.name))
-							.setText(group.getGroupName() + "(" + group.getAffiliationsCount() + "人)");
+					((TextView) findViewById(R.id.name)).setText(group.getGroupName() + "(" + group.getAffiliationsCount() + "人)");
 				} else {
-					((TextView) findViewById(R.id.name)).setText(
-							group.getGroupName().substring(0, 7) + "...(" + group.getAffiliationsCount() + "人)");
+					((TextView) findViewById(R.id.name)).setText(group.getGroupName().substring(0, 7) + "...(" + group.getAffiliationsCount() + "人)");
 				}
 			} else
 				((TextView) findViewById(R.id.name)).setText(toChatUsername);
@@ -511,6 +508,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 				return false;
 			}
 		});
+		//EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
 		// 注册接收消息广播
 		receiver = new NewMessageBroadcastReceiver();
 		IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
@@ -519,14 +517,12 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		registerReceiver(receiver, intentFilter);
 
 		// 注册一个ack回执消息的BroadcastReceiver
-		IntentFilter ackMessageIntentFilter = new IntentFilter(
-				EMChatManager.getInstance().getAckMessageBroadcastAction());
+		IntentFilter ackMessageIntentFilter = new IntentFilter(EMChatManager.getInstance().getAckMessageBroadcastAction());
 		ackMessageIntentFilter.setPriority(5);
 		registerReceiver(ackMessageReceiver, ackMessageIntentFilter);
 
 		// 注册一个消息送达的BroadcastReceiver
-		IntentFilter deliveryAckMessageIntentFilter = new IntentFilter(
-				EMChatManager.getInstance().getDeliveryAckMessageBroadcastAction());
+		IntentFilter deliveryAckMessageIntentFilter = new IntentFilter(EMChatManager.getInstance().getDeliveryAckMessageBroadcastAction());
 		deliveryAckMessageIntentFilter.setPriority(5);
 		registerReceiver(deliveryAckMessageReceiver, deliveryAckMessageIntentFilter);
 
@@ -1360,6 +1356,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			adapter.notifyDataSetChanged();
 		}
 	};
+	//控制屏幕亮度
 	private PowerManager.WakeLock wakeLock;
 	private String phone;
 	private BroadcastReceiver cmdMessageReceiver;
@@ -1428,8 +1425,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 					try {
 						int length = voiceRecorder.stopRecoding();
 						if (length > 0) {
-							sendVoice(voiceRecorder.getVoiceFilePath(), voiceRecorder.getVoiceFileName(toChatUsername),
-									Integer.toString(length), false);
+							sendVoice(voiceRecorder.getVoiceFilePath(), voiceRecorder.getVoiceFileName(toChatUsername),Integer.toString(length), false);
 						} else if (length == EMError.INVALID_FILE) {
 							Toast.makeText(getApplicationContext(), st1, Toast.LENGTH_SHORT).show();
 						} else {
@@ -1485,8 +1481,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 							@SuppressWarnings("rawtypes")
 							Class clz = Class.forName("com.hanyu.desheng.utils.SmileUtils");
 							Field field = clz.getField(filename);
-							mEditTextContent
-									.append(SmileUtils.getSmiledText(ChatActivity.this, (String) field.get(null)));
+							mEditTextContent.append(SmileUtils.getSmiledText(ChatActivity.this, (String) field.get(null)));
 						} else { // 删除文字或者表情
 							if (!TextUtils.isEmpty(mEditTextContent.getText())) {
 

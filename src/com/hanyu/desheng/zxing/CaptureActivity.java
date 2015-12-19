@@ -375,7 +375,7 @@ public final class CaptureActivity extends Activity implements
 
 		// 把图片画到扫描框
 		viewfinderView.drawResultBitmap(barcode);
-		//---------------------------------------------------------------------------------------------------------------------------------
+
 		beepManager.playBeepSoundAndVibrate();
 		String result = ResultParser.parseResult(rawResult).toString();
 		if (result.contains("desheng4567ds")) {

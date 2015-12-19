@@ -63,8 +63,7 @@ public class SmileUtils {
 	public static final String ee_34 = "[(W)]";
 	public static final String ee_35 = "[(D)]";
 
-	private static final Factory spannableFactory = Spannable.Factory
-			.getInstance();
+	private static final Factory spannableFactory = Spannable.Factory.getInstance();
 
 	private static final Map<Pattern, Integer> emoticons = new HashMap<Pattern, Integer>();
 
@@ -125,10 +124,8 @@ public class SmileUtils {
 			Matcher matcher = entry.getKey().matcher(spannable);
 			while (matcher.find()) {
 				boolean set = true;
-				for (ImageSpan span : spannable.getSpans(matcher.start(),
-						matcher.end(), ImageSpan.class))
-					if (spannable.getSpanStart(span) >= matcher.start()
-							&& spannable.getSpanEnd(span) <= matcher.end())
+				for (ImageSpan span : spannable.getSpans(matcher.start(),matcher.end(), ImageSpan.class))
+					if (spannable.getSpanStart(span) >= matcher.start() && spannable.getSpanEnd(span) <= matcher.end())
 						spannable.removeSpan(span);
 					else {
 						set = false;
@@ -136,9 +133,7 @@ public class SmileUtils {
 					}
 				if (set) {
 					hasChanges = true;
-					spannable.setSpan(new ImageSpan(context, entry.getValue()),
-							matcher.start(), matcher.end(),
-							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+					spannable.setSpan(new ImageSpan(context, entry.getValue()),matcher.start(), matcher.end(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				}
 			}
 		}

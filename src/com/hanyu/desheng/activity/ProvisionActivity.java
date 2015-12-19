@@ -39,7 +39,7 @@ public class ProvisionActivity extends BaseActivity {
 		setBack();
 		setTopTitle("会员条款");
 		provision_wv.getSettings().setDefaultTextEncodingName("UTF-8");
-		provision_wv.loadUrl("http://e.aysfq.cn/hytk.html");
+		provision_wv.loadUrl("http://app.4567cn.com/hytk.html");
 	}
 
 	@Override

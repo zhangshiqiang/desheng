@@ -20,8 +20,7 @@ public class ImageCache {
 
     private ImageCache() {
         // use 1/8 of available heap size
-        cache = new LruCache<String, Bitmap>((int) (Runtime.getRuntime()
-                .maxMemory() / 8)) {
+        cache = new LruCache<String, Bitmap>((int) (Runtime.getRuntime().maxMemory() / 8)) {
             @Override
             protected int sizeOf(String key, Bitmap value) {
                 return value.getRowBytes() * value.getHeight();

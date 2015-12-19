@@ -19,14 +19,30 @@
             android:background="@drawable/dl_03" />
     </RelativeLayout>
 
-    <com.hanyu.desheng.ui.CircleImageView
-        android:id="@+id/shop_head_img"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+    <RelativeLayout
+        android:id="@+id/shop_head_rl"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/tx_03"
-        android:layout_marginLeft="3dp"
-        android:visibility="gone" />
+        android:layout_marginLeft="3dp" >
+
+        <com.hanyu.desheng.ui.CircleImageView
+            android:id="@+id/shop_head_img"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/tx_03"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/shop_head_tv"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/msg_cnt_redshape"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"

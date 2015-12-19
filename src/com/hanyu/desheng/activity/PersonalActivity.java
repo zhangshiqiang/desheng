@@ -114,9 +114,8 @@ public class PersonalActivity extends BaseActivity {
 	private static final int PROFESS = 5;
 	private static final int PHONE = 6;
 	private static final int EMAIL = 7;
-
-	private static String IMG_PATH = getSDPath() + java.io.File.separator
-			+ "ocrtest";
+	public static final int RESULTCODE = 8;
+	private static String IMG_PATH = getSDPath() + java.io.File.separator + "ocrtest";
 
 	// private static ProgressDialog pd;
 	// private String cityTxt;
@@ -126,59 +125,48 @@ public class PersonalActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.personal_rl1:
-			menuWindow = new SelectPicPopupWindow(PersonalActivity.this,
-					itemsOnClick);
-			menuWindow.showAtLocation(findViewById(R.id.personal),
-					Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+			menuWindow = new SelectPicPopupWindow(PersonalActivity.this, itemsOnClick);
+			menuWindow.showAtLocation(findViewById(R.id.personal), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 			break;
 		case R.id.personal_rl2:
-			intent = new Intent(PersonalActivity.this,
-					ChangeNicknameActivity.class);
+			intent = new Intent(PersonalActivity.this, ChangeNicknameActivity.class);
 			intent.putExtra("flag", 1);
 			startActivityForResult(intent, REALNAME);
 			break;
 		case R.id.personal_rlqq:
-			intent = new Intent(PersonalActivity.this,
-					ChangeNicknameActivity.class);
+			intent = new Intent(PersonalActivity.this, ChangeNicknameActivity.class);
 			intent.putExtra("flag", 2);
 			startActivityForResult(intent, QQNUMBER);
 			break;
 		case R.id.personal_rlwx:
-			intent = new Intent(PersonalActivity.this,
-					ChangeNicknameActivity.class);
+			intent = new Intent(PersonalActivity.this, ChangeNicknameActivity.class);
 			intent.putExtra("flag", 1);
 			startActivityForResult(intent, WEIXIN);
 			break;
 		case R.id.personal_rlpro:
-			intent = new Intent(PersonalActivity.this,
-					ChangeNicknameActivity.class);
+			intent = new Intent(PersonalActivity.this, ChangeNicknameActivity.class);
 			intent.putExtra("flag", 1);
 			startActivityForResult(intent, PROFESS);
 			break;
 		case R.id.personal_rlph:
-			intent = new Intent(PersonalActivity.this,
-					ChangeNicknameActivity.class);
+			intent = new Intent(PersonalActivity.this, ChangeNicknameActivity.class);
 			intent.putExtra("flag", 3);
 			startActivityForResult(intent, PHONE);
 			break;
 		case R.id.personal_rlem:
-			intent = new Intent(PersonalActivity.this,
-					ChangeNicknameActivity.class);
+			intent = new Intent(PersonalActivity.this, ChangeNicknameActivity.class);
 			intent.putExtra("flag", 4);
 			startActivityForResult(intent, EMAIL);
 			break;
 		case R.id.personal_rl3:
-			intent = new Intent(PersonalActivity.this,
-					ChangeNicknameActivity.class);
+			intent = new Intent(PersonalActivity.this, ChangeNicknameActivity.class);
 			intent.putExtra("flag", 1);
 			startActivityForResult(intent, NICKNAME);
 			break;
 		case R.id.personal_rl5:
-			TimePopupWindow timePopupWindow = new TimePopupWindow(context,
-					Type.YEAR_MONTH_DAY);
+			TimePopupWindow timePopupWindow = new TimePopupWindow(context, Type.YEAR_MONTH_DAY);
 			timePopupWindow.setRange(1950, 2050);
-			timePopupWindow.showAtLocation(v, Gravity.BOTTOM
-					| Gravity.CENTER_HORIZONTAL, 0, 0, null);
+			timePopupWindow.showAtLocation(v, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0, null);
 			timePopupWindow.setOnTimeSelectListener(new OnTimeSelectListener() {
 				@SuppressLint("SimpleDateFormat")
 				@Override
@@ -199,9 +187,12 @@ public class PersonalActivity extends BaseActivity {
 			break;
 		case R.id.rl_back:
 			UpLoadDetails(sex);
+			Intent i = new Intent();
+			String headpic = SharedPreferencesUtil.getStringData(context, "headpic", "");
+			i.putExtra("headpic", headpic);
+			setResult(RESULTCODE, i);
 			finish();
 			break;
-
 		default:
 			break;
 		}
@@ -230,15 +221,13 @@ public class PersonalActivity extends BaseActivity {
 		if (!path.exists()) {
 			path.mkdirs();
 		}
-		String head = SharedPreferencesUtil.getStringData(context, "headpic",
-				"");
+		String head = SharedPreferencesUtil.getStringData(context, "headpic", "");
 		if (!TextUtils.isEmpty(head)) {
 			ImageLoader.getInstance().displayImage(head, personal_riv);
 		} else {
 			personal_riv.setBackgroundResource(R.drawable.tx_03);
 		}
-		String memberid = SharedPreferencesUtil.getStringData(context,
-				"memberid", "");
+		String memberid = SharedPreferencesUtil.getStringData(context, "memberid", "");
 		LogUtil.i(tag, "我是获取会员信息中的" + memberid);
 		getUserInfo(memberid);
 	}
@@ -271,8 +260,7 @@ public class PersonalActivity extends BaseActivity {
 			case R.id.takePhotoBtn:// 拍照
 				// 相机
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				intent.putExtra(MediaStore.EXTRA_OUTPUT,
-						Uri.fromFile(new File(IMG_PATH, "temp.jpg")));
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(IMG_PATH, "temp.jpg")));
 				startActivityForResult(intent, CAMERA);
 				break;
 			case R.id.pickPhotoBtn:// 相册选择图片
@@ -390,8 +378,7 @@ public class PersonalActivity extends BaseActivity {
 		// outputX outputY 是裁剪图片宽高
 		intent.putExtra("outputX", 230);
 		intent.putExtra("outputY", 230);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT,
-				Uri.fromFile(new File(IMG_PATH, "temp_cropped.jpg")));
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(IMG_PATH, "temp_cropped.jpg")));
 		intent.putExtra("return-data", false);
 		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 		intent.putExtra("noFaceDetection", true); // no face detection
@@ -405,8 +392,7 @@ public class PersonalActivity extends BaseActivity {
 	 */
 	public static String getSDPath() {
 		File sdDir = null;
-		boolean sdCardExist = Environment.getExternalStorageState().equals(
-				android.os.Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
+		boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
 		if (sdCardExist) {
 			sdDir = Environment.getExternalStorageDirectory();// 获取外存目录
 		}
@@ -423,8 +409,7 @@ public class PersonalActivity extends BaseActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				String result = EngineManager.getUserEngine().uploadUserImage(
-						file);
+				String result = EngineManager.getUserEngine().uploadUserImage(file);
 				return result;
 			}
 
@@ -438,12 +423,9 @@ public class PersonalActivity extends BaseActivity {
 							JSONObject object = json.getJSONObject("data");
 							String upload = object.getString("imgurl");
 							GlobalParams.headpic = upload;
-							SharedPreferencesUtil.saveStringData(context,
-									"headpic", GlobalParams.headpic);
-							ImageLoader.getInstance().displayImage(
-									GlobalParams.headpic, personal_riv);
-							sendBroadcast(new Intent(
-									Left.UPDATA_CENTER));
+							SharedPreferencesUtil.saveStringData(context, "headpic", GlobalParams.headpic);
+							ImageLoader.getInstance().displayImage(GlobalParams.headpic, personal_riv);
+							sendBroadcast(new Intent(Left.UPDATA_CENTER));
 							MyToastUtils.showShortToast(context, "更换头像成功");
 
 						} else {
@@ -503,11 +485,9 @@ public class PersonalActivity extends BaseActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				String memberid = SharedPreferencesUtil.getStringData(context,
-						"memberid", "");
+				String memberid = SharedPreferencesUtil.getStringData(context, "memberid", "");
 				LogUtil.i(tag, "我是更新会员信息中的" + memberid);
-				String membercode = SharedPreferencesUtil.getStringData(
-						context, "membercode", "");
+				String membercode = SharedPreferencesUtil.getStringData(context, "membercode", "");
 				nickname2 = personal_tv2.getText().toString();
 				realname = personal_et.getText().toString();
 				email = personal_tv3.getText().toString();
@@ -516,16 +496,11 @@ public class PersonalActivity extends BaseActivity {
 				weixin = personal_wx.getText().toString();
 				profession = personal_profession.getText().toString();
 				birthday = personal_birthday.getText().toString();
-				String identity = SharedPreferencesUtil.getStringData(context,
-						"idcard", "");
-				String identity_img = SharedPreferencesUtil.getStringData(
-						context, "idcard_url", "");
-				String headpic = SharedPreferencesUtil.getStringData(context,
-						"headpic", "");
-				String result = EngineManager.getUserEngine().toUpdateHeadPic(
-						memberid, membercode, headpic, nickname2, realname,
-						email, sex + "", phone, qq, weixin, profession,
-						birthday, identity, identity_img);
+				String identity = SharedPreferencesUtil.getStringData(context, "idcard", "");
+				String identity_img = SharedPreferencesUtil.getStringData(context, "idcard_url", "");
+				String headpic = SharedPreferencesUtil.getStringData(context, "headpic", "");
+				String result = EngineManager.getUserEngine().toUpdateHeadPic(memberid, membercode, headpic, nickname2,
+						realname, email, sex + "", phone, qq, weixin, profession, birthday, identity, identity_img);
 				return result;
 			}
 
@@ -536,14 +511,12 @@ public class PersonalActivity extends BaseActivity {
 						JSONObject json = new JSONObject(result);
 						String code = json.getString("code");
 						if (code.equals("0")) {
-							SharedPreferencesUtil.saveStringData(context,
-									"miname", nickname2);
+							SharedPreferencesUtil.saveStringData(context, "miname", nickname2);
 							// SharedPreferencesUtil.saveStringData(context,
 							// "realname", realname);
 							// SharedPreferencesUtil.saveStringData(context,
 							// "email", email);
-							SharedPreferencesUtil.saveStringData(context,
-									"miphone", phone);
+							SharedPreferencesUtil.saveStringData(context, "miphone", phone);
 							// SharedPreferencesUtil.saveStringData(context,
 							// "qq",
 							// qq);
@@ -555,8 +528,7 @@ public class PersonalActivity extends BaseActivity {
 							// "birthday", birthday);
 							// SharedPreferencesUtil.saveIntData(context, "sex",
 							// sex);
-							sendBroadcast(new Intent(
-									Left.UPDATA_CENTER));
+							sendBroadcast(new Intent(Left.UPDATA_CENTER));
 							// MyToastUtils.showShortToast(context, "更新成功");
 						} else {
 							// MyToastUtils.showShortToast(context, "更新失败");
@@ -585,8 +557,7 @@ public class PersonalActivity extends BaseActivity {
 
 			@Override
 			protected InputStream doInBackground(Void... params) {
-				InputStream result = EngineManager.getUserEngine().toGetinfo(
-						memberid);
+				InputStream result = EngineManager.getUserEngine().toGetinfo(memberid);
 				return result;
 			}
 
@@ -613,8 +584,7 @@ public class PersonalActivity extends BaseActivity {
 						// 生日
 						@SuppressWarnings("deprecation")
 						Date date = new Date(userInfo.mibirthday);
-						String format = (String) DateFormat.format(
-								"yyyy-MM-dd", date);
+						String format = (String) DateFormat.format("yyyy-MM-dd", date);
 						personal_birthday.setText(format);
 						// 性别
 						if ("1".equals(userInfo.misex)) {
@@ -640,6 +610,10 @@ public class PersonalActivity extends BaseActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 			UpLoadDetails(sex);
+			Intent i = new Intent();
+			String headpic = SharedPreferencesUtil.getStringData(context, "headpic", "");
+			i.putExtra("headpic", headpic);
+			setResult(RESULTCODE, i);
 			finish();
 			return true;
 		}

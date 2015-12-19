@@ -278,6 +278,7 @@ public class YangUtils {
 			if (url == null || "".equals(url) || url.length() < 1) {
 				return null;
 			}
+			System.out.println("**************************************************"+url);
 			Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
 			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 			// 图像数据转换，使用了矩阵转换

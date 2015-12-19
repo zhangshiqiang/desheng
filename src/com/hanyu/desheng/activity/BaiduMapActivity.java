@@ -112,16 +112,13 @@ public class BaiduMapActivity extends HuanXinBaseActivity {
 		initMapView();
 		if (latitude == 0) {
 			mMapView = new MapView(this, new BaiduMapOptions());
-			mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
-							mCurrentMode, true, null));
+			mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(mCurrentMode, true, null));
 			showMapWithLocationClient();
 		} else {
 			double longtitude = intent.getDoubleExtra("longitude", 0);
 			String address = intent.getStringExtra("address");
 			LatLng p = new LatLng(latitude, longtitude);
-			mMapView = new MapView(this,
-					new BaiduMapOptions().mapStatus(new MapStatus.Builder()
-							.target(p).build()));
+			mMapView = new MapView(this,new BaiduMapOptions().mapStatus(new MapStatus.Builder().target(p).build()));
 			showMap(latitude, longtitude, address);
 		}
 		// 注册 SDK 广播监听者

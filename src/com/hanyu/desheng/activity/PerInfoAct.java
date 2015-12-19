@@ -146,8 +146,7 @@ public class PerInfoAct extends BaseActivity {
 						ChatBean chatBean = GsonUtils.json2Bean(result, ChatBean.class);
 						if (chatBean != null && chatBean.code == 0) {
 							if (chatBean.data.info_list != null && chatBean.data.info_list.size() > 0) {
-								ImageLoader.getInstance().displayImage(chatBean.data.info_list.get(0).miuserheader,
-										dzact_riv);
+								ImageLoader.getInstance().displayImage(chatBean.data.info_list.get(0).miuserheader,dzact_riv);
 								dzact_tv1.setText(chatBean.data.info_list.get(0).miname);
 								getUserInfo(chatBean.data.info_list.get(0).mobile);
 							}

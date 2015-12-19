@@ -153,7 +153,6 @@ public class ContactsFragment extends BaseFragment {
 
 	@Override
 	public void setListener() {
-//		
 		contacts_right.setOnClickListener(this);
 	}
 

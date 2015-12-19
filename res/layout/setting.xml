@@ -9,6 +9,25 @@
     <!-- 检测更新 -->
 
     <RelativeLayout
+        android:id="@+id/setting_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp" >
+
+        <TextView
+            android:id="@+id/setting_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/down_icon"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="当前版本号" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/setting_rl1"
         style="@style/item_rl"
         android:layout_marginTop="20dp" >
@@ -100,13 +119,5 @@
 
         <ImageView style="@style/imageview_arrows" />
     </RelativeLayout>
-    <!-- 意见反馈 -->
-
-    <Button
-        android:id="@+id/menu_proposal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/yjfk"
-        android:gravity="center_horizontal|center_vertical" />
 
 </LinearLayout>

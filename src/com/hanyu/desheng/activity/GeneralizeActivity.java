@@ -10,12 +10,27 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jivesoftware.smack.util.Base64Encoder;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
+import com.hanyu.desheng.GlobalParams;
+import com.hanyu.desheng.R;
+import com.hanyu.desheng.base.BaseActivity;
+import com.hanyu.desheng.bean.PointListInfo;
+import com.hanyu.desheng.engine.EngineManager;
+import com.hanyu.desheng.engine.HttpTask;
+import com.hanyu.desheng.fragment.MainFragment;
+import com.hanyu.desheng.ui.RoundedImageView;
+import com.hanyu.desheng.util.ShowDialogUtil;
+import com.hanyu.desheng.utils.LogUtil;
+import com.hanyu.desheng.utils.MyToastUtils;
+import com.hanyu.desheng.utils.SharedPreferencesUtil;
+import com.hanyu.desheng.utils.YangUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -26,7 +41,6 @@ import android.text.TextUtils;
 import android.util.Xml;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -34,24 +48,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-
-import com.hanyu.desheng.GlobalParams;
-import com.hanyu.desheng.MainActivity;
-import com.hanyu.desheng.R;
-import com.hanyu.desheng.base.BaseActivity;
-import com.hanyu.desheng.bean.PointListInfo;
-import com.hanyu.desheng.engine.EngineManager;
-import com.hanyu.desheng.engine.HttpTask;
-import com.hanyu.desheng.fragment.MainFragment;
-import com.hanyu.desheng.fragment.ShopFragment;
-import com.hanyu.desheng.ui.RoundedImageView;
-import com.hanyu.desheng.util.ShowDialogUtil;
-import com.hanyu.desheng.utils.LogUtil;
-import com.hanyu.desheng.utils.MyToastUtils;
-import com.hanyu.desheng.utils.SharedPreferencesUtil;
-import com.hanyu.desheng.utils.YangUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class GeneralizeActivity extends BaseActivity {
 	private static final String tag = "GeneralizeActivity";
@@ -75,7 +71,7 @@ public class GeneralizeActivity extends BaseActivity {
 	private String appHome = Environment.getExternalStorageDirectory().getAbsolutePath() + "/desheng";
 	private String DSQR;
 	private String state;
-	private String url;
+	public static String url;
 
 	@Override
 	public void onClick(View v) {
@@ -129,10 +125,11 @@ public class GeneralizeActivity extends BaseActivity {
 		phone = SharedPreferencesUtil.getStringData(context, "miphone", "");
 		String mobile = Base64Encoder.getInstance().encode(phone);
 		LogUtil.i(tag, "mobile" + mobile);
-		url = "http://e.aysfq.cn/Api/login.php?invite=" + mobile;
+		url = "http://app.4567cn.com/Api/login.php?invite=" + mobile;
 		Bitmap bitmap = YangUtils.createQRImage(url);
 		compressImage(bitmap, 5);
 		getPointList(phone);
+
 	}
 
 	private void initView() {
@@ -151,6 +148,35 @@ public class GeneralizeActivity extends BaseActivity {
 	public void setListener() {
 		generalize_btn.setOnClickListener(this);
 		generalize_rl2.setOnClickListener(this);
+	}
+
+	public static String MSG = "com.hanyu.desheng.activity.GeneralizeActivity.fenxiang";
+	private MyBroadCast2 receiver3;
+
+	private class MyBroadCast2 extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			LogUtil.i("fenxiang", "广播分享！！！！！！！！");
+			if (!YangUtils.isLogin(context)) {
+				ShowDialogUtil.showIsLoginDialog(context);
+			} else {
+				if ("1".equals(state)) {
+					DSQR = Environment.getExternalStorageDirectory().getAbsolutePath() + "/desheng/" + 5 + ".png";
+					LogUtil.i(tag, DSQR);
+					showShare();
+				} else {
+					MyToastUtils.showShortToast(context, "您还不是店主，目前不能使用此功能");
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (receiver3 != null) {
+			unregisterReceiver(receiver3);
+		}
+		super.onDestroy();
 	}
 
 	/**
@@ -309,29 +335,29 @@ public class GeneralizeActivity extends BaseActivity {
 			TextView gl_lv_tv2;
 			TextView gl_lv_tv3;
 		}
-
 	}
 
 	private void showShare() {
 		GlobalParams.share = 2;
-		ShareSDK.initSDK(context);
 		OnekeyShare oks = new OnekeyShare();
-		// 关闭sso授权
 		oks.disableSSOWhenAuthorize();
-		oks.setSilent(false);
-		oks.setDialogMode();
 		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-		oks.setTitle("DS4567"); 
+		oks.setTitle("DS4567");
+		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+		oks.setTitleUrl(url);
 		// text是分享文本，所有平台都需要这个字段
-		oks.setText("大众创业，万众创新：我只推荐 德升DS4567，移动互联 第一时装平台！8");
+		oks.setText("大众创业，万众创新：我只推荐 德升DS4567，移动互联 第一时装平台！");
 		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-		oks.setImagePath(DSQR);// 确保SDcard下面存在此张图片
-		oks.setSiteUrl(url);
+		oks.setImagePath(DSQR);
+		// url仅在微信（包括好友和朋友圈）中使用
 		oks.setUrl(url);
+		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
 		oks.setComment("大众创业，万众创新：我只推荐 德升DS4567，移动互联 第一时装平台！");
-		// oks.setImageUrl("http://img8.cntrades.com/201508/16/17-46-24-50-960556.png.middle.png");
-		// 启动分享GUI
+		// site是分享此内容的网站名称，仅在QQ空间使用
+		oks.setSite(getString(R.string.app_name));
+		oks.setSiteUrl(url);
 		oks.show(context);
+
 	}
 
 	@SuppressLint("SdCardPath")

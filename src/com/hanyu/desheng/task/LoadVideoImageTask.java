@@ -55,20 +55,15 @@ public class LoadVideoImageTask extends AsyncTask<Object, Void, Bitmap> {
 				@Override
 				public void onClick(View v) {
 					if (thumbnailPath != null) {
-						VideoMessageBody videoBody = (VideoMessageBody) message
-								.getBody();
-						Intent intent = new Intent(activity,
-								ShowVideoActivity.class);
+						VideoMessageBody videoBody = (VideoMessageBody) message.getBody();
+						Intent intent = new Intent(activity,ShowVideoActivity.class);
 						intent.putExtra("localpath", videoBody.getLocalUrl());
 						intent.putExtra("secret", videoBody.getSecret());
 						intent.putExtra("remotepath", videoBody.getRemoteUrl());
-						if (message != null
-								&& message.direct == EMMessage.Direct.RECEIVE
-								&& !message.isAcked) {
+						if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked) {
 							message.isAcked = true;
 							try {
-								EMChatManager.getInstance().ackMessageRead(
-										message.getFrom(), message.getMsgId());
+								EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -80,16 +75,14 @@ public class LoadVideoImageTask extends AsyncTask<Object, Void, Bitmap> {
 			});
 
 		} else {
-			if (message.status == EMMessage.Status.FAIL
-					|| message.direct == EMMessage.Direct.RECEIVE) {
+			if (message.status == EMMessage.Status.FAIL || message.direct == EMMessage.Direct.RECEIVE) {
 				if (CommonUtils.isNetWorkConnected(activity)) {
 					new AsyncTask<Void, Void, Void>() {
 						 
 						
 						@Override
 						protected Void doInBackground(Void... params) {
-							EMChatManager.getInstance().asyncFetchMessage(
-									message);
+							EMChatManager.getInstance().asyncFetchMessage(message);
 							return null;
 						}
 
