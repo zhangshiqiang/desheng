@@ -6,6 +6,11 @@
     android:orientation="vertical" >
 
     <include
+        android:id="@+id/title_msg"
+        layout="@layout/message_title"
+        android:visibility="gone" />
+
+    <include
         android:id="@+id/rl_error_item"
         layout="@layout/chat_neterror_item"
         android:visibility="gone" />

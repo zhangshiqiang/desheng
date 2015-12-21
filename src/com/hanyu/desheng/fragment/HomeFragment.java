@@ -94,6 +94,7 @@ public class HomeFragment extends BaseFragment {
 
 	private android.app.AlertDialog updateDialog;
 	private RelativeLayout home_rl_back;
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -116,9 +117,10 @@ public class HomeFragment extends BaseFragment {
 		return view;
 	}
 
+	
 	@Override
 	public void initData(Bundle savedInstanceState) {
-		home_rl_back=MainFragment.home_rl_back;
+		home_rl_back = MainFragment.home_rl_back;
 		View headView = View.inflate(getActivity(), R.layout.home_head_view, null);
 
 		homgpager_viewpager = (LoopViewPager) headView.findViewById(R.id.homgpager_viewpager);
@@ -139,7 +141,7 @@ public class HomeFragment extends BaseFragment {
 		list_view.getRefreshableView().addHeaderView(headView);
 		selectpage();
 
-//		getHotData("0", 2);
+		// getHotData("0", 2);
 		getNewsData("0");
 
 		initListener();
@@ -365,7 +367,6 @@ public class HomeFragment extends BaseFragment {
 				list_view.onPullUpRefreshComplete();
 			}
 
-			
 			protected void onPreExecute() {
 
 			}
@@ -437,8 +438,7 @@ public class HomeFragment extends BaseFragment {
 				} else {
 					result = EngineManager.getUserEngine().getTopPic("", page_no);
 				}
-				
-				
+
 				return result;
 			}
 
@@ -449,8 +449,6 @@ public class HomeFragment extends BaseFragment {
 					banners = homeBean.data.banner_list;
 					startViewPager();
 
-					// 检测版本更新
-					checkUpdate(homeBean);
 				}
 			}
 
@@ -458,59 +456,6 @@ public class HomeFragment extends BaseFragment {
 
 			}
 		}.executeProxy();
-	}
-
-	/**
-	 * 检查更新
-	 */
-	public void checkUpdate(HomeBean homeBean) {
-		if (getActivity() == null) {
-			return;
-		}
-		PackageManager pm = getActivity().getPackageManager();
-		try {
-			PackageInfo info = pm.getPackageInfo(getActivity().getPackageName(), 0);
-			String versionName = info.versionName;
-			if (!versionName.equals(homeBean.data.andriod.version)) {
-				showUpdateDialog(homeBean.data.andriod.version,
-						new DSUrlManager().getFullUrl3(homeBean.data.andriod.apk_url));
-
-			}
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void showUpdateDialog(final String versionName, final String downloadUrl) {
-		Builder builder = new android.app.AlertDialog.Builder(context);
-		builder.setTitle("发现新版本!");
-		builder.setMessage("新版本" + versionName + ",是否更新");
-		builder.setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				updateDialog.dismiss();
-			}
-
-		});
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				updateDialog.dismiss();
-				// Intent updateIntent = new Intent(context,
-				// UpdateAppService.class);
-				// updateIntent.putExtra("downloadUrl", downloadUrl);
-				// context.startService(updateIntent);
-
-				Uri uri = Uri.parse("http://www.pgyer.com/1G7m");
-				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(intent);
-
-			}
-		});
-		updateDialog = builder.show();
-
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EasyUtils;
 import com.easemob.util.HanziToPinyin;
 import com.hanyu.desheng.ExampleApplication;
+import com.hanyu.desheng.ExitApplication;
 import com.hanyu.desheng.MainActivity;
 import com.hanyu.desheng.R;
 import com.hanyu.desheng.activity.MyOrderActivity;
@@ -68,6 +69,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
 		ViewUtils.inject(this);
 		init(savedInstanceState);
 		setListener();
+		ExitApplication.getInstance().addActivity(this);
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		if (userDao == null)
 			userDao = new UserDao(getApplicationContext());

@@ -30,9 +30,11 @@ import com.hanyu.desheng.utils.YangUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tina.utils.UpdateUtils;
 import com.zhy.utils.DownLoadManager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -81,8 +83,6 @@ public class ShopFragment extends BaseFragment {
 	@ViewInject(R.id.shop_webview)
 	public static WebView shop_webview;
 	private PopupWindow popupWindow;
-	private RelativeLayout rlback;// webview后退键
-	public static CircleImageView shop_head_img;
 	private RelativeLayout shop_tv_right;// 分享当前链接
 	private TextView share;
 	private TextView copy;
@@ -95,6 +95,13 @@ public class ShopFragment extends BaseFragment {
 	private String chat_url = "http://wxkf.wddcn.com/client/chat.ashx?sid=17871&mid=429&utype=dzd&uid=5495667&ciid_siid=0_0&url=http://dzd.4567cn.com/vshop/detail.html?sid=17871%26gid=585956509%26iid=55621";
 	private String chat_url1 = "http://wxkf.wddcn.com/client/chat.ashx?";
 	private String info;
+
+	@ViewInject(R.id.shop_rl_back)
+	public static RelativeLayout rlback;// webview后退键
+	@ViewInject(R.id.shop_head_rl)
+	public static View shop_head_rl;
+	@ViewInject(R.id.shop_head_img)
+	public static CircleImageView shop_head_img;
 
 	public ShopFragment() {
 	}
@@ -173,9 +180,7 @@ public class ShopFragment extends BaseFragment {
 	@Override
 	public View initView(LayoutInflater inflater) {
 		view = View.inflate(context, R.layout.shop_fragment, null);
-		rlback = MainFragment.rlback;
-		shop_head_img = MainFragment.shop_head_img;
-		shop_tv_right = MainFragment.shop_tv_right;
+//		shop_tv_right = MainFragment.shop_tv_right;
 		ViewUtils.inject(this, view);
 		instance = this;
 		return view;
@@ -185,7 +190,7 @@ public class ShopFragment extends BaseFragment {
 	@SuppressLint("NewApi")
 	@Override
 	public void initData(Bundle savedInstanceState) {
-		getToppic("0");
+		getToppic(this.getActivity(), "0");
 		WebSettings s = shop_webview.getSettings();
 		// 开启 DOM storage API 功能
 		shop_webview.getSettings().setDomStorageEnabled(true);
@@ -227,38 +232,47 @@ public class ShopFragment extends BaseFragment {
 				LogUtil.i("tag", "请求地址：" + url);
 				// 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
 				// Uri uri=Uri.parse(url);
-				if (url.contains(chat_url1)) {
-					if (!"".equals(SharedPreferencesUtil.getStringData(getActivity(), "hx_kefu_name", ""))) {
-						Intent intent = new Intent(getActivity(), ChatActivity.class);
-						intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
-						intent.putExtra("userId",
-								SharedPreferencesUtil.getStringData(getActivity(), "hx_kefu_name", ""));
-						intent.putExtra("username", "店长");
-						intent.putExtra("flag", 2);
-						startActivity(intent);
-					} else {
-						checkUpShopid(SharedPreferencesUtil.getStringVspid(getActivity()));
-					}
-
-					return true;
-				}
-
+				// if (url.contains(chat_url1)) {
+				// if
+				// (!"".equals(SharedPreferencesUtil.getStringData(getActivity(),
+				// "hx_kefu_name", ""))) {
+				// Intent intent = new Intent(getActivity(),
+				// ChatActivity.class);
+				// intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+				// intent.putExtra("userId",
+				// SharedPreferencesUtil.getStringData(getActivity(),
+				// "hx_kefu_name", ""));
+				// intent.putExtra("username", "店长");
+				// intent.putExtra("flag", 2);
+				// startActivity(intent);
+				// } else {
+				// checkUpShopid(SharedPreferencesUtil.getStringVspid(getActivity()));
+				// }
+				//
+				// return true;
+				// }
 				if (url.startsWith("tel:")) {
-
-					if (ExampleApplication.chatmap.containsKey(url.substring(4, url.length()))) {
-						String phone = url.substring(4, url.length());
-						SharedPreferencesUtil.saveStringData(context, "dzphone", phone);
-						Intent intent = new Intent(getActivity(), ChatActivity.class);
-						intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
-						intent.putExtra("userId", ExampleApplication.chatmap.get(url.substring(4, url.length())));
-						intent.putExtra("username", "店长");
-						intent.putExtra("flag", 2);
-						startActivity(intent);
-					} else {
-						List<String> mobiles = new ArrayList<String>();
-						mobiles.add(url.substring(4, url.length()));
-						checkPhoneNumber(gson.toJson(mobiles));
-					}
+					// if
+					// (ExampleApplication.chatmap.containsKey(url.substring(4,
+					// url.length()))) {
+					// String phone = url.substring(4, url.length());
+					// SharedPreferencesUtil.saveStringData(context, "dzphone",
+					// phone);
+					// Intent intent = new Intent(getActivity(),
+					// ChatActivity.class);
+					// intent.putExtra("chatType",
+					// ChatActivity.CHATTYPE_SINGLE);
+					// intent.putExtra("userId",
+					// ExampleApplication.chatmap.get(url.substring(4,
+					// url.length())));
+					// intent.putExtra("username", "店长");
+					// intent.putExtra("flag", 2);
+					// startActivity(intent);
+					// } else {
+					List<String> mobiles = new ArrayList<String>();
+					mobiles.add(url.substring(4, url.length()));
+					checkPhoneNumber(gson.toJson(mobiles));
+					// }
 					return true;
 				}
 
@@ -354,7 +368,7 @@ public class ShopFragment extends BaseFragment {
 		}
 	}
 
-	private void getToppic(final String page_no) {
+	private void getToppic(final Activity activity, final String page_no) {
 		new HttpTask<Void, Void, String>(context) {
 			@Override
 			protected String doInBackground(Void... params) {
@@ -378,7 +392,7 @@ public class ShopFragment extends BaseFragment {
 					info = homeBean.data.andriod.apk_url;
 
 					// 检测版本更新
-					 checkUpdate(homeBean);
+					UpdateUtils.checkUpdate(activity, homeBean);
 				}
 			}
 
@@ -386,95 +400,6 @@ public class ShopFragment extends BaseFragment {
 
 			}
 		}.executeProxy();
-	}
-
-	/**
-	 * 检查更新
-	 */
-	public void checkUpdate(HomeBean homeBean) {
-		if (getActivity() == null) {
-			return;
-		}
-		PackageManager pm = getActivity().getPackageManager();
-		try {
-			PackageInfo info = pm.getPackageInfo(getActivity().getPackageName(), 0);
-			String versionName = info.versionName;
-			if (!versionName.equals(homeBean.data.andriod.version)) {
-				showUpdateDialog(homeBean.data.andriod.version,
-						new DSUrlManager().getFullUrl3(homeBean.data.andriod.apk_url));
-
-			} else {
-//				Toast.makeText(getActivity(), "已是最新版本！", Toast.LENGTH_LONG);
-				LogUtil.i("===", "已是最新版本！");
-			}
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void showUpdateDialog(final String versionName, final String downloadUrl) {
-		Builder builder = new android.app.AlertDialog.Builder(context);
-		builder.setTitle("发现新版本!");
-		builder.setMessage("新版本" + versionName + ",是否更新");
-		builder.setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				updateDialog.dismiss();
-			}
-
-		});
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				updateDialog.dismiss();
-				// Intent updateIntent = new Intent(context,
-				// UpdateAppService.class);
-				// updateIntent.putExtra("downloadUrl", downloadUrl);
-				// context.startService(updateIntent);
-
-				/*
-				 * Uri uri = Uri.parse("http://www.pgyer.com/1G7m"); Intent
-				 * intent = new Intent(Intent.ACTION_VIEW, uri);
-				 * startActivity(intent);
-				 */
-				downLoadApk(downloadUrl);
-			}
-		});
-		updateDialog = builder.show();
-
-	}
-
-	protected void downLoadApk(final String downloadUrl) {
-		final ProgressDialog pd; // 进度条对话框
-		pd = new ProgressDialog(this.getActivity());
-		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		pd.setMessage("正在下载更新");
-		pd.show();
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					File file = DownLoadManager.getFileFromServer(downloadUrl, pd);
-					sleep(3000);
-					installApk(file);
-					pd.dismiss(); // 结束掉进度条对话框
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}.start();
-	}
-
-	protected void installApk(File file) {
-		Intent intent = new Intent();
-		// 执行动作
-		intent.setAction(Intent.ACTION_VIEW);
-		// 执行的数据类型
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");// 编者按：此处Android应为android，否则造成安装不了
-		startActivity(intent);
 	}
 
 	@Override
@@ -536,7 +461,7 @@ public class ShopFragment extends BaseFragment {
 				if (time - lastPressTime < 500) {
 					getActivity().finish();
 				} else {
-					Toast.makeText(context, "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "再按一次返回桌面", Toast.LENGTH_SHORT).show();
 					lastPressTime = System.currentTimeMillis();
 				}
 			}
@@ -574,11 +499,13 @@ public class ShopFragment extends BaseFragment {
 								if (!ExampleApplication.chatmap.containsKey(lpb.get(0).mobile))
 									SharedPreferencesUtil.saveStringData(context, "dzphone", lpb.get(0).mobile);
 								ExampleApplication.chatmap.put(lpb.get(0).mobile, lpb.get(0).hx_name);
-								Intent intent = new Intent(getActivity(), ChatActivity.class);
-								intent.putExtra("userId", lpb.get(0).hx_name);
-								intent.putExtra("username", "店长");
-								intent.putExtra("flag", 2);
-								getActivity().startActivity(intent);
+								// Intent intent = new Intent(getActivity(),
+								// ChatActivity.class);
+								// intent.putExtra("userId",
+								// lpb.get(0).hx_name);
+								// intent.putExtra("username", "店长");
+								// intent.putExtra("flag", 2);
+								// getActivity().startActivity(intent);
 							}
 						} else {
 							String msg = md.msg;

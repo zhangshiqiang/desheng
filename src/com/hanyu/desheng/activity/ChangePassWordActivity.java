@@ -26,6 +26,8 @@ public class ChangePassWordActivity extends BaseActivity {
 	private EditText change_pwd_et2;
 	@ViewInject(R.id.change_pwd_et3)
 	private EditText change_pwd_et3;
+	@ViewInject(R.id.change_pwd_et3s)
+	private EditText change_pwd_et3s;
 	@ViewInject(R.id.change_pwd_btn)
 	private Button commit;
 	private static final int USERINFO = 0;
@@ -37,12 +39,16 @@ public class ChangePassWordActivity extends BaseActivity {
 			String username = change_pwd_et1.getText().toString();
 			String pwd = change_pwd_et2.getText().toString();
 			String newpwd = change_pwd_et3.getText().toString();
+			String newpwds = change_pwd_et3s.getText().toString();
 			if (TextUtils.isEmpty(username)) {
 				MyToastUtils.showShortToast(context, "请输入您的账号");
 			} else if (TextUtils.isEmpty(pwd)) {
 				MyToastUtils.showShortToast(context, "请输入您的原密码");
 			} else if (TextUtils.isEmpty(newpwd)) {
 				MyToastUtils.showShortToast(context, "请输入新密码");
+			} else if (!newpwd.equals(newpwds)) {
+				System.out.println(newpwd + "====" + newpwds);
+				MyToastUtils.showShortToast(context, "两次密码不一致");
 			} else {
 				Changepwd(username, pwd, newpwd);
 			}
@@ -104,14 +110,14 @@ public class ChangePassWordActivity extends BaseActivity {
 							SharedPreferences settings = getSharedPreferences("config", 0);
 
 							SharedPreferences.Editor editor = settings.edit();
-							//清除保存的账号
+							// 清除保存的账号
 							editor.remove("hx_name");
 
 							editor.commit();
 
 							intent = new Intent(context, LoginActivity.class);
 							startActivityForResult(intent, USERINFO);
-							ExitApplication.getInstance().exit(ChangePassWordActivity.this);
+							ExitApplication.getInstance().exit(context);
 						} else {
 							MyToastUtils.showShortToast(context, msg);
 						}

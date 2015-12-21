@@ -6,8 +6,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 /**
- * 存放所有activity，用以退出程序《ExitApplication.getInstance().exit(this);》
- * @author 973835826
+ * 存放所有activity，用以退出程序
  *
  */
 public class ExitApplication extends Application {

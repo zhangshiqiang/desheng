@@ -38,6 +38,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -53,7 +54,7 @@ import android.widget.TextView;
 
 public class MainFragment extends BaseFragment {
 	public static final String tag = "MainFragment";
-
+	private InputMethodManager manager;
 	private FragmentManager fm;
 	@ViewInject(R.id.layout_content)
 	private FrameLayout layout_content;
@@ -82,12 +83,6 @@ public class MainFragment extends BaseFragment {
 	private BadgeView contarctBadge;
 	UserDao dao;
 	// 标题返回
-	@ViewInject(R.id.shop_rl_back)
-	public static RelativeLayout rlback;// webview后退键
-	@ViewInject(R.id.shop_head_rl)
-	public static View shop_head_rl;
-	@ViewInject(R.id.shop_head_img)
-	public static CircleImageView shop_head_img;
 	@ViewInject(R.id.contacts_rl_back)
 	public static RelativeLayout contacts_rl_back;
 	@ViewInject(R.id.home_rl_back)
@@ -95,18 +90,18 @@ public class MainFragment extends BaseFragment {
 	@ViewInject(R.id.msg_rl_back)
 	public static RelativeLayout msg_rl_back;
 	// 标题控件
-	@ViewInject(R.id.title_shop)
-	private View vtitle_shop;
-	@ViewInject(R.id.title_home)
-	private View vtitle_home;
-	@ViewInject(R.id.title_contacts)
-	private View vtitle_contacts;
-	@ViewInject(R.id.title_msg)
-	private View vtitle_msg;
-	@ViewInject(R.id.rb_shopping)
-	private RadioButton rb_shops;
-	@ViewInject(R.id.shop_tv_right)
-	public static RelativeLayout shop_tv_right;
+//	@ViewInject(R.id.title_shop)
+//	private View vtitle_shop;
+//	@ViewInject(R.id.title_home)
+//	private View vtitle_home;
+//	@ViewInject(R.id.title_contacts)
+//	private View vtitle_contacts;
+//	@ViewInject(R.id.title_msg)
+//	private View vtitle_msg;
+//	@ViewInject(R.id.rb_shopping)
+//	private RadioButton rb_shops;
+//	@ViewInject(R.id.shop_tv_right)
+//	public static RelativeLayout shop_tv_right;
 	private PopupWindow popupWindow;
 	private LinearLayout groupchat;
 	private TextView addfri;
@@ -128,6 +123,7 @@ public class MainFragment extends BaseFragment {
 	private MyGroupFragment groupFragment;
 	@ViewInject(R.id.iv_friend_right)
 	public static ImageView iv_friend_right;
+	
 	@ViewInject(R.id.contacts_fl)
 	public static FrameLayout contacts_fl;
 
@@ -139,6 +135,7 @@ public class MainFragment extends BaseFragment {
 
 	@Override
 	public void initData(Bundle savedInstanceState) {
+		manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		dao = new UserDao(getActivity());
 		userinfo = new UserInfo();
 		badge = new BadgeView(context, home_btn);
@@ -176,11 +173,11 @@ public class MainFragment extends BaseFragment {
 					} else {
 						transaction.show(homefragment);
 					}
-					vtitle_contacts.setVisibility(View.GONE);
-					vtitle_msg.setVisibility(View.GONE);
-					vtitle_shop.setVisibility(View.GONE);
-					vtitle_home.setVisibility(View.VISIBLE);
-					rb_shops.setVisibility(View.VISIBLE);
+//					vtitle_contacts.setVisibility(View.GONE);
+//					vtitle_msg.setVisibility(View.GONE);
+//					vtitle_shop.setVisibility(View.GONE);
+//					vtitle_home.setVisibility(View.VISIBLE);
+//					rb_shops.setVisibility(View.VISIBLE);
 					break;
 				case R.id.rb_contacts:
 					contarctBadge.hide();
@@ -195,11 +192,11 @@ public class MainFragment extends BaseFragment {
 						} else {
 							transaction.show(contactsfragment);
 						}
-						vtitle_home.setVisibility(View.GONE);
-						vtitle_msg.setVisibility(View.GONE);
-						vtitle_shop.setVisibility(View.GONE);
-						vtitle_contacts.setVisibility(View.VISIBLE);
-						rb_shops.setVisibility(View.VISIBLE);
+//						vtitle_home.setVisibility(View.GONE);
+//						vtitle_msg.setVisibility(View.GONE);
+//						vtitle_shop.setVisibility(View.GONE);
+//						vtitle_contacts.setVisibility(View.VISIBLE);
+//						rb_shops.setVisibility(View.VISIBLE);
 					}
 
 					break;
@@ -220,11 +217,11 @@ public class MainFragment extends BaseFragment {
 							transaction.show(messagefragment);
 						}
 						checkgroup();
-						vtitle_home.setVisibility(View.GONE);
-						vtitle_contacts.setVisibility(View.GONE);
-						vtitle_shop.setVisibility(View.GONE);
-						vtitle_msg.setVisibility(View.VISIBLE);
-						rb_shops.setVisibility(View.VISIBLE);
+//						vtitle_home.setVisibility(View.GONE);
+//						vtitle_contacts.setVisibility(View.GONE);
+//						vtitle_shop.setVisibility(View.GONE);
+//						vtitle_msg.setVisibility(View.VISIBLE);
+//						rb_shops.setVisibility(View.VISIBLE);
 					}
 					break;
 				case R.id.rb_shopping:
@@ -238,11 +235,12 @@ public class MainFragment extends BaseFragment {
 						} else {
 							transaction.show(shopfragment);
 						}
-						vtitle_home.setVisibility(View.GONE);
-						vtitle_msg.setVisibility(View.GONE);
-						vtitle_contacts.setVisibility(View.GONE);
-						vtitle_shop.setVisibility(View.VISIBLE);
-						rb_shops.setVisibility(View.INVISIBLE);
+//						vtitle_home.setVisibility(View.GONE);
+//						vtitle_msg.setVisibility(View.GONE);
+//						vtitle_contacts.setVisibility(View.GONE);
+//						vtitle_shop.setVisibility(View.VISIBLE);
+//						rb_shops.setVisibility(View.INVISIBLE);
+						hideKeyboard();
 					}
 					break;
 				}
@@ -250,6 +248,18 @@ public class MainFragment extends BaseFragment {
 			}
 		});
 		main_radio.check(R.id.rb_shopping);
+	}
+
+	/**
+	 * 隐藏软键盘
+	 */
+	private void hideKeyboard() {
+		if (getActivity().getWindow()
+				.getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+			if (getActivity().getCurrentFocus() != null)
+				manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+						InputMethodManager.HIDE_NOT_ALWAYS);
+		}
 	}
 
 	public void contactss() {
@@ -306,11 +316,11 @@ public class MainFragment extends BaseFragment {
 		}
 		if (hasNewMsgs) {
 			// iv_friend_right.setBackgroundResource(R.drawable.ss_03_new);
-			shop_head_txt.setVisibility(View.VISIBLE);
+//			shop_head_txt.setVisibility(View.VISIBLE);
 			LogUtil.i("***", shop_head_txt.getVisibility() + "=1");
 		} else {
 			// iv_friend_right.setBackgroundResource(R.drawable.ss_03);
-			shop_head_txt.setVisibility(View.GONE);
+//			shop_head_txt.setVisibility(View.GONE);
 		}
 		LogUtil.i("***", shop_head_txt.getVisibility() + "=2");
 	}
@@ -424,8 +434,8 @@ public class MainFragment extends BaseFragment {
 
 	@Override
 	public void setListener() {
-		home_tv_right.setOnClickListener(this);
-		message_right.setOnClickListener(this);
+//		home_tv_right.setOnClickListener(this);
+//		message_right.setOnClickListener(this);
 	}
 
 	/**

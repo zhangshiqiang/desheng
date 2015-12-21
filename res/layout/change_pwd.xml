@@ -87,6 +87,28 @@
             android:textSize="14sp" />
     </RelativeLayout>
 
+    <RelativeLayout style="@style/item_rl" >
+
+        <TextView
+            style="@style/item_textview"
+            android:text="确认密码：" />
+
+        <EditText
+            android:id="@+id/change_pwd_et3s"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:background="@null"
+            android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="请再次输入新密码"
+            android:inputType="textPassword"
+            android:maxLength="30"
+            android:paddingRight="25dp"
+            android:textColor="@color/gray2"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
     <View style="@style/DividerLine_style" />
 
     <Button

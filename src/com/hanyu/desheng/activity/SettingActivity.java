@@ -14,6 +14,7 @@ import com.hanyu.desheng.utils.SharedPreferencesUtil;
 import com.hanyu.desheng.utils.YangUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tina.utils.UpdateUtils;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -50,13 +51,29 @@ public class SettingActivity extends BaseActivity {
 	private TextView setting_version;
 	@ViewInject(R.id.ivMes)
 	private ImageView ivMes;
-	
+	private HomeBean homeBean;
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.setting_rl1:
 			// TODO 检测更新
-			getToppic("0");
+			PackageInfo info;
+			try {
+				info = getPackageManager().getPackageInfo(getPackageName(), 0);
+				String versionName = info.versionName;
+				if (!info.versionName.equals(homeBean.data.andriod.version)) {
+					setting_tv1.setText("发现新版本" + homeBean.data.andriod.version);
+					UpdateUtils.checkUpdate(this, homeBean);
+				} else {
+					setting_tv1.setText("已是最新版本");
+					Toast.makeText(this, "您已经是最新版本了！", Toast.LENGTH_SHORT).show();
+				}
+			} catch (NameNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			break;
 		case R.id.setting_rl2:
 			if (!YangUtils.isLogin(context)) {
@@ -107,7 +124,6 @@ public class SettingActivity extends BaseActivity {
 	 */
 	private void getToppic(final String page_no) {
 		new HttpTask<Void, Void, String>(context) {
-			
 
 			@Override
 			protected String doInBackground(Void... params) {
@@ -125,10 +141,26 @@ public class SettingActivity extends BaseActivity {
 			@Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
-					HomeBean homeBean = GsonUtils.json2Bean(result, HomeBean.class);
-					
-					// 检测版本更新
-					checkUpdate(homeBean);
+					homeBean = GsonUtils.json2Bean(result, HomeBean.class);
+
+					if (result != null) {
+						homeBean = GsonUtils.json2Bean(result, HomeBean.class);
+						PackageInfo info;
+						try {
+							info = getPackageManager().getPackageInfo(getPackageName(), 0);
+							String versionName = info.versionName;
+							if (!info.versionName.equals(homeBean.data.andriod.version)) {
+								setting_tv1.setText("发现新版本" + homeBean.data.andriod.version);
+							} else {
+								setting_tv1.setText("已是最新版本");
+							}
+						} catch (NameNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+
 				}
 			}
 
@@ -140,65 +172,16 @@ public class SettingActivity extends BaseActivity {
 
 	private AlertDialog updateDialog;
 
-	/**
-	 * 检查更新
-	 */
-	public void checkUpdate(HomeBean homeBean) {
-		PackageManager pm = getPackageManager();
-		try {
-			PackageInfo info = pm.getPackageInfo(getPackageName(), 0);
-			String versionName = info.versionName;
-			if (!versionName.equals(homeBean.data.andriod.version)) {
-				setting_tv1.setText("发现新版本" + homeBean.data.andriod.version);
-				showUpdateDialog(homeBean.data.andriod.version,new DSUrlManager().getFullUrl2(homeBean.data.andriod.apk_url));
-			} else {
-				Toast.makeText(this, "您已经是最新版本了！", Toast.LENGTH_SHORT).show();
-			}
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	//获取apk的versionCode，即AndroidManifest.xml中定义的android:versionCode
+	// 获取apk的versionCode，即AndroidManifest.xml中定义的android:versionCode
 	public int getVersionCode(Context context) {
-	    int versionCode = 0;
-	    try {
-	        versionCode = context.getPackageManager().getPackageInfo("net.vpntunnel", 0).versionCode;
-	    } catch (NameNotFoundException e) {
-//	        Log.e(TAG, e.getMessage());
-	    }
-	 
-	    return versionCode;
-	}
+		int versionCode = 0;
+		try {
+			versionCode = context.getPackageManager().getPackageInfo("net.vpntunnel", 0).versionCode;
+		} catch (NameNotFoundException e) {
+			// Log.e(TAG, e.getMessage());
+		}
 
-	public void showUpdateDialog(final String versionName, final String downloadUrl) {
-		Builder builder = new android.app.AlertDialog.Builder(context);
-		builder.setTitle("发现新版本!");
-		builder.setMessage("新版本" + versionName + ",是否更新");
-		builder.setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				updateDialog.dismiss();
-			}
-
-		});
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				updateDialog.dismiss();
-				// UpdateManager update = new UpdateManager(context,
-				// versionName, downloadUrl);
-				// update.downloadApk(downloadUrl);
-				Uri uri = Uri.parse(
-						"http://storage3.pgyer.com/M02/05/3F/wKgBfVZSy2qAZdKjARcQTI9SmZA127.apk?auth_key=48e0c6fb48a3f0955ee3dca284557242-1448420727&attname=desheng%281%29.apk");
-				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(intent);
-
-			}
-		});
-		updateDialog = builder.show();
-
+		return versionCode;
 	}
 
 	@Override
@@ -237,8 +220,8 @@ public class SettingActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+		getToppic("0");
+
 	}
 
 	@Override
@@ -250,19 +233,4 @@ public class SettingActivity extends BaseActivity {
 		setting_rl5.setOnClickListener(this);
 		ivMes.setOnClickListener(this);
 	}
-
-	/**
-	 * 检测更新
-	 */
-	// private void updateVersion(){
-	// if(gUtil==null){
-	// gUtil=new GeneralUtil(this);
-	// }
-	// Version version=new Version();
-	// version.sessionId=GlobalParams.sessionId;
-	// version.id="1";
-	// version.sysType="1";
-	// gUtil.getVersion(version,1);
-	// }
-
 }

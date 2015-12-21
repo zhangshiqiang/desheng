@@ -5,11 +5,15 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
+    <include
+        android:id="@+id/title_contacts"
+        layout="@layout/contacts_title"
+        android:visibility="gone" />
+
     <FrameLayout
         android:id="@+id/contacts_fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </FrameLayout>
-
 
 </LinearLayout>

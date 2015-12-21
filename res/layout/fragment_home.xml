@@ -4,11 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <include
+        android:id="@+id/title_home"
+        layout="@layout/home_title"
+        android:visibility="gone" />
+
     <com.hanyu.desheng.pulltorefresh.PullToRefreshListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
         android:background="#ffffff"
         android:divider="#F4F4F4"
         android:dividerHeight="10dp"

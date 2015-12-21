@@ -45,11 +45,13 @@ public class RegisterActivity extends BaseActivity {
 	private EditText regidter_et;
 	@ViewInject(R.id.register_et_pwd)
 	private EditText register_et_pwd;
+	@ViewInject(R.id.enter_et_pwd)
+	private EditText enter_et_pwd;
 	@ViewInject(R.id.register_code_et)
 	private EditText register_code_et;
 	private String phone;
 	private String authcode;// 验证码
-	private String pwd;
+	private String pwd, pwds;
 
 	private int i = 60;
 	private Timer timer;
@@ -80,6 +82,7 @@ public class RegisterActivity extends BaseActivity {
 		case R.id.register_btn1:
 			phone = regidter_et.getText().toString();
 			pwd = register_et_pwd.getText().toString();
+			pwds = enter_et_pwd.getText().toString();
 			authcode = register_code_et.getText().toString();
 			if (TextUtils.isEmpty(phone)) {
 				MyToastUtils.showShortToast(context, "请输入手机号");
@@ -90,8 +93,9 @@ public class RegisterActivity extends BaseActivity {
 			} else if (TextUtils.isEmpty(pwd)) {
 				MyToastUtils.showShortToast(context, "请输入密码");
 			} else if (pwd.length() < 6) {
-				MyToastUtils.showShortToast(context,
-						"密码长度太短，为了安全，请你重新设置不低于6位数的密码");
+				MyToastUtils.showShortToast(context, "密码长度太短，为了安全，请你重新设置不低于6位数的密码");
+			} else if (pwd != pwds) {
+				MyToastUtils.showShortToast(context, "两次输入密码不一致");
 			} else if (!register_cb.isChecked()) {
 				MyToastUtils.showShortToast(context, "请选中条款");
 			} else {
@@ -142,8 +146,7 @@ public class RegisterActivity extends BaseActivity {
 
 			@Override
 			protected RegisterBean doInBackground(Void... params) {
-				RegisterBean result = EngineManager.getUserEngine().toRegister(
-						phone, pwd);
+				RegisterBean result = EngineManager.getUserEngine().toRegister(phone, pwd);
 				return result;
 			}
 
@@ -177,8 +180,7 @@ public class RegisterActivity extends BaseActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				String result = EngineManager.getUserEngine().checkVerCode(
-						phone, FLAG, authcode);
+				String result = EngineManager.getUserEngine().checkVerCode(phone, FLAG, authcode);
 				return result;
 			}
 
@@ -219,8 +221,7 @@ public class RegisterActivity extends BaseActivity {
 			@Override
 			protected String doInBackground(Void... params) {
 				String content = "验证码：";
-				String result = EngineManager.getUserEngine().postVerCode(
-						phone, FLAG, content);
+				String result = EngineManager.getUserEngine().postVerCode(phone, FLAG, content);
 				return result;
 			}
 

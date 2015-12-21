@@ -346,13 +346,13 @@ public class GeneralizeActivity extends BaseActivity {
 		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
 		oks.setTitleUrl(url);
 		// text是分享文本，所有平台都需要这个字段
-		oks.setText("大众创业，万众创新：我只推荐 德升DS4567，移动互联 第一时装平台！");
+		oks.setText("大众创业，万众创新：我只推荐 德升DS4567，一个更专业的时装购物平台，");
 		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 		oks.setImagePath(DSQR);
 		// url仅在微信（包括好友和朋友圈）中使用
 		oks.setUrl(url);
 		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
-		oks.setComment("大众创业，万众创新：我只推荐 德升DS4567，移动互联 第一时装平台！");
+		oks.setComment("大众创业，万众创新：我只推荐 德升DS4567，一个更专业的时装购物平台，");
 		// site是分享此内容的网站名称，仅在QQ空间使用
 		oks.setSite(getString(R.string.app_name));
 		oks.setSiteUrl(url);

@@ -1,7 +1,6 @@
 package com.hanyu.desheng.fragment;
 
 import java.util.List;
-
 import com.hanyu.desheng.R;
 import com.hanyu.desheng.activity.AddFrendActivity;
 import com.hanyu.desheng.base.BaseFragment;
@@ -9,8 +8,6 @@ import com.hanyu.desheng.db.InviteMessgeDao;
 import com.hanyu.desheng.domain.InviteMessage;
 import com.hanyu.desheng.domain.InviteMessage.InviteMesageStatus;
 import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -84,7 +81,7 @@ public class ContactsFragment extends BaseFragment {
 				hideFragments(transaction);
 
 				InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromInputMethod(group.getWindowToken(), 0);
+				imm.hideSoftInputFromInputMethod(group.getWindowToken(), 0);  
 				imm.hideSoftInputFromWindow(group.getWindowToken(), 0);
 
 				switch (checkedId) {

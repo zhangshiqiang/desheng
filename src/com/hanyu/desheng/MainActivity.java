@@ -343,12 +343,12 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onPanelOpened(View arg0) {
-				MainFragment.shop_head_rl.setAlpha(0.0f);
+				ShopFragment.shop_head_rl.setAlpha(0.0f);
 			}
 
 			@Override
 			public void onPanelClosed(View arg0) {
-				MainFragment.shop_head_rl.setAlpha(1.0f);
+				ShopFragment.shop_head_rl.setAlpha(1.0f);
 			}
 
 		});

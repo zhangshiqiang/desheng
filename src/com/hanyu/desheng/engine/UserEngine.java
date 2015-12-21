@@ -527,7 +527,7 @@ public class UserEngine extends DSUrlManager {
 		params.put("hx_name", hx_name);
 		params.put("hx_group_id", hx_group_id);
 		result = getHttpManager().sendPost(getFullUrl2(CHECK_ADMIN), params);
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&"+result);
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&"+hx_name);
 		if (result != null) {
 			LogUtil.i("tag", result);
 			return result;

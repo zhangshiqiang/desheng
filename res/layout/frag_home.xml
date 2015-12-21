@@ -4,26 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/title_shop"
-        layout="@layout/shop_title"
-        android:visibility="gone" />
-
-    <include
-        android:id="@+id/title_contacts"
-        layout="@layout/contacts_title"
-        android:visibility="gone" />
-
-    <include
-        android:id="@+id/title_msg"
-        layout="@layout/message_title"
-        android:visibility="gone" />
-
-    <include
-        android:id="@+id/title_home"
-        layout="@layout/home_title"
-        android:visibility="gone" />
-
     <RelativeLayout
         android:id="@+id/main_rl"
         android:layout_width="match_parent"
