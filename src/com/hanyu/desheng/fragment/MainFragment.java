@@ -58,8 +58,6 @@ public class MainFragment extends BaseFragment {
 	private FragmentManager fm;
 	@ViewInject(R.id.layout_content)
 	private FrameLayout layout_content;
-	@ViewInject(R.id.shop_head_tv)
-	public static TextView shop_head_txt;
 	// 主页
 	private HomeFragment homefragment;
 	private ContactsFragment contactsfragment;
@@ -82,26 +80,9 @@ public class MainFragment extends BaseFragment {
 	private Button btnContact;
 	private BadgeView contarctBadge;
 	UserDao dao;
-	// 标题返回
-	@ViewInject(R.id.contacts_rl_back)
-	public static RelativeLayout contacts_rl_back;
-	@ViewInject(R.id.home_rl_back)
-	public static RelativeLayout home_rl_back;
-	@ViewInject(R.id.msg_rl_back)
-	public static RelativeLayout msg_rl_back;
 	// 标题控件
-//	@ViewInject(R.id.title_shop)
-//	private View vtitle_shop;
-//	@ViewInject(R.id.title_home)
-//	private View vtitle_home;
-//	@ViewInject(R.id.title_contacts)
-//	private View vtitle_contacts;
-//	@ViewInject(R.id.title_msg)
-//	private View vtitle_msg;
-//	@ViewInject(R.id.rb_shopping)
-//	private RadioButton rb_shops;
-//	@ViewInject(R.id.shop_tv_right)
-//	public static RelativeLayout shop_tv_right;
+	@ViewInject(R.id.shop_tv_right)
+	public static RelativeLayout shop_tv_right;
 	private PopupWindow popupWindow;
 	private LinearLayout groupchat;
 	private TextView addfri;
@@ -113,20 +94,9 @@ public class MainFragment extends BaseFragment {
 	@ViewInject(R.id.home_tv_right)
 	private RelativeLayout home_tv_right;
 
-	@ViewInject(R.id.message_right)
-	public static RelativeLayout message_right;
-	@ViewInject(R.id.contacts_right)
-	public static RelativeLayout contacts_right;// 添加好友
-	@ViewInject(R.id.rg_contact)
-	public static RadioGroup rg;
-	private MyFriendFragment friendFragment;
-	private MyGroupFragment groupFragment;
 	@ViewInject(R.id.iv_friend_right)
 	public static ImageView iv_friend_right;
 	
-	@ViewInject(R.id.contacts_fl)
-	public static FrameLayout contacts_fl;
-
 	@Override
 	public View initView(LayoutInflater inflater) {
 		view = View.inflate(context, R.layout.frag_home, null);
@@ -142,6 +112,7 @@ public class MainFragment extends BaseFragment {
 		badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
 		badge.setTextSize(10);
 		badge.setTextColor(context.getResources().getColor(R.color.white));
+		
 		state = SharedPreferencesUtil.getStringData(context, "shopstate", "");
 		contarctBadge = new BadgeView(context, btnContact);
 		contarctBadge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
@@ -149,7 +120,6 @@ public class MainFragment extends BaseFragment {
 		contarctBadge.setTextColor(context.getResources().getColor(R.color.white));
 
 		selectpage();
-		hasNewMsg();
 		newMsgBroad();
 	}
 
@@ -173,11 +143,6 @@ public class MainFragment extends BaseFragment {
 					} else {
 						transaction.show(homefragment);
 					}
-//					vtitle_contacts.setVisibility(View.GONE);
-//					vtitle_msg.setVisibility(View.GONE);
-//					vtitle_shop.setVisibility(View.GONE);
-//					vtitle_home.setVisibility(View.VISIBLE);
-//					rb_shops.setVisibility(View.VISIBLE);
 					break;
 				case R.id.rb_contacts:
 					contarctBadge.hide();
@@ -192,11 +157,6 @@ public class MainFragment extends BaseFragment {
 						} else {
 							transaction.show(contactsfragment);
 						}
-//						vtitle_home.setVisibility(View.GONE);
-//						vtitle_msg.setVisibility(View.GONE);
-//						vtitle_shop.setVisibility(View.GONE);
-//						vtitle_contacts.setVisibility(View.VISIBLE);
-//						rb_shops.setVisibility(View.VISIBLE);
 					}
 
 					break;
@@ -216,12 +176,6 @@ public class MainFragment extends BaseFragment {
 						} else {
 							transaction.show(messagefragment);
 						}
-						checkgroup();
-//						vtitle_home.setVisibility(View.GONE);
-//						vtitle_contacts.setVisibility(View.GONE);
-//						vtitle_shop.setVisibility(View.GONE);
-//						vtitle_msg.setVisibility(View.VISIBLE);
-//						rb_shops.setVisibility(View.VISIBLE);
 					}
 					break;
 				case R.id.rb_shopping:
@@ -235,11 +189,6 @@ public class MainFragment extends BaseFragment {
 						} else {
 							transaction.show(shopfragment);
 						}
-//						vtitle_home.setVisibility(View.GONE);
-//						vtitle_msg.setVisibility(View.GONE);
-//						vtitle_contacts.setVisibility(View.GONE);
-//						vtitle_shop.setVisibility(View.VISIBLE);
-//						rb_shops.setVisibility(View.INVISIBLE);
 						hideKeyboard();
 					}
 					break;
@@ -260,69 +209,6 @@ public class MainFragment extends BaseFragment {
 				manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
 						InputMethodManager.HIDE_NOT_ALWAYS);
 		}
-	}
-
-	public void contactss() {
-
-		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				fm = getFragmentManager();
-				FragmentTransaction transaction = fm.beginTransaction();
-				hideFragments(transaction);
-
-				InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromInputMethod(group.getWindowToken(), 0);
-				imm.hideSoftInputFromWindow(group.getWindowToken(), 0);
-
-				switch (checkedId) {
-				case R.id.rb_contact:
-					if (friendFragment == null) {
-						friendFragment = new MyFriendFragment();
-						transaction.add(R.id.contacts_fl, friendFragment);
-					} else {
-						transaction.show(friendFragment);
-					}
-					break;
-				case R.id.rb_group:
-					if (groupFragment == null) {
-						groupFragment = new MyGroupFragment();
-						transaction.add(R.id.contacts_fl, groupFragment);
-					} else {
-						transaction.show(groupFragment);
-					}
-					break;
-				}
-				transaction.commit();
-			}
-		});
-		rg.check(R.id.rb_contact);
-
-		hasNewMsg();
-		newMsgBroad();
-
-	}
-
-	private void hasNewMsg() {
-		InviteMessgeDao dao = new InviteMessgeDao(context);
-		List<InviteMessage> msgs = dao.getMessagesList();
-		boolean hasNewMsgs = false;
-		for (InviteMessage msg : msgs) {
-			if (msg.getStatus() == InviteMesageStatus.BEAPPLYED || msg.getStatus() == InviteMesageStatus.BEINVITEED) {
-				hasNewMsgs = true;
-				break;
-			}
-		}
-		if (hasNewMsgs) {
-			// iv_friend_right.setBackgroundResource(R.drawable.ss_03_new);
-//			shop_head_txt.setVisibility(View.VISIBLE);
-			LogUtil.i("***", shop_head_txt.getVisibility() + "=1");
-		} else {
-			// iv_friend_right.setBackgroundResource(R.drawable.ss_03);
-//			shop_head_txt.setVisibility(View.GONE);
-		}
-		LogUtil.i("***", shop_head_txt.getVisibility() + "=2");
 	}
 
 	public static final String GET_NEW_MSG = "action_new_msg";
@@ -387,7 +273,6 @@ public class MainFragment extends BaseFragment {
 						popupWindow.dismiss();
 						intent = new Intent(context, NewGroupActivity.class);
 						getActivity().startActivityForResult(intent, NEW_GROUP);
-						// context.startActivity(intent);
 					} else {
 						MyToastUtils.showShortToast(context, "您还不是店主，不能使用该功能");
 					}
@@ -412,30 +297,11 @@ public class MainFragment extends BaseFragment {
 			});
 
 			break;
-		case R.id.message_right:
-			intent = new Intent(context, NewGroupActivity.class);
-			startActivity(intent);
-			// showPopupWindow(v);
-			break;
-		}
-	}
-
-	/**
-	 * 判断该用户是否是店长，是则可发起群聊，否则不可发起群聊
-	 */
-	private void checkgroup() {
-		String state = SharedPreferencesUtil.getStringData(context, "shopstate", "");
-		if ("1".equals(state)) {
-			message_right.setVisibility(View.VISIBLE);
-		} else {
-			message_right.setVisibility(View.GONE);
 		}
 	}
 
 	@Override
 	public void setListener() {
-//		home_tv_right.setOnClickListener(this);
-//		message_right.setOnClickListener(this);
 	}
 
 	/**
@@ -473,19 +339,6 @@ public class MainFragment extends BaseFragment {
 			}
 
 		}.executeProxy();
-	}
-
-	@Override
-	public void onResume() {
-		hasNewMsg();
-		super.onResume();
-	}
-
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		hasNewMsg();
-		super.onPause();
 	}
 
 	@Override
@@ -558,9 +411,9 @@ public class MainFragment extends BaseFragment {
 				Left.menu_msgcnt.setVisibility(View.GONE);
 			}
 			if (Left.menu_msgcnt.getVisibility() != View.VISIBLE) {
-				MainFragment.shop_head_txt.setVisibility(View.GONE);
+				ShopFragment.shop_head_txt.setVisibility(View.GONE);
 			} else {
-				MainFragment.shop_head_txt.setVisibility(View.VISIBLE);
+				ShopFragment.shop_head_txt.setVisibility(View.VISIBLE);
 			}
 
 			if (ExampleApplication.getInstance().getContactList() == null) {

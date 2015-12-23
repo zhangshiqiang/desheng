@@ -4,10 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/title_shop"
-        layout="@layout/shop_title"
-        android:visibility="gone" />
+    <include layout="@layout/shop_title" />
 
     <RelativeLayout
         android:layout_width="match_parent"

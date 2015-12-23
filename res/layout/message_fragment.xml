@@ -5,10 +5,7 @@
     android:background="#ffffff"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/title_msg"
-        layout="@layout/message_title"
-        android:visibility="gone" />
+    <include layout="@layout/message_title" />
 
     <include
         android:id="@+id/rl_error_item"

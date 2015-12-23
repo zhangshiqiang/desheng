@@ -83,6 +83,7 @@ public class ShopFragment extends BaseFragment {
 	@ViewInject(R.id.shop_webview)
 	public static WebView shop_webview;
 	private PopupWindow popupWindow;
+	@ViewInject(R.id.shop_tv_right)
 	private RelativeLayout shop_tv_right;// 分享当前链接
 	private TextView share;
 	private TextView copy;
@@ -97,11 +98,13 @@ public class ShopFragment extends BaseFragment {
 	private String info;
 
 	@ViewInject(R.id.shop_rl_back)
-	public static RelativeLayout rlback;// webview后退键
+	private RelativeLayout rlback;// webview后退键
 	@ViewInject(R.id.shop_head_rl)
 	public static View shop_head_rl;
 	@ViewInject(R.id.shop_head_img)
-	public static CircleImageView shop_head_img;
+	private CircleImageView shop_head_img;
+	@ViewInject(R.id.shop_head_tv)
+	public static TextView shop_head_txt;
 
 	public ShopFragment() {
 	}
@@ -180,7 +183,7 @@ public class ShopFragment extends BaseFragment {
 	@Override
 	public View initView(LayoutInflater inflater) {
 		view = View.inflate(context, R.layout.shop_fragment, null);
-//		shop_tv_right = MainFragment.shop_tv_right;
+		// shop_tv_right = MainFragment.shop_tv_right;
 		ViewUtils.inject(this, view);
 		instance = this;
 		return view;

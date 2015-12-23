@@ -49,6 +49,7 @@ import com.hanyu.desheng.utils.GsonUtils;
 import com.hanyu.desheng.utils.SharedPreferencesUtil;
 import com.leaf.library.slidingmenu.SlidingMenu;
 
+import android.R.color;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -74,11 +75,6 @@ public class MainActivity extends BaseActivity {
 	FrameLayout left, right;
 	public static SlidingPaneLayout slidingPaneLayout;
 	protected static final String TAG = "MainActivity";
-	// // 未读消息textview
-	// private TextView unreadLabel;
-	// // 未读通讯录textview
-	// private TextView unreadAddressLable;
-
 	// 账号在别处登录
 	public boolean isConflict = false;
 	// 账号被移除
@@ -113,9 +109,7 @@ public class MainActivity extends BaseActivity {
 			intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
 			intent.putExtra("groupId", groupId);
 			startActivityForResult(intent, 0);
-
 		}
-
 	}
 
 	/**
@@ -276,44 +270,6 @@ public class MainActivity extends BaseActivity {
 		EMChat.getInstance().setAppInited();
 		JPushInterface.init(getApplicationContext());
 		registerMessageReceiver();
-		// mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		//
-		// // init the ListView and Adapter, nothing new
-		//// initListView();
-		//
-		// // set a custom shadow that overlays the main content when the drawer
-		// // opens
-		// mDrawerLayout.setDrawerShadow(R.drawable.center_02,
-		// GravityCompat.START);
-		//
-		// mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-		// R.drawable.center_01, R.string.drawer_open,
-		// R.string.drawer_close) {
-		//
-		// /**
-		// * Called when a drawer has settled in a completely closed state.
-		// */
-		// public void onDrawerClosed(View view) {
-		//
-		// invalidateOptionsMenu(); // creates call to
-		// // onPrepareOptionsMenu()
-		// }
-		//
-		// /** Called when a drawer has settled in a completely open state. */
-		// public void onDrawerOpened(View drawerView) {
-		//
-		// invalidateOptionsMenu(); // creates call to
-		// // onPrepareOptionsMenu()
-		// }
-		// };
-		//
-		// // Set the drawer toggle as the DrawerListener
-		// mDrawerLayout.setDrawerListener(mDrawerToggle);
-		//
-		// // enable ActionBar app icon to behave as action to toggle nav drawer
-		// getActionBar().setDisplayHomeAsUpEnabled(true);
-		// getActionBar().setHomeButtonEnabled(true);
-		// Note: getActionBar() Added in API level 11
 		setContentView(R.layout.activity_main);
 		slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingPaneLayout);
 		left = (FrameLayout) findViewById(R.id.leftfragment);
@@ -333,17 +289,19 @@ public class MainActivity extends BaseActivity {
 				left.setScaleX(slideOffset / 2 + 0.5F);
 				left.setAlpha(slideOffset);
 				right.setScaleY(1 - slideOffset / 5);
-				if(Left.menu_msgcnt.getVisibility() != View.VISIBLE){
-					MainFragment.shop_head_txt.setVisibility(View.GONE);
-				}else{
-					MainFragment.shop_head_txt.setVisibility(View.VISIBLE);
+				ShopFragment.shop_head_rl.setAlpha(1 - slideOffset);
+
+				if (Left.menu_msgcnt.getVisibility() != View.VISIBLE) {
+					 ShopFragment.shop_head_txt.setVisibility(View.GONE);
+				} else {
+					 ShopFragment.shop_head_txt.setVisibility(View.VISIBLE);
 				}
-				
+				slidingPaneLayout.setSliderFadeColor(color.transparent);
+
 			}
 
 			@Override
 			public void onPanelOpened(View arg0) {
-				ShopFragment.shop_head_rl.setAlpha(0.0f);
 			}
 
 			@Override
@@ -352,62 +310,6 @@ public class MainActivity extends BaseActivity {
 			}
 
 		});
-		// menu_center = (ImageButton) findViewById(R.id.menu_center);
-		// menu_contens = (ImageButton) findViewById(R.id.menu_contents);
-		// menu_msg = (ImageButton) findViewById(R.id.menu_msg);
-		// menu_shop = (ImageButton) findViewById(R.id.menu_shop);
-		// menu_staudy = (ImageButton) findViewById(R.id.menu_staudy);
-		// menu_center.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent intent = new Intent(MainFragment.CHANGETAB);
-		// intent.putExtra("tab", 4);
-		// // main_rl.setVisibility(View.GONE);
-		// sendBroadcast(intent);
-		// }
-		// });
-		// menu_contens.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent intent = new Intent(MainFragment.CHANGETAB);
-		// intent.putExtra("tab", 1);
-		// // main_rl.setVisibility(View.GONE);
-		// sendBroadcast(intent);
-		// }
-		// });
-		// menu_msg.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent intent = new Intent(MainFragment.CHANGETAB);
-		// intent.putExtra("tab", 3);
-		// // main_rl.setVisibility(View.GONE);
-		// sendBroadcast(intent);
-		// }
-		// });
-		// menu_shop.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent intent = new Intent(MainFragment.CHANGETAB);
-		// intent.putExtra("tab", 2);
-		// // main_rl.setVisibility(View.GONE);
-		// sendBroadcast(intent);
-		// }
-		// });
-		// menu_staudy.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Intent intent = new Intent(MainFragment.CHANGETAB);
-		// intent.putExtra("tab", 0);
-		// // main_rl.setVisibility(View.GONE);
-		// sendBroadcast(intent);
-		// }
-		// });
-
 	}
 
 	@Override

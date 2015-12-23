@@ -25,6 +25,7 @@ import com.hanyu.desheng.pulltorefresh.PullToRefreshBase.OnRefreshListener;
 import com.hanyu.desheng.pulltorefresh.PullToRefreshListView;
 import com.hanyu.desheng.ui.BadgeView;
 import com.hanyu.desheng.utils.MyTimeUtils;
+import com.hanyu.desheng.utils.SharedPreferencesUtil;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import android.annotation.SuppressLint;
@@ -55,23 +56,18 @@ import android.widget.Toast;
 @SuppressLint("ShowToast")
 public class MessageFragment extends BaseFragment {
 	protected static final String tag = "MessageFragment";
-//	@ViewInject(R.id.message_right)
-//	private RelativeLayout message_right;
-
+	@ViewInject(R.id.message_right)
+	private RelativeLayout message_right;
 	@ViewInject(R.id.msg_iv)
 	private ImageView msg_iv;
-
 	@ViewInject(R.id.message_ptr)
 	private PullToRefreshListView message_ptr;
-
 	public RelativeLayout errorItem;
 	public TextView errorText;
-
 	// private MessageListPtrAdapter adapter;
 	private BadgeView badge;
 	@SuppressWarnings("unused")
 	private PopupWindow popupWindow;
-
 	// 聊天
 	private InputMethodManager inputMethodManager;
 	@SuppressWarnings("unused")
@@ -79,6 +75,7 @@ public class MessageFragment extends BaseFragment {
 	private ChatAllHistoryAdapter adapter;
 	private List<EMConversation> conversationList = new ArrayList<EMConversation>();
 	UserDao dao;
+	@ViewInject(R.id.msg_rl_back)
 	private RelativeLayout msg_rl_back;
 	@Override
 	public void onClick(View v) {
@@ -110,10 +107,22 @@ public class MessageFragment extends BaseFragment {
 		// badge.setText("84");
 		return view;
 	}
+	
+	/**
+	 * 判断该用户是否是店长，是则可发起群聊，否则不可发起群聊
+	 */
+	private void checkgroup() {
+		String state = SharedPreferencesUtil.getStringData(context, "shopstate", "");
+		if ("1".equals(state)) {
+			message_right.setVisibility(View.VISIBLE);
+		} else {
+			message_right.setVisibility(View.GONE);
+		}
+	}
 
 	@Override
 	public void initData(Bundle savedInstanceState) {
-		msg_rl_back=MainFragment.msg_rl_back;
+		checkgroup();
 		msg_rl_back.setOnClickListener(this);
 		if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
 			return;
@@ -213,7 +222,7 @@ public class MessageFragment extends BaseFragment {
 	@Override
 	public void setListener() {
 //		msg_rl_back.setOnClickListener(this);
-//		message_right.setOnClickListener(this);
+		message_right.setOnClickListener(this);
 	}
 
 	@Override

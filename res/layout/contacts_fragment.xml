@@ -5,10 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/title_contacts"
-        layout="@layout/contacts_title"
-        android:visibility="gone" />
+    <include layout="@layout/contacts_title" />
 
     <FrameLayout
         android:id="@+id/contacts_fl"

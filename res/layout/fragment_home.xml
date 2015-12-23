@@ -4,10 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/title_home"
-        layout="@layout/home_title"
-        android:visibility="gone" />
+    <include layout="@layout/home_title" />
 
     <com.hanyu.desheng.pulltorefresh.PullToRefreshListView
         android:id="@+id/list_view"

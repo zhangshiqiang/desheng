@@ -8,6 +8,8 @@ import com.hanyu.desheng.db.InviteMessgeDao;
 import com.hanyu.desheng.domain.InviteMessage;
 import com.hanyu.desheng.domain.InviteMessage.InviteMesageStatus;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,15 +31,21 @@ import android.widget.RelativeLayout;
 @SuppressLint("DefaultLocale")
 public class ContactsFragment extends BaseFragment {
 	protected static final String tag = "ContactsFragment";
+	@ViewInject(R.id.contacts_fl)
 	private FrameLayout contacts_fl;
+	@ViewInject(R.id.contacts_right)
 	private RelativeLayout contacts_right;// 添加好友
+	@ViewInject(R.id.rg_contact)
 	private RadioGroup rg;
 
 	private FragmentManager fm;
 	private MyFriendFragment friendFragment;
 	private MyGroupFragment groupFragment;
+	@ViewInject(R.id.iv_friend_right)
 	private ImageView iv_friend_right;
+	@ViewInject(R.id.contacts_rl_back)
 	private RelativeLayout contacts_rl_back;
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -60,17 +68,58 @@ public class ContactsFragment extends BaseFragment {
 	@Override
 	public View initView(LayoutInflater inflater) {
 		view = View.inflate(context, R.layout.contacts_fragment, null);
-		contacts_fl = MainFragment.contacts_fl;
-		contacts_right = MainFragment.contacts_right;
-		rg = MainFragment.rg;
-		iv_friend_right = MainFragment.iv_friend_right;
+		// contacts_right = MainFragment.contacts_right;
+		// rg = MainFragment.rg;
+		// iv_friend_right = MainFragment.iv_friend_right;
 		ViewUtils.inject(this, view);
 		return view;
 	}
 
+	public void contactss() {
+
+		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				fm = getFragmentManager();
+				FragmentTransaction transaction = fm.beginTransaction();
+				hideFragments(transaction);
+
+				InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromInputMethod(group.getWindowToken(), 0);
+				imm.hideSoftInputFromWindow(group.getWindowToken(), 0);
+
+				switch (checkedId) {
+				case R.id.rb_contact:
+					if (friendFragment == null) {
+						friendFragment = new MyFriendFragment();
+						transaction.add(R.id.contacts_fl, friendFragment);
+					} else {
+						transaction.show(friendFragment);
+					}
+					break;
+				case R.id.rb_group:
+					if (groupFragment == null) {
+						groupFragment = new MyGroupFragment();
+						transaction.add(R.id.contacts_fl, groupFragment);
+					} else {
+						transaction.show(groupFragment);
+					}
+					break;
+				}
+				transaction.commit();
+			}
+		});
+		rg.check(R.id.rb_contact);
+
+		hasNewMsg();
+		newMsgBroad();
+
+	}
+
 	@Override
 	public void initData(Bundle savedInstanceState) {
-		contacts_rl_back=MainFragment.contacts_rl_back;
+		// contacts_rl_back=MainFragment.contacts_rl_back;
 		contacts_rl_back.setOnClickListener(this);
 		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -81,7 +130,7 @@ public class ContactsFragment extends BaseFragment {
 				hideFragments(transaction);
 
 				InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromInputMethod(group.getWindowToken(), 0);  
+				imm.hideSoftInputFromInputMethod(group.getWindowToken(), 0);
 				imm.hideSoftInputFromWindow(group.getWindowToken(), 0);
 
 				switch (checkedId) {

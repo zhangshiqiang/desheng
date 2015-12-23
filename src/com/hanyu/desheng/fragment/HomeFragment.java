@@ -93,8 +93,8 @@ public class HomeFragment extends BaseFragment {
 	private List<Banner> banners = new ArrayList<HomeBean.Data.Banner>();
 
 	private android.app.AlertDialog updateDialog;
+	@ViewInject(R.id.home_rl_back)
 	private RelativeLayout home_rl_back;
-
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -120,7 +120,7 @@ public class HomeFragment extends BaseFragment {
 	
 	@Override
 	public void initData(Bundle savedInstanceState) {
-		home_rl_back = MainFragment.home_rl_back;
+//		home_rl_back = MainFragment.home_rl_back;
 		View headView = View.inflate(getActivity(), R.layout.home_head_view, null);
 
 		homgpager_viewpager = (LoopViewPager) headView.findViewById(R.id.homgpager_viewpager);
